@@ -1,27 +1,27 @@
 # ROADMAP — PULSE
 
-> Authoritative roadmap derived from the verbatim 7-phase breakdown in `09_DEVELOPMENT_ROADMAP.md` (preserved at `intel/context.md` §11), with Fase 5 deliverables updated per locked ADR DEC-008. Six phases (Fase 1–6) deliver the v1 MVP; Phase 2+ enhancements are explicitly out of scope.
+> Authoritative roadmap derived from the verbatim 7-phase breakdown in `09_DEVELOPMENT_ROADMAP.md` (preserved at `intel/context.md` §11), with Phase 5 deliverables updated per locked ADR DEC-008. Six phases (Phase 1–6) deliver the v1 MVP; Phase 2+ enhancements are explicitly out of scope.
 >
-> Phase numbering follows the source's "Fase N" naming. Each phase delivers a coherent, verifiable capability. Every requirement in `REQUIREMENTS.md` maps to exactly one phase.
+> Phase numbering follows the source's "Phase N" naming. Each phase delivers a coherent, verifiable capability. Every requirement in `REQUIREMENTS.md` maps to exactly one phase.
 >
-> **MVP usable at end of Fase 3** (per source §5: "→ Akhir Fase 3 = MVP USABLE"). Fase 4–6 harden the system into full Konkin 2026 coverage and operational readiness.
+> **MVP usable at end of Phase 3** (per source §5: "→ Akhir Phase 3 = MVP USABLE"). Phase 4–6 harden the system into full Konkin 2026 coverage and operational readiness.
 
 ---
 
 ## Phases
 
-- [ ] **Fase 1: Foundation (Master Data + Auth)** — App boots, login works, master data Konkin 2026 ter-seed, struktur stream bisa dibrowse, docker compose + nginx stack online di port 3399, design-system primitives dipakai.
-- [ ] **Fase 2: Assessment Workflow (PIC + Asesor)** — End-to-end self-assessment + asesor review + rekomendasi tracker untuk indikator pilot (Outage + SMAP + EAF + EFOR), notifications + audit log live.
-- [ ] **Fase 3: NKO Calculator + Dashboard** — NKO terhitung otomatis multi-tier, dashboard eksekutif + heatmap + trend live via WebSocket. Akhir fase ini = MVP USABLE.
-- [ ] **Fase 4: Compliance Tracker + Reports** — 9 laporan rutin + komponen lain ter-track, pengurang terintegrasi ke NKO, export PDF/Excel/Word resmi.
-- [ ] **Fase 5: AI Integration** — OpenRouter routing + 5 fitur AI MVP (Draft Justifikasi, Draft Rekomendasi, Anomaly Detection, AI Inline Help, Comparative Analysis) + sub-fase 5b RAG/Summary/SMART.
-- [ ] **Fase 6: Stream Coverage Lengkap + HCR + Go-Live Hardening** — Semua 14 sub-stream ML Pilar II + HCR + sub-indikator Pilar I/IV/V ter-implementasi, prod checklist passed.
+- [ ] **Phase 1: Foundation (Master Data + Auth)** — App boots, login works, master data Konkin 2026 ter-seed, struktur stream bisa dibrowse, docker compose + nginx stack online di port 3399, design-system primitives dipakai.
+- [ ] **Phase 2: Assessment Workflow (PIC + Asesor)** — End-to-end self-assessment + asesor review + rekomendasi tracker untuk indikator pilot (Outage + SMAP + EAF + EFOR), notifications + audit log live.
+- [ ] **Phase 3: NKO Calculator + Dashboard** — NKO terhitung otomatis multi-tier, dashboard eksekutif + heatmap + trend live via WebSocket. Akhir fase ini = MVP USABLE.
+- [ ] **Phase 4: Compliance Tracker + Reports** — 9 laporan rutin + komponen lain ter-track, pengurang terintegrasi ke NKO, export PDF/Excel/Word resmi.
+- [ ] **Phase 5: AI Integration** — OpenRouter routing + 5 fitur AI MVP (Draft Justifikasi, Draft Rekomendasi, Anomaly Detection, AI Inline Help, Comparative Analysis) + sub-fase 5b RAG/Summary/SMART.
+- [ ] **Phase 6: Stream Coverage Lengkap + HCR + Go-Live Hardening** — Semua 14 sub-stream ML Pilar II + HCR + sub-indikator Pilar I/IV/V ter-implementasi, prod checklist passed.
 
 ---
 
 ## Phase Details
 
-### Fase 1: Foundation (Master Data + Auth)
+### Phase 1: Foundation (Master Data + Auth)
 **Goal**: User dapat login ke aplikasi PULSE dan menelusuri struktur master data Konkin 2026 (perspektif → indikator → stream ML rubrik) di lingkungan Docker Compose yang sudah berjalan, dengan branding, design system, dan kebijakan no-evidence-upload sudah aktif sejak hari pertama.
 
 **Depends on**: Nothing (first phase)
@@ -41,10 +41,10 @@
 
 ---
 
-### Fase 2: Assessment Workflow (PIC + Asesor)
+### Phase 2: Assessment Workflow (PIC + Asesor)
 **Goal**: PIC dapat melakukan self-assessment end-to-end (KPI Kuantitatif + Maturity Level) untuk indikator pilot, asesor dapat review/override/return, dan setiap rekomendasi yang dibuat dapat di-track sampai close atau carry-over ke periode berikutnya — semua perubahan tercatat di audit log dan notifikasi terkirim.
 
-**Depends on**: Fase 1
+**Depends on**: Phase 1
 
 **Requirements**: REQ-periode-lifecycle, REQ-self-assessment-kpi-form, REQ-self-assessment-ml-form, REQ-auto-save, REQ-pic-actions, REQ-asesor-review, REQ-recommendation-create, REQ-recommendation-lifecycle, REQ-notifications, REQ-audit-log
 
@@ -60,10 +60,10 @@
 
 ---
 
-### Fase 3: NKO Calculator + Dashboard
+### Phase 3: NKO Calculator + Dashboard
 **Goal**: Manajer Unit dapat melihat dashboard eksekutif PULSE dengan NKO real-time yang dihitung otomatis multi-tier (sub-area → area → stream → indikator → pilar → NKO), drill-down ke detail komponen, dan visualisasi trend + heatmap maturity.
 
-**Depends on**: Fase 2
+**Depends on**: Phase 2
 
 **Requirements**: REQ-nko-calc-engine, REQ-nko-aggregation-rules, REQ-nko-realtime-ws, REQ-dashboard-executive, REQ-dashboard-heatmap, REQ-dashboard-trend
 
@@ -79,10 +79,10 @@
 
 ---
 
-### Fase 4: Compliance Tracker + Reports
+### Phase 4: Compliance Tracker + Reports
 **Goal**: BID CPF dan auditor dapat track 9 laporan rutin + komponen compliance lain (PACA/ICOFR/NAC/Critical Event) dengan pengurang otomatis terintegrasi ke NKO, dan manajer dapat export laporan formal NKO Semester (PDF/Excel/Word) yang siap dikirim ke Direksi PT PLN NP.
 
-**Depends on**: Fase 3
+**Depends on**: Phase 3
 
 **Requirements**: REQ-compliance-laporan-tracker, REQ-compliance-komponen, REQ-compliance-summary, REQ-report-nko-semester, REQ-report-assessment-sheet, REQ-report-compliance-detail, REQ-report-recommendation-tracker
 
@@ -97,10 +97,10 @@
 
 ---
 
-### Fase 5: AI Integration
+### Phase 5: AI Integration
 **Goal**: PIC dan asesor mendapat asistensi AI yang menambah produktivitas (draft justifikasi, draft rekomendasi SMART, anomaly detection, inline help per indikator, comparative analysis cross-periode) dengan biaya ~$3.15/bulan, full audit trail, PII masking, rate-limit 20/min/user, dan fallback graceful saat OpenRouter down — plus sub-fase 5b RAG chat / executive summary / SMART action-plan generator.
 
-**Depends on**: Fase 4
+**Depends on**: Phase 4
 
 **Requirements**: REQ-ai-draft-justification, REQ-ai-draft-recommendation, REQ-ai-anomaly-detection, REQ-ai-inline-help, REQ-ai-comparative-analysis, REQ-ai-rate-limiting, REQ-ai-pii-masking, REQ-ai-fallback, REQ-ai-audit-trail, REQ-rate-limiting-general, REQ-ai-rag-chat, REQ-ai-summary-periode, REQ-ai-action-plan-generator
 
@@ -109,7 +109,7 @@
   2. PIC klik ikon ❓ di samping nama indikator → side panel slide-in menampilkan AI Inline Help (Apa itu / Formula / Best practice / Indikator terkait / Kesalahan umum) dari cache `ai_inline_help`; admin dapat trigger regenerate via `POST /api/v1/ai/inline-help/{id}/regenerate`. Tombol "Bandingkan dengan TW Lalu" pada form (visible jika ≥1 prior period) memunculkan modal dengan narasi 3–5 kalimat + 4-period trend chart, di-cache 1 jam.
   3. Hybrid anomaly detection memflag self-assessment dengan deviasi >30% / >2σ / ML jump >1.5 levels; LLM classifier mereturn salah satu dari `legitimate_improvement | data_entry_error | needs_verification | suspicious` dengan reason yang muncul sebagai warning badge di Asesor Workspace.
   4. PII masking layer memblok NIP / personal email / vendor names sebelum payload dikirim ke OpenRouter (verifikasi via test); header `X-Title: PULSE` dan `HTTP-Referer: https://pulse.tenayan.local` ter-set; rate limit 20 req/min/user enforced di Nginx + backend, 100 req/min mutating dan 1000 req/min dashboard read juga enforced.
-  5. Saat OpenRouter unavailable, semua AI button disabled dengan tooltip "Layanan AI sementara tidak tersedia"; form workflows tetap fungsional 100%; error tercatat dengan exponential backoff. Sub-fase 5b: chat RAG dengan Pedoman Konkin (Claude Sonnet, k=5 ivfflat cosine, sources cited) + summary periode 400–600 kata + SMART action-plan generator JSON — semua opsional, tidak block Fase 5 inti.
+  5. Saat OpenRouter unavailable, semua AI button disabled dengan tooltip "Layanan AI sementara tidak tersedia"; form workflows tetap fungsional 100%; error tercatat dengan exponential backoff. Sub-fase 5b: chat RAG dengan Pedoman Konkin (Claude Sonnet, k=5 ivfflat cosine, sources cited) + summary periode 400–600 kata + SMART action-plan generator JSON — semua opsional, tidak block Phase 5 inti.
   6. Total biaya AI ter-track per use-case dan per user; bulan pertama actual spend ≤ $5 (target ~$3.15); 100% AI request tercatat di `ai_suggestion_log`.
 
 **Plans**: TBD
@@ -117,10 +117,10 @@
 
 ---
 
-### Fase 6: Stream Coverage Lengkap + HCR + Go-Live Hardening
+### Phase 6: Stream Coverage Lengkap + HCR + Go-Live Hardening
 **Goal**: Semua sub-stream maturity level Konkin 2026 (Reliability, Efficiency, WPC, Operation, Energi Primer, LCCM, SCM, Manajemen Lingkungan, K3, Keamanan, Pengelolaan Bendungan, DPP) plus HCR/OCR ter-implementasi, sub-indikator Pilar I/IV/V lengkap, dan production go-live checklist passed sehingga sistem dapat diserahkan untuk operasional resmi UP Tenayan.
 
-**Depends on**: Fase 5
+**Depends on**: Phase 5
 
 **Requirements**: REQ-prod-checklist
 

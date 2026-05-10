@@ -8,14 +8,14 @@
 
 - **Name:** PULSE — Performance & Unit Live Scoring Engine
 - **Core Value:** Kertas kerja digital + workflow asesmen real-time NKO untuk Kontrak Kinerja Unit di PLTU Tenayan, PT PLN Nusantara Power. Replaces Excel-based per-stream kertas kerja with structured, auditable, collaborative platform.
-- **Current Focus:** Bootstrap Fase 1 — Foundation (Master Data + Auth)
+- **Current Focus:** Bootstrap Phase 1 — Foundation (Master Data + Auth)
 - **Reference Doc:** Peraturan Direksi PT PLN Nusantara Power Nomor 0019.P/DIR/2025 (17 Juli 2025)
 
 ---
 
 ## Current Position
 
-- **Current Phase:** Fase 1 — Foundation (Master Data + Auth)
+- **Current Phase:** Phase 1 — Foundation (Master Data + Auth)
 - **Current Plan:** None (not yet planned — run `/gsd-plan-phase 1`)
 - **Status:** Not started
 - **Progress:** 0% — `[░░░░░░░░░░] 0/6 phases complete`
@@ -26,8 +26,8 @@
 
 - **Total v1 Requirements:** 50 (across 18 sections A–S)
 - **ADR-Locked Requirements:** 5 (REQ-pulse-branding, REQ-pulse-heartbeat-animation, REQ-ai-inline-help, REQ-ai-comparative-analysis, REQ-no-evidence-upload)
-- **Total Phases:** 6 (Fase 1 → Fase 6)
-- **MVP Boundary:** End of Fase 3 (per source §5)
+- **Total Phases:** 6 (Phase 1 → Phase 6)
+- **MVP Boundary:** End of Phase 3 (per source §5)
 - **Coverage:** 50/50 v1 requirements mapped ✓
 - **Plans Completed:** 0
 - **Plans Remaining:** TBD (created per phase via `/gsd-plan-phase`)
@@ -48,9 +48,9 @@ See `PROJECT.md` `<decisions status="LOCKED">` block for full text. Summary:
 - DEC-005: Comparative Analysis cross-periode added to MVP
 - DEC-006: New DB table `ai_inline_help`
 - DEC-007: New API endpoints for AI features 7 & 8
-- DEC-008: Fase 5 deliverables list (updated)
+- DEC-008: Phase 5 deliverables list (updated)
 - DEC-009: AI cost ~$3.15/month (updated)
-- DEC-010: Re-locked clarifications (no upload, JSONB ML, HCR Fase 6, dark theme, AI routing, tech stack)
+- DEC-010: Re-locked clarifications (no upload, JSONB ML, HCR Phase 6, dark theme, AI routing, tech stack)
 - DEC-011: Open items deferred (logo, SSL, OpenRouter key, integrations)
 
 ### Tech Stack (Locked)
@@ -83,8 +83,8 @@ None.
 ### Open Items (deferred — DEC-011, NOT locked)
 
 - Final logo (placeholder for now)
-- SSL certificate strategy (decide at deploy time, end of Fase 6)
-- OpenRouter API key provisioning (Budi handles directly before Fase 5)
+- SSL certificate strategy (decide at deploy time, end of Phase 6)
+- OpenRouter API key provisioning (Budi handles directly before Phase 5)
 - External integrations Navitas/SAP — Phase 2+
 
 ---
@@ -96,13 +96,13 @@ None.
 - **Activity:** Project bootstrap from intel synthesis — `gsd-roadmapper` produced PROJECT.md, REQUIREMENTS.md, ROADMAP.md, STATE.md from 12 classified planning docs (1 ADR + 7 SPEC + 4 DOC).
 - **Date:** 2026-05-11
 - **Outcome:** All four planning artifacts written. Ready for phase planning.
-- **Next:** Run `/gsd-plan-phase 1` to decompose Fase 1 — Foundation into executable plans.
+- **Next:** Run `/gsd-plan-phase 1` to decompose Phase 1 — Foundation into executable plans.
 
 ### Resume Pointer
 
 ```
 Run: /gsd-plan-phase 1
-Phase: Fase 1 — Foundation (Master Data + Auth)
+Phase: Phase 1 — Foundation (Master Data + Auth)
 Goal: User dapat login ke aplikasi PULSE dan menelusuri struktur master data Konkin 2026
       (perspektif → indikator → stream ML rubrik) di lingkungan Docker Compose yang sudah berjalan,
       dengan branding, design system, dan kebijakan no-evidence-upload sudah aktif sejak hari pertama.

@@ -59,11 +59,11 @@ Referensi: **Peraturan Direksi PT PLN Nusantara Power Nomor 0019.P/DIR/2025** (1
 - **statement:** Adopt **Pulse Heartbeat** as signature visual motion. LED indicators pulse 60–80 BPM equivalent saat sehat; faster saat alert. NKO Gauge ripple animation on snapshot update (300ms ease-out). Loading state = horizontal pulse wave (no generic spinner). CSS keyframe `pulse-heartbeat` defined.
 
 ### DEC-004 — AI Feature #7: Inline Help (Konteks Indikator) added to MVP
-- **scope:** AI feature set, MVP scope, Fase 5 deliverables
+- **scope:** AI feature set, MVP scope, Phase 5 deliverables
 - **statement:** Per-indikator AI Inline Help is MVP feature. Pre-computed and cached at indikator-creation time, regenerated on indikator structure change. Model: `google/gemini-2.5-flash`. Panel content: "Apa itu [indikator]?", Formula, Best practice industri, Indikator terkait, Kesalahan umum.
 
 ### DEC-005 — AI Feature #8: Comparative Analysis (Cross-Periode) added to MVP
-- **scope:** AI feature set, MVP scope, Fase 5 deliverables
+- **scope:** AI feature set, MVP scope, Phase 5 deliverables
 - **statement:** Cross-period comparative analysis ("Bandingkan dengan TW Lalu") is MVP feature. Backend pulls 2-period component data + 4-period historical trend, sends to LLM, caches result for 1 hour. Model: `google/gemini-2.5-flash`. Output: 3–5 sentence BI formal narrative, structured JSON.
 
 ### DEC-006 — New DB table `ai_inline_help`
@@ -77,9 +77,9 @@ Referensi: **Peraturan Direksi PT PLN Nusantara Power Nomor 0019.P/DIR/2025** (1
   - `POST /api/v1/ai/inline-help/{indikator_id}/regenerate` — admin: trigger regen.
   - `POST /api/v1/ai/comparative-analysis` — body `{indikator_id, period_a, period_b}`.
 
-### DEC-008 — Fase 5 deliverables (UPDATED)
+### DEC-008 — Phase 5 deliverables (UPDATED)
 - **scope:** roadmap
-- **statement:** Fase 5 deliverable list:
+- **statement:** Phase 5 deliverable list:
   - Setup OpenRouter client + routing
   - AI Suggestion Drawer component
   - Draft Justifikasi (PIC) — Gemini Flash
@@ -108,7 +108,7 @@ Referensi: **Peraturan Direksi PT PLN Nusantara Power Nomor 0019.P/DIR/2025** (1
 - **statement:** The following decisions are re-locked by this ADR:
   - **No evidence file upload.** Only external URL (`link_eviden`) recorded.
   - **Dynamic JSONB schema for maturity-level rubrics** (`ml_stream.structure JSONB`).
-  - **HCR deferred to Fase 6.** Schema reserved; full implementation only after other streams stable.
+  - **HCR deferred to Phase 6.** Schema reserved; full implementation only after other streams stable.
   - **UI: skeuomorphic dark theme (control-room digital).** Light theme variant only.
   - **AI routing: Gemini 2.5 Flash for routine + Claude Sonnet 4 for complex.** Via OpenRouter.
   - **Tech stack: FastAPI + React 18 + PostgreSQL 16 + Docker Compose.**
@@ -175,7 +175,7 @@ Kontrak Kinerja Unit (per tahun)
 - **Dark theme default**, skeuomorphic control-room aesthetic (CONSTR-design-philosophy).
 - **PII masking** before any LLM call (CONSTR-llm-pii-policy): block NIP, personal email, audit-in-progress data, exact vendor names.
 - **AI cost budget:** ~$3.15/month (DEC-009 / CONSTR-ai-cost-budget).
-- **HCR deferred to Fase 6** (DEC-010).
+- **HCR deferred to Phase 6** (DEC-010).
 
 ---
 

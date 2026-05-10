@@ -55,7 +55,7 @@
   - `ml_stream.structure JSONB` holds `{areas: [{code, name, sub_areas: [{code, name, uraian, criteria: {level_0..level_4}}]}]}`.
   - GIN index `idx_ml_stream_structure ON ml_stream USING GIN(structure)`.
   - Admin tree-editor UI at `/master/stream-ml/:id` supports nested edit.
-  - Streams supported in MVP seed: Outage Management, SMAP (others added per Fase 6 batches).
+  - Streams supported in MVP seed: Outage Management, SMAP (others added per Phase 6 batches).
 
 ### REQ-bidang-master
 - source: `03_DATA_MODEL.md` §3.1, §4 seed; `02_FUNCTIONAL_SPEC.md` §3
@@ -354,7 +354,7 @@
 
 ---
 
-## L. AI Assistant — Phase 2 (deferred from MVP, but in scope per Fase 5b sub-phase)
+## L. AI Assistant — Phase 2 (deferred from MVP, but in scope per Phase 5b sub-phase)
 
 ### REQ-ai-rag-chat
 - source: `07_AI_INTEGRATION.md` §3.5, §4; `03_DATA_MODEL.md` §3.9 (pedoman_chunk + pgvector); `04_API_SPEC.md` §11
@@ -560,58 +560,58 @@
 
 | Requirement | Phase | Status | ADR-Locked |
 |-------------|-------|--------|:----------:|
-| REQ-user-roles | Fase 1 | Pending | |
-| REQ-auth-jwt | Fase 1 | Pending | |
-| REQ-route-guards | Fase 1 | Pending | |
-| REQ-konkin-template-crud | Fase 1 | Pending | |
-| REQ-dynamic-ml-schema | Fase 1 | Pending | |
-| REQ-bidang-master | Fase 1 | Pending | |
-| REQ-frontend-stack | Fase 1 | Pending | |
-| REQ-backend-stack | Fase 1 | Pending | |
-| REQ-docker-compose-deploy | Fase 1 | Pending | |
-| REQ-nginx-config | Fase 1 | Pending | |
-| REQ-pulse-branding | Fase 1 | Pending | ✓ |
-| REQ-pulse-heartbeat-animation | Fase 1 | Pending | ✓ |
-| REQ-skeuomorphic-design-system | Fase 1 | Pending | |
-| REQ-health-checks | Fase 1 | Pending | |
-| REQ-no-evidence-upload | Fase 1 | Pending | ✓ |
-| REQ-backup-restore | Fase 1 | Pending | |
-| REQ-periode-lifecycle | Fase 2 | Pending | |
-| REQ-self-assessment-kpi-form | Fase 2 | Pending | |
-| REQ-self-assessment-ml-form | Fase 2 | Pending | |
-| REQ-auto-save | Fase 2 | Pending | |
-| REQ-pic-actions | Fase 2 | Pending | |
-| REQ-asesor-review | Fase 2 | Pending | |
-| REQ-recommendation-create | Fase 2 | Pending | |
-| REQ-recommendation-lifecycle | Fase 2 | Pending | |
-| REQ-notifications | Fase 2 | Pending | |
-| REQ-audit-log | Fase 2 | Pending | |
-| REQ-nko-calc-engine | Fase 3 | Pending | |
-| REQ-nko-aggregation-rules | Fase 3 | Pending | |
-| REQ-nko-realtime-ws | Fase 3 | Pending | |
-| REQ-dashboard-executive | Fase 3 | Pending | |
-| REQ-dashboard-heatmap | Fase 3 | Pending | |
-| REQ-dashboard-trend | Fase 3 | Pending | |
-| REQ-compliance-laporan-tracker | Fase 4 | Pending | |
-| REQ-compliance-komponen | Fase 4 | Pending | |
-| REQ-compliance-summary | Fase 4 | Pending | |
-| REQ-report-nko-semester | Fase 4 | Pending | |
-| REQ-report-assessment-sheet | Fase 4 | Pending | |
-| REQ-report-compliance-detail | Fase 4 | Pending | |
-| REQ-report-recommendation-tracker | Fase 4 | Pending | |
-| REQ-ai-draft-justification | Fase 5 | Pending | |
-| REQ-ai-draft-recommendation | Fase 5 | Pending | |
-| REQ-ai-anomaly-detection | Fase 5 | Pending | |
-| REQ-ai-inline-help | Fase 5 | Pending | ✓ |
-| REQ-ai-comparative-analysis | Fase 5 | Pending | ✓ |
-| REQ-ai-rate-limiting | Fase 5 | Pending | |
-| REQ-ai-pii-masking | Fase 5 | Pending | |
-| REQ-ai-fallback | Fase 5 | Pending | |
-| REQ-ai-audit-trail | Fase 5 | Pending | |
-| REQ-rate-limiting-general | Fase 5 | Pending | |
-| REQ-ai-rag-chat | Fase 5 | Pending | |
-| REQ-ai-summary-periode | Fase 5 | Pending | |
-| REQ-ai-action-plan-generator | Fase 5 | Pending | |
-| REQ-prod-checklist | Fase 6 | Pending | |
+| REQ-user-roles | Phase 1 | Pending | |
+| REQ-auth-jwt | Phase 1 | Pending | |
+| REQ-route-guards | Phase 1 | Pending | |
+| REQ-konkin-template-crud | Phase 1 | Pending | |
+| REQ-dynamic-ml-schema | Phase 1 | Pending | |
+| REQ-bidang-master | Phase 1 | Pending | |
+| REQ-frontend-stack | Phase 1 | Pending | |
+| REQ-backend-stack | Phase 1 | Pending | |
+| REQ-docker-compose-deploy | Phase 1 | Pending | |
+| REQ-nginx-config | Phase 1 | Pending | |
+| REQ-pulse-branding | Phase 1 | Pending | ✓ |
+| REQ-pulse-heartbeat-animation | Phase 1 | Pending | ✓ |
+| REQ-skeuomorphic-design-system | Phase 1 | Pending | |
+| REQ-health-checks | Phase 1 | Pending | |
+| REQ-no-evidence-upload | Phase 1 | Pending | ✓ |
+| REQ-backup-restore | Phase 1 | Pending | |
+| REQ-periode-lifecycle | Phase 2 | Pending | |
+| REQ-self-assessment-kpi-form | Phase 2 | Pending | |
+| REQ-self-assessment-ml-form | Phase 2 | Pending | |
+| REQ-auto-save | Phase 2 | Pending | |
+| REQ-pic-actions | Phase 2 | Pending | |
+| REQ-asesor-review | Phase 2 | Pending | |
+| REQ-recommendation-create | Phase 2 | Pending | |
+| REQ-recommendation-lifecycle | Phase 2 | Pending | |
+| REQ-notifications | Phase 2 | Pending | |
+| REQ-audit-log | Phase 2 | Pending | |
+| REQ-nko-calc-engine | Phase 3 | Pending | |
+| REQ-nko-aggregation-rules | Phase 3 | Pending | |
+| REQ-nko-realtime-ws | Phase 3 | Pending | |
+| REQ-dashboard-executive | Phase 3 | Pending | |
+| REQ-dashboard-heatmap | Phase 3 | Pending | |
+| REQ-dashboard-trend | Phase 3 | Pending | |
+| REQ-compliance-laporan-tracker | Phase 4 | Pending | |
+| REQ-compliance-komponen | Phase 4 | Pending | |
+| REQ-compliance-summary | Phase 4 | Pending | |
+| REQ-report-nko-semester | Phase 4 | Pending | |
+| REQ-report-assessment-sheet | Phase 4 | Pending | |
+| REQ-report-compliance-detail | Phase 4 | Pending | |
+| REQ-report-recommendation-tracker | Phase 4 | Pending | |
+| REQ-ai-draft-justification | Phase 5 | Pending | |
+| REQ-ai-draft-recommendation | Phase 5 | Pending | |
+| REQ-ai-anomaly-detection | Phase 5 | Pending | |
+| REQ-ai-inline-help | Phase 5 | Pending | ✓ |
+| REQ-ai-comparative-analysis | Phase 5 | Pending | ✓ |
+| REQ-ai-rate-limiting | Phase 5 | Pending | |
+| REQ-ai-pii-masking | Phase 5 | Pending | |
+| REQ-ai-fallback | Phase 5 | Pending | |
+| REQ-ai-audit-trail | Phase 5 | Pending | |
+| REQ-rate-limiting-general | Phase 5 | Pending | |
+| REQ-ai-rag-chat | Phase 5 | Pending | |
+| REQ-ai-summary-periode | Phase 5 | Pending | |
+| REQ-ai-action-plan-generator | Phase 5 | Pending | |
+| REQ-prod-checklist | Phase 6 | Pending | |
 
 **Coverage:** 50 / 50 requirements mapped (note: 53 rows above include REQ-ai-rag-chat, REQ-ai-summary-periode, REQ-ai-action-plan-generator from Section L which the synthesis count rolls into the 50-total via the §K cross-count footnote). All sections A–S accounted for.
