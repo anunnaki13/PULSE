@@ -36,7 +36,24 @@
   5. Tidak ada endpoint multipart untuk evidence file; `link_eviden` field hanya menerima URL; admin Excel-import endpoint adalah satu-satunya multipart endpoint.
   6. Daily backup cron at 02:00 sudah scheduled di VPS, restore script teruji manual sekali.
 
-**Plans**: TBD
+**Plans**: 7 plans across 5 waves (revised iteration 2 — see plan Revision History blocks)
+
+| Wave | Plans | Notes |
+|------|-------|-------|
+| 1 | 01-PLAN-01 | Repo scaffold + docker-verify checkpoint |
+| 2 | 01-PLAN-02, 01-PLAN-03, 01-PLAN-04 | Parallel: infra + backend skeleton + frontend skeleton. Plans 03/04 Task 1 is the **Wave 0 test bootstrap** (B-06): `pip install -e backend[dev]`, `pnpm install`, conftest, vitest globals types in tsconfig (B-05), test-runner smoke. |
+| 3 | 01-PLAN-05 | Auth backend (depends on 03). Six spec roles seeded (B-01/B-02). `users.bidang_id` NOT created here (B-04). Wires `metrics_admin_dep` to `require_role("super_admin","admin_unit")` (W-02). |
+| 4 | 01-PLAN-06 | Master data (depends on 03, 05). Sequential after 05 (W-04 Option A). 0003 migration adds master tables AND `users.bidang_id` + `fk_users_bidang_id` (B-04). Perspektif gets `is_pengurang` + `pengurang_cap` (W-07). `import-from-excel` adds `require_csrf` (B-07). |
+| 5 | 01-PLAN-07 | Integration (depends on 02, 04, 05, 06). Frontend Role union + ProtectedRoute use spec roles (B-01/B-02). Login + master screens consume the six skeuomorphic primitives via barrel (W-01/W-10). Seed sets perspektif VI as `is_pengurang=True` (W-07) and creates the admin user with role `admin_unit` (CONTEXT.md Auth). |
+
+- [ ] 01-PLAN-01-repo-scaffold-docker-verify.md — **Wave 1.** Monorepo scaffold, .env.example, Makefile + PowerShell fallback, README "About the Name" (mentions admin_unit role per CONTEXT.md Auth), Docker-installed verify checkpoint.
+- [ ] 01-PLAN-02-infra-compose-nginx-backup.md — **Wave 2.** 6-service Docker Compose (pgvector + Redis + backend + frontend + nginx + backup sidecar), Nginx with security headers + rate-limit zones; backup sidecar uses **dcron** (W-08); Task 2 verify runs `docker compose build pulse-backup` (B-06).
+- [ ] 01-PLAN-03-backend-skeleton-health.md — **Wave 2.** FastAPI app skeleton (pinned stack with `[dev]` extras); `/api/v1/health` plus admin-only `/api/v1/health/detail` and `/api/v1/metrics` (Prometheus text — W-02); Wave-0 test bootstrap with real `pytest --collect-only` smoke (B-06); router + model auto-discovery; `metrics_admin_dep` placeholder for Plan 05 to swap.
+- [ ] 01-PLAN-04-frontend-skeleton-design-system.md — **Wave 2.** React 18 + Vite + Tailwind v4 + motion 12; full DEC-003 token palette plus `--sk-led-glow` / `--sk-led-alert-glow`; **two** heartbeat keyframes (healthy / alert — B-03); reduced-motion gate; **six** primitives `SkLed`/`SkButton`/`SkPanel`/`SkInput`/`SkSelect`/`SkBadge` + barrel `@/components/skeuomorphic` (W-01/W-10); vitest globals + jest-dom in `tsconfig.app.json` (B-05); BI i18n lookup; real `pnpm install` + `vitest --passWithNoTests` smoke (B-06).
+- [ ] 01-PLAN-05-auth-backend-jwt-rbac.md — **Wave 3.** Users/roles models + Alembic 0002 seeding **six spec roles** (`super_admin`, `admin_unit`, `pic_bidang`, `asesor`, `manajer_unit`, `viewer` — B-01/B-02); JWT dual-mode (Bearer/cookie) with refresh-token jti rotation in Redis; `require_role` dep; CSRF double-submit; brute-force lockout; `users.bidang_id` is NOT created (B-04 — moves to Plan 06); wires `metrics_admin_dep` to `require_role("super_admin","admin_unit")` (W-02 closure).
+- [ ] 01-PLAN-06-master-data-backend.md — **Wave 4 (sequential).** Bidang / Konkin / Perspektif (with `is_pengurang` + `pengurang_cap` — W-07) / Indikator / MlStream / `konkin_import_log` models + Alembic 0003 (JSONB+GIN) **plus `users.bidang_id` column + `fk_users_bidang_id` FK (B-04)**; admin-gated CRUD via spec role names (`super_admin`, `admin_unit`); template lock filters bobot by `is_pengurang=False` (W-07); admin-only Excel import as the single multipart endpoint **with `require_csrf`** (B-07).
+- [ ] 01-PLAN-07-frontend-wire-seed-verify.md — **Wave 5.** Zustand auth store; `Role` TS union and `ProtectedRoute` use the six spec names (B-01/B-02); Login + master screens consume only skeuomorphic primitives via barrel (W-01/W-10); idempotent seed (bidang + Konkin 2026 with VI as pengurang per W-07 + Outage/SMAP/EAF/EFOR + **admin_unit** user per CONTEXT.md Auth); Phase-1 e2e verification checkpoint covering W-02/W-07/W-08/B-03/B-04/B-07 evidence steps.
+
 **UI hint**: yes
 
 ---
@@ -139,7 +156,7 @@
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation (Master Data + Auth) | 0/0 | Not started | - |
+| 1. Foundation (Master Data + Auth) | 0/7 | Planned | - |
 | 2. Assessment Workflow (PIC + Asesor) | 0/0 | Not started | - |
 | 3. NKO Calculator + Dashboard | 0/0 | Not started | - |
 | 4. Compliance Tracker + Reports | 0/0 | Not started | - |
