@@ -1,83 +1,147 @@
-# SISKONKIN — Sistem Monitoring Kontrak Kinerja Unit Pembangkit
+# PULSE — Performance & Unit Live Scoring Engine
 
-> **Sistem informasi monitoring & self-assessment Kontrak Kinerja PLTU Tenayan**
-> PT PLN Nusantara Power UP Tenayan — 2026
+> "Denyut Kinerja Pembangkit, Real-Time."
+
+**PULSE** adalah kertas kerja digital + workflow asesmen Kontrak Kinerja Unit (Konkin) untuk PLTU Tenayan, PT PLN Nusantara Power. Sistem ini menggantikan workflow Excel (kertas kerja per stream) dengan platform terstruktur, auditable, dan kolaboratif yang menghitung **NKO (Nilai Kinerja Organisasi) secara real-time** dan mengelola self-assessment, asesor review, rekomendasi, serta tindak lanjut compliance.
+
+Referensi: **Peraturan Direksi PT PLN Nusantara Power Nomor 0019.P/DIR/2025** (17 Juli 2025) tentang Pedoman Penilaian Kontrak Kinerja Unit; dirancang untuk Konkin 2026.
 
 ---
 
-## Tentang Proyek
+## Tentang Nama
 
-SISKONKIN adalah aplikasi internal untuk memantau, melakukan self-assessment, melakukan asesmen oleh asesor, dan mengelola tindak lanjut rekomendasi atas Kontrak Kinerja Unit (Konkin) PLTU Tenayan setiap triwulan. Sistem ini menggantikan workflow berbasis Excel (kertas kerja yang berbeda-beda per stream) dengan platform terstruktur yang konsisten, dapat ditelusuri, dan kolaboratif.
+Nama, akronim, tagline, dan riwayat rebrand (DEC-001) ke PULSE didokumentasikan lengkap di [`docs/ABOUT-THE-NAME.md`](docs/ABOUT-THE-NAME.md). Singkatnya: **P**erformance & **U**nit **L**ive **S**coring **E**ngine, dengan **Pulse Heartbeat** sebagai tanda tangan visual (LED berdenyut 60–80 BPM saat sehat).
 
-Sistem mengacu pada **Peraturan Direksi PT PLN Nusantara Power Nomor 0019.P/DIR/2025** tanggal 17 Juli 2025 tentang Pedoman Penilaian Kontrak Kinerja Unit, dan dirancang untuk mengakomodasi struktur Konkin 2026.
+---
 
-## Filosofi Desain
+## Quick Start
 
-1. **Bukan sistem manajemen evidence.** Sistem ini adalah kertas kerja digital + workflow asesmen, bukan document repository. Evidence tetap dikelola oleh PIC bidang masing-masing di sistem internal mereka.
-2. **Setiap stream punya rubrik unik.** Sistem dirancang dengan **dynamic schema per stream** — bukan one-size-fits-all form.
-3. **Self-assessment → Asesor → Feedback → Tindak Lanjut.** Alur ini diterapkan konsisten di semua indikator, baik KPI kuantitatif maupun Maturity Level.
-4. **Triwulan sebagai irama monitoring, semester sebagai irama formal.** Konkin formal dinilai per semester, tapi monitoring & koreksi arah dilakukan per triwulan.
-5. **AI sebagai asisten, bukan pengganti asesor.** LLM membantu menulis rekomendasi, mendeteksi anomali, dan mempercepat self-assessment — keputusan tetap di manusia.
-
-## Struktur Dokumen Blueprint
-
-Dokumen ini disusun dalam beberapa file. Baca berurutan untuk pemahaman utuh:
-
-| # | Dokumen | Isi |
-|---|---|---|
-| 1 | [`01_DOMAIN_MODEL.md`](docs/01_DOMAIN_MODEL.md) | Pemahaman bisnis: hierarki Konkin, jenis indikator, formula, polaritas, pemilik proses |
-| 2 | [`02_FUNCTIONAL_SPEC.md`](docs/02_FUNCTIONAL_SPEC.md) | Modul fungsional, user roles, alur kerja, fitur per modul |
-| 3 | [`03_DATA_MODEL.md`](docs/03_DATA_MODEL.md) | Database schema (PostgreSQL), relasi entitas, sample data |
-| 4 | [`04_API_SPEC.md`](docs/04_API_SPEC.md) | Endpoint REST API (FastAPI), request/response schema |
-| 5 | [`05_FRONTEND_ARCHITECTURE.md`](docs/05_FRONTEND_ARCHITECTURE.md) | Struktur React, routing, state management, komponen kunci |
-| 6 | [`06_DESIGN_SYSTEM_SKEUOMORPHIC.md`](docs/06_DESIGN_SYSTEM_SKEUOMORPHIC.md) | Design tokens, skeuomorphic visual language, komponen UI |
-| 7 | [`07_AI_INTEGRATION.md`](docs/07_AI_INTEGRATION.md) | Integrasi LLM (OpenRouter), use case AI, prompt patterns |
-| 8 | [`08_DEPLOYMENT.md`](docs/08_DEPLOYMENT.md) | Docker Compose, environment variables, Nginx, backup |
-| 9 | [`09_DEVELOPMENT_ROADMAP.md`](docs/09_DEVELOPMENT_ROADMAP.md) | Fase pengembangan MVP → Full, milestone, prioritas |
-| 10 | [`10_CLAUDE_CODE_INSTRUCTIONS.md`](docs/10_CLAUDE_CODE_INSTRUCTIONS.md) | Instruksi spesifik untuk Claude Code di VPS |
-
-## Tech Stack
-
-```
-Backend:    FastAPI (Python 3.11+) + SQLAlchemy 2.x + Alembic
-Database:   PostgreSQL 16
-Frontend:   React 18 + Vite + TypeScript + TanStack Query + Zustand
-Styling:    Tailwind CSS + custom skeuomorphic design tokens
-LLM:        OpenRouter (Gemini 2.5 Flash for routine, Claude Sonnet for complex)
-Container:  Docker Compose + Nginx reverse proxy
-Auth:       JWT + httpOnly cookies, role-based access
-Port:       3399 (production), 5173 (dev frontend), 8000 (dev backend)
-```
-
-## Identitas Visual
-
-Aplikasi mengadopsi gaya **Skeuomorphic / Neumorphic** dengan warna dasar PLN (biru gelap navy + kuning aksen) yang didekati sebagai material fisik: tombol seperti hardware, dial pengukur seperti instrumen kontrol pembangkit, kartu seperti panel logam. Ini bukan kebetulan — pembangkit listrik adalah dunia instrumen fisik, dan UI harus terasa seperti control room digital.
-
-Detail lengkap di [`06_DESIGN_SYSTEM_SKEUOMORPHIC.md`](docs/06_DESIGN_SYSTEM_SKEUOMORPHIC.md).
-
-## Quick Start (untuk developer / Claude Code)
+Prasyarat: Docker Desktop (atau Docker Engine) terpasang dan engine berjalan. Lihat [Verifikasi Docker](#verifikasi-docker) di bawah.
 
 ```bash
-# 1. Clone repo
-git clone <repo_url> siskonkin
-cd siskonkin
-
-# 2. Baca dokumen secara berurutan (1 → 10)
-# 3. Mulai dari MVP scope di docs/09_DEVELOPMENT_ROADMAP.md
-# 4. Setup environment
+# 1. Salin template environment dan isi secret-nya (JWT keys, POSTGRES_PASSWORD, dll.)
 cp .env.example .env
-docker compose up -d
 
-# 5. Migrasi database
-docker compose exec backend alembic upgrade head
-docker compose exec backend python -m app.scripts.seed_konkin_2026
+# 2. Naikkan seluruh stack (db, redis, backend, frontend, nginx, backup sidecar)
+make up
+# Windows tanpa make:
+./scripts/dev.ps1 up
+
+# 3. Jalankan migrasi + seed master data
+make migrate
+make seed
+
+# 4. Buka aplikasi
+#    http://localhost:3399
 ```
 
-## Catatan Penting
+Login pertama menggunakan kredensial `INITIAL_ADMIN_EMAIL` / `INITIAL_ADMIN_PASSWORD` dari `.env`. Akun ini dibuat seed dengan role **`admin_unit`** (lihat [Roles](#roles)) dan password **wajib** dirotasi setelah login pertama.
 
-- **Tidak ada upload file evidence.** Field `link_eviden` cukup berupa text/URL ke sistem eksternal (Google Drive, SharePoint, atau path internal unit).
-- **Setiap stream maturity level punya rubrik berbeda.** Schema database menggunakan pola JSONB untuk fleksibilitas, bukan tabel statis.
-- **HCR akan ditambahkan kemudian.** Schema dan modul sudah disiapkan ruangnya, implementasi penuh setelah MVP stream lain stabil.
+---
+
+## Stack
+
+Versi locked di `.planning/phases/01-foundation-master-data-auth/01-RESEARCH.md` Standard Stack.
+
+- **Frontend:** React 18 + Vite 7 + TypeScript 5.9; TanStack Query v5; Zustand; React Hook Form + Zod; React Router v6; Tailwind v4 + skeuomorphic tokens; Recharts/ECharts; Motion (framer-motion); Sonner.
+- **Backend:** FastAPI 0.136 di Python 3.11-slim; gunicorn 26 + UvicornWorker (4 worker); Pydantic v2; SQLAlchemy 2.0 async + asyncpg; Alembic 1.18; python-jose 3.5 (JWT); passlib + bcrypt 5.
+- **Database:** PostgreSQL 16 via `pgvector/pgvector:pg16`; ekstensi `uuid-ossp`, `pgcrypto`, `vector`. UUID PK + JSONB dynamic schema (GIN index).
+- **Cache:** Redis 7-alpine (256 MB, `allkeys-lru`).
+- **Reverse Proxy:** Nginx 1.30-alpine; publish hanya host port 3399.
+- **LLM (Phase 5+):** OpenRouter — `google/gemini-2.5-flash` (rutin) + `anthropic/claude-sonnet-4` (kompleks).
+- **Deploy:** Docker Compose, single VPS, domain `pulse.tenayan.local`.
+
+---
+
+## Developer Verbs
+
+Dua entrypoint, perilaku identik. `make` untuk Linux/macOS/Git Bash; `./scripts/dev.ps1` untuk PowerShell murni; `./scripts/dev.sh` sebagai bash fallback.
+
+| Verb     | Make            | PowerShell                          | Bash                                   | Deskripsi                                         |
+|----------|-----------------|-------------------------------------|----------------------------------------|---------------------------------------------------|
+| up       | `make up`       | `./scripts/dev.ps1 up`              | `./scripts/dev.sh up`                  | `docker compose up -d --wait` (semua service)     |
+| down     | `make down`     | `./scripts/dev.ps1 down`            | `./scripts/dev.sh down`                | Stop + hapus container                            |
+| build    | `make build`    | `./scripts/dev.ps1 build`           | `./scripts/dev.sh build`               | Build semua image                                 |
+| seed     | `make seed`     | `./scripts/dev.ps1 seed`            | `./scripts/dev.sh seed`                | `python -m app.seed` (bidang + Konkin 2026)       |
+| migrate  | `make migrate`  | `./scripts/dev.ps1 migrate`         | `./scripts/dev.sh migrate`             | `alembic upgrade head`                            |
+| test     | `make test`     | `./scripts/dev.ps1 test`            | `./scripts/dev.sh test`                | pytest backend + vitest frontend                  |
+| backup   | `make backup`   | `./scripts/dev.ps1 backup`          | `./scripts/dev.sh backup`              | Trigger `backup.sh` di sidecar `pulse-backup`     |
+| restore  | `make restore FILE=…` | `./scripts/dev.ps1 restore -File …` | `FILE=… ./scripts/dev.sh restore`   | Restore dari file backup `.sql.gz`                |
+| logs     | `make logs`     | `./scripts/dev.ps1 logs`            | `./scripts/dev.sh logs`                | `docker compose logs -f --tail=200`               |
+| lint     | `make lint`     | `./scripts/dev.ps1 lint`            | `./scripts/dev.sh lint`                | ruff (backend) + eslint (frontend)                |
+
+---
+
+## Verifikasi Docker
+
+Sebelum `make up` bisa berjalan, pastikan tiga perintah berikut sukses (terutama di Windows host):
+
+```powershell
+docker --version
+docker compose version
+docker info
+```
+
+Output yang diharapkan:
+- `docker --version` → `Docker version 24.x` atau lebih baru.
+- `docker compose version` → `Docker Compose version v2.x` atau lebih baru.
+- `docker info` → engine berjalan tanpa error "Cannot connect to the Docker daemon".
+
+Jika gagal: pasang Docker Desktop ([docker.com/products/docker-desktop](https://www.docker.com/products/docker-desktop/)), tunggu indikator engine hijau, buka ulang terminal, lalu jalankan ulang.
+
+---
+
+## Roles
+
+PULSE menyemai enam role (penamaan verbatim sesuai `REQ-user-roles` + `REQ-route-guards`):
+
+| Role            | Cakupan |
+|-----------------|---------|
+| `super_admin`   | Akses penuh ke seluruh modul + master data + konfigurasi sistem. |
+| `admin_unit`    | Admin di tingkat unit (PLTU Tenayan); pengelola Konkin template, master bidang, dan akun. |
+| `pic_bidang`    | PIC bidang; mengisi self-assessment indikator yang ter-assign ke `bidang_id`-nya. Akses `/master/*` ditolak (redirect ke `/dashboard`). |
+| `asesor`        | Reviewer; approve/override/return submission self-assessment dan menulis rekomendasi. |
+| `manajer_unit`  | Manajer Unit; melihat dashboard NKO + drill-down + trend. |
+| `viewer`        | Read-only; tidak bisa memutasikan apa pun. |
+
+ROADMAP.md success criterion #1 ("Admin dapat login…") merujuk ke pengguna dengan role **`admin_unit`**.
+
+---
+
+## Phase 1 Acceptance Criteria
+
+Disalin verbatim dari `.planning/ROADMAP.md` §"Phase 1: Foundation (Master Data + Auth)". Phase ini adalah *runnable shell* — login + navigasi master data + Docker Compose stack hijau.
+
+1. Admin dapat login via `pulse.tenayan.local:3399` dengan kredensial JWT, dan navigasi ke `/master/konkin-template/2026` menampilkan 6 perspektif + indikator yang ter-seed.
+2. PIC dapat login dan hanya melihat indikator yang di-assign ke `bidang_id`-nya (read-only view); akses ke `/master/*` ditolak dengan redirect ke `/dashboard`.
+3. Halaman login menampilkan branding **PULSE** dengan tagline "Denyut Kinerja Pembangkit, Real-Time." dan animasi Pulse Heartbeat (LED 60–80 BPM) — `grep` repo terhadap nama legacy pra-rebrand mengembalikan zero hits di luar `.planning/intel/classifications/` (lihat DEC-002 di [`docs/ABOUT-THE-NAME.md`](docs/ABOUT-THE-NAME.md) untuk daftar identifier yang diaudit).
+4. `make seed` populates bidang master + Konkin 2026 PLTU Tenayan struktur (perspektif + indikator + bobot, plus seed Outage + SMAP + EAF + EFOR rubrik) tanpa error; `GET /api/v1/health` returns 200.
+5. Tidak ada endpoint multipart untuk evidence file; `link_eviden` field hanya menerima URL; admin Excel-import endpoint adalah satu-satunya multipart endpoint.
+6. Daily backup cron at 02:00 sudah scheduled di VPS, restore script teruji manual sekali.
+
+---
+
+## Struktur Repo (target Phase 1)
+
+```
+PULSE/
+├── docker-compose.yml             # 6 service (db, redis, backend, frontend, nginx, backup)
+├── docker-compose.override.yml    # dev-only (volume mount, hot-reload)
+├── .env.example                   # template env, nol secret asli
+├── .env                           # gitignored
+├── Makefile                       # entrypoint DX (Git Bash / Linux / macOS)
+├── scripts/
+│   ├── dev.ps1                    # PowerShell fallback (Windows tanpa make)
+│   └── dev.sh                     # bash fallback
+├── backend/                       # FastAPI app + Alembic + tests
+├── frontend/                      # React 18 + Vite + TypeScript + tests
+├── nginx/                         # konfigurasi reverse proxy
+├── infra/backup/                  # backup sidecar (cron + pg_dump + rsync)
+├── docs/                          # ABOUT-THE-NAME.md + dokumentasi naratif
+└── .planning/                     # GSD planning artifacts (PHASE/PLAN/SUMMARY)
+```
+
+---
 
 ## Lisensi & Kerahasiaan
 

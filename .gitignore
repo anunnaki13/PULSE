@@ -1,0 +1,49 @@
+# PULSE — .gitignore
+# Secrets & local env
+.env
+.env.local
+.env.*.local
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+.coverage
+htmlcov/
+
+# Node / Frontend
+node_modules/
+dist/
+build/
+.vite/
+.vitest/
+coverage/
+.turbo/
+
+# Logs
+*.log
+logs/
+
+# Backups (local restores; production backups live under ${BACKUP_DIR})
+backups/
+*.sql
+*.sql.gz
+!backend/alembic/**/*.sql
+
+# Editor / IDE / OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Docker / runtime artifacts
+docker-compose.override.local.yml
+*.pid
