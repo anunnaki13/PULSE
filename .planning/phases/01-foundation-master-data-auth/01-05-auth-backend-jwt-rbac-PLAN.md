@@ -3,7 +3,7 @@ phase: 01-foundation-master-data-auth
 plan: 05
 type: execute
 wave: 3
-depends_on: [03]
+depends_on: [01-03]
 files_modified:
   - backend/app/models/user.py
   - backend/app/models/role.py

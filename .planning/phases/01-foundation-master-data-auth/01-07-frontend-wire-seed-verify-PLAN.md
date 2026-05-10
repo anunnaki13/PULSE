@@ -3,7 +3,7 @@ phase: 01-foundation-master-data-auth
 plan: 07
 type: execute
 wave: 5
-depends_on: [02, 04, 05, 06]
+depends_on: [01-02, 01-04, 01-05, 01-06]
 files_modified:
   - frontend/src/types/index.ts
   - frontend/src/lib/auth-store.ts

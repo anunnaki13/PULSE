@@ -3,7 +3,7 @@ phase: 01-foundation-master-data-auth
 plan: 06
 type: execute
 wave: 4
-depends_on: [03, 05]
+depends_on: [01-03, 01-05]
 files_modified:
   - backend/app/models/bidang.py
   - backend/app/models/konkin_template.py
