@@ -1,0 +1,40 @@
+{
+  "source_path": "C:/Users/ANUNNAKI/Projects/PULSE/07_AI_INTEGRATION.md",
+  "type": "SPEC",
+  "confidence": "high",
+  "manifest_override": true,
+  "title": "07 — AI Integration (LLM Strategy)",
+  "summary": "Technical specification for integrating LLMs into SISKONKIN via OpenRouter, covering model routing, RAG pipeline, prompt templates, backend architecture, privacy controls, and AI use cases.",
+  "scope": [
+    "LLM integration",
+    "OpenRouter provider",
+    "Gemini 2.5 Flash",
+    "Claude Sonnet 4",
+    "Model routing strategy",
+    "Draft justifikasi (PIC)",
+    "Draft rekomendasi (Asesor)",
+    "Anomaly detection (rule + LLM hybrid)",
+    "Smart summary periode",
+    "Chat RAG dengan Pedoman Konkin",
+    "Action plan generator SMART",
+    "RAG pipeline",
+    "pgvector retrieval",
+    "pedoman_chunk indexing",
+    "Embedding (text-embedding-3-small, voyage-2)",
+    "Backend AI services architecture",
+    "OpenRouter HTTP client wrapper",
+    "PII masking layer",
+    "ai_suggestion_log audit trail",
+    "AI Assist Drawer UX pattern",
+    "Cost estimation",
+    "Rate limiting",
+    "Fallback & graceful degradation",
+    "AI quality monitoring"
+  ],
+  "cross_refs": [
+    "08_DEPLOYMENT.md"
+  ],
+  "locked": false,
+  "precedence": null,
+  "notes": ""
+}

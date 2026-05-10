@@ -1,0 +1,33 @@
+{
+  "source_path": "C:/Users/ANUNNAKI/Projects/PULSE/01_DOMAIN_MODEL.md",
+  "type": "DOC",
+  "confidence": "high",
+  "manifest_override": true,
+  "title": "01 — Domain Model",
+  "summary": "Business domain model for SISKONKIN: Kontrak Kinerja hierarchy, perspectives/weights, KPI vs Maturity Level indicator types, and compliance rules for PT PLN Nusantara Power generating units.",
+  "scope": [
+    "Kontrak Kinerja (Konkin)",
+    "SISKONKIN system",
+    "PT PLN Nusantara Power",
+    "PLTU Tenayan",
+    "PLTU Tembilahan",
+    "NKO formula",
+    "Perspektif (5 Pilar BUMN + Compliance)",
+    "KPI Kuantitatif",
+    "Maturity Level (0-5)",
+    "Sub-indikator BPP, SDGs, HCR, OCR, SMAP",
+    "Stream maturity (Outage, Reliability, WPC, Operation, Efficiency, LCCM, DPP, SCM, etc.)",
+    "Compliance pengurang NKO",
+    "Periode assessment (triwulan/semester)",
+    "Pemilik proses (Bidang)",
+    "Glosarium singkatan domain"
+  ],
+  "cross_refs": [
+    "KONKIN_TENAYAN_2026.pdf",
+    "kertas_kerja_Kepatuhan_2026.xlsx",
+    "02_FUNCTIONAL_SPEC.md"
+  ],
+  "locked": false,
+  "precedence": null,
+  "notes": ""
+}

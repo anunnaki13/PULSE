@@ -1,0 +1,37 @@
+{
+  "source_path": "C:/Users/ANUNNAKI/Projects/PULSE/08_DEPLOYMENT.md",
+  "type": "SPEC",
+  "confidence": "high",
+  "manifest_override": true,
+  "title": "08 — Deployment (Docker Compose, Nginx, Backup)",
+  "summary": "Deployment specification for SISKONKIN on a VPS via Docker Compose with Nginx reverse proxy on port 3399, including backup, monitoring, and rollout procedures.",
+  "scope": [
+    "Docker Compose",
+    "Nginx reverse proxy",
+    "PostgreSQL 16 + pgvector",
+    "Redis 7",
+    "FastAPI backend",
+    "Frontend (Vite/Nginx)",
+    "WebSocket",
+    "OpenRouter API integration",
+    "Environment configuration (.env)",
+    "Backend Dockerfile (Python 3.11, gunicorn/uvicorn)",
+    "Frontend Dockerfile (Node 20, pnpm)",
+    "Backup strategy (pg_dump, cron, retention)",
+    "Restore procedure",
+    "Health checks",
+    "Logging and monitoring",
+    "VPS initial deployment steps",
+    "Rolling deploy procedure",
+    "Production checklist",
+    "Firewall (UFW)",
+    "Makefile shortcuts"
+  ],
+  "cross_refs": [
+    "05_FRONTEND_ARCHITECTURE.md",
+    "09_DEVELOPMENT_ROADMAP.md"
+  ],
+  "locked": false,
+  "precedence": null,
+  "notes": ""
+}

@@ -1,0 +1,31 @@
+{
+  "source_path": "C:/Users/ANUNNAKI/Projects/PULSE/09_DEVELOPMENT_ROADMAP.md",
+  "type": "DOC",
+  "confidence": "high",
+  "manifest_override": true,
+  "title": "09 — Development Roadmap",
+  "summary": "Phased development roadmap for SISKONKIN, breaking delivery into MVP, advanced features, AI integration, and full stream coverage with estimates and milestones.",
+  "scope": [
+    "SISKONKIN development phases",
+    "MVP scope",
+    "Foundation (master data + auth)",
+    "Assessment workflow (PIC + Asesor)",
+    "NKO Calculator + Dashboard",
+    "Compliance Tracker + Reports",
+    "AI Integration (OpenRouter, Gemini Flash, RAG)",
+    "Stream coverage (Outage, SMAP, Reliability, HCR, OCR)",
+    "Resource planning",
+    "Risk & mitigation",
+    "Definition of Done",
+    "Milestone demo targets"
+  ],
+  "cross_refs": [
+    "03_DATA_MODEL.md",
+    "01_DOMAIN_MODEL.md",
+    "kertas_kerja_Kepatuhan_2026.xlsx",
+    "10_CLAUDE_CODE_INSTRUCTIONS.md"
+  ],
+  "locked": false,
+  "precedence": null,
+  "notes": ""
+}

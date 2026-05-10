@@ -1,0 +1,38 @@
+{
+  "source_path": "C:/Users/ANUNNAKI/Projects/PULSE/06_DESIGN_SYSTEM_SKEUOMORPHIC.md",
+  "type": "SPEC",
+  "confidence": "high",
+  "manifest_override": true,
+  "title": "06 — Design System: Skeuomorphic Control Room",
+  "summary": "Skeuomorphic/neumorphic design system spec for SISKONKIN defining design tokens, component contracts, layout patterns, animations, and Tailwind mappings inspired by industrial control room instruments.",
+  "scope": [
+    "design tokens",
+    "color palette",
+    "typography",
+    "spacing and sizing",
+    "shadow system",
+    "transitions",
+    "SkPanel component",
+    "SkButton component",
+    "SkInput component",
+    "SkScreenLcd component",
+    "SkDial component",
+    "SkLed component",
+    "SkGauge component",
+    "SkSlider component",
+    "level color system",
+    "dashboard grid layout",
+    "sidebar navigation",
+    "light theme variant",
+    "animation patterns",
+    "iconography",
+    "responsiveness",
+    "Tailwind config mapping"
+  ],
+  "cross_refs": [
+    "07_AI_INTEGRATION.md"
+  ],
+  "locked": false,
+  "precedence": null,
+  "notes": ""
+}

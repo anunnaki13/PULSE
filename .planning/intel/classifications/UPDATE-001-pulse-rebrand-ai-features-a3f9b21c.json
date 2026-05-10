@@ -1,0 +1,42 @@
+{
+  "source_path": "C:/Users/ANUNNAKI/Projects/PULSE/UPDATE-001-pulse-rebrand-ai-features.md",
+  "type": "ADR",
+  "confidence": "high",
+  "manifest_override": true,
+  "title": "UPDATE-001 — Rebranding ke PULSE & Penambahan Fitur AI",
+  "summary": "SUPERSEDING patch ADR that rebrands SISKONKIN to PULSE, adds two AI MVP features (Inline Help, Comparative Analysis), and locks previously-open clarifications across docs 01-10.",
+  "scope": [
+    "project rebrand SISKONKIN to PULSE",
+    "naming, acronym, taglines",
+    "code/DB/container identifier renames (pulse-net, pulse-db, pulse-backend, pulse-frontend, pulse-redis, pulse-nginx)",
+    "domain rename pulse.tenayan.local",
+    "design system Pulse Heartbeat signature animation",
+    "AI Feature #7 Inline Help (per-indikator cached context)",
+    "AI Feature #8 Comparative Analysis (cross-periode narrative)",
+    "ai_inline_help database table",
+    "API endpoints /ai/inline-help and /ai/comparative-analysis",
+    "Fase 5 roadmap deliverables update",
+    "AI cost estimate update (~$3.15/month)",
+    "locked clarifications: no evidence upload, dynamic JSONB maturity schema, HCR deferred to Fase 6, skeuomorphic dark theme, Gemini Flash + Claude Sonnet routing, FastAPI+React 18+PostgreSQL 16+Docker Compose stack"
+  ],
+  "cross_refs": [
+    "README.md",
+    "CHANGELOG.md",
+    "docs/01_DOMAIN_MODEL.md",
+    "docs/02_FUNCTIONAL_SPEC.md",
+    "docs/03_DATA_MODEL.md",
+    "docs/04_API_SPEC.md",
+    "docs/05_FRONTEND_ARCHITECTURE.md",
+    "docs/06_DESIGN_SYSTEM_SKEUOMORPHIC.md",
+    "docs/07_AI_INTEGRATION.md",
+    "docs/08_DEPLOYMENT.md",
+    "docs/09_DEVELOPMENT_ROADMAP.md",
+    "docs/10_CLAUDE_CODE_INSTRUCTIONS.md",
+    ".env.example",
+    "docker-compose.yml",
+    "Makefile"
+  ],
+  "locked": true,
+  "precedence": 0,
+  "notes": "Manifest declared this as ADR with precedence=0 (highest, beats default ADR precedence). Status reads 'APPROVED' which is treated as Accepted -> locked=true. This document SUPERSEDES/AMENDS the existing 01-10 doc series rather than running parallel; downstream consumers must apply this patch on top of the base blueprint and prefer its decisions over any conflicting earlier statement."
+}

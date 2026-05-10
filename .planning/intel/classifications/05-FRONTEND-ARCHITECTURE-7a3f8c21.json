@@ -1,0 +1,31 @@
+{
+  "source_path": "C:/Users/ANUNNAKI/Projects/PULSE/05_FRONTEND_ARCHITECTURE.md",
+  "type": "SPEC",
+  "confidence": "high",
+  "manifest_override": true,
+  "title": "05 — Frontend Architecture",
+  "summary": "Technical specification for the SISKONKIN React frontend: tech stack, directory structure, routing map, state management, key components, performance patterns, accessibility, i18n, and build environment.",
+  "scope": [
+    "React 18 + Vite + TypeScript frontend",
+    "React Router v6 routing map",
+    "TanStack Query server state",
+    "Zustand client state",
+    "React Hook Form + Zod forms",
+    "Tailwind CSS skeuomorphic design tokens",
+    "Skeuomorphic UI primitives (SkButton, SkDial, SkPanel, SkGauge, etc.)",
+    "MaturityLevelTree / MaturityLevelSubAreaCard / LevelSelector components",
+    "NkoGauge dashboard component",
+    "AiAssistButton / AiSuggestionDrawer",
+    "Route guards and role-based access",
+    "Auto-save and optimistic updates",
+    "WebSocket real-time updates",
+    "Build and environment configuration"
+  ],
+  "cross_refs": [
+    "06_DESIGN_SYSTEM_SKEUOMORPHIC.md",
+    "08_DEPLOYMENT.md"
+  ],
+  "locked": false,
+  "precedence": null,
+  "notes": ""
+}

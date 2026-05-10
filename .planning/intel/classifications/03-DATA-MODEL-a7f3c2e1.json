@@ -1,0 +1,33 @@
+{
+  "source_path": "C:/Users/ANUNNAKI/Projects/PULSE/03_DATA_MODEL.md",
+  "type": "SPEC",
+  "confidence": "high",
+  "manifest_override": true,
+  "title": "03 - Data Model (PostgreSQL Schema)",
+  "summary": "PostgreSQL 16+ database schema for SISKONKIN with JSONB support, defining tables for users, Konkin templates, indicators, maturity levels, assessments, recommendations, compliance, and AI/RAG.",
+  "scope": [
+    "PostgreSQL schema",
+    "users and access control",
+    "bidang and roles",
+    "konkin_template",
+    "perspektif",
+    "indikator",
+    "ml_stream (maturity level)",
+    "periode",
+    "assessment_session",
+    "recommendation",
+    "compliance tracker",
+    "nko_snapshot",
+    "audit_log",
+    "AI conversation and RAG (pgvector)",
+    "notification",
+    "Alembic migrations",
+    "performance and indexing"
+  ],
+  "cross_refs": [
+    "04_API_SPEC.md"
+  ],
+  "locked": false,
+  "precedence": null,
+  "notes": ""
+}

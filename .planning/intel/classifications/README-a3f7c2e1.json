@@ -1,0 +1,36 @@
+{
+  "source_path": "C:/Users/ANUNNAKI/Projects/PULSE/README.md",
+  "type": "DOC",
+  "confidence": "high",
+  "manifest_override": true,
+  "title": "SISKONKIN — Sistem Monitoring Kontrak Kinerja Unit Pembangkit",
+  "summary": "Project overview and blueprint index for SISKONKIN, a quarterly performance contract monitoring and self-assessment system for PT PLN Nusantara Power UP Tenayan.",
+  "scope": [
+    "SISKONKIN application",
+    "Kontrak Kinerja Unit (Konkin)",
+    "PLTU Tenayan",
+    "PT PLN Nusantara Power UP Tenayan",
+    "self-assessment workflow",
+    "asesor workflow",
+    "tindak lanjut rekomendasi",
+    "blueprint document index",
+    "tech stack overview",
+    "skeuomorphic design philosophy",
+    "quick start guide"
+  ],
+  "cross_refs": [
+    "docs/01_DOMAIN_MODEL.md",
+    "docs/02_FUNCTIONAL_SPEC.md",
+    "docs/03_DATA_MODEL.md",
+    "docs/04_API_SPEC.md",
+    "docs/05_FRONTEND_ARCHITECTURE.md",
+    "docs/06_DESIGN_SYSTEM_SKEUOMORPHIC.md",
+    "docs/07_AI_INTEGRATION.md",
+    "docs/08_DEPLOYMENT.md",
+    "docs/09_DEVELOPMENT_ROADMAP.md",
+    "docs/10_CLAUDE_CODE_INSTRUCTIONS.md"
+  ],
+  "locked": false,
+  "precedence": null,
+  "notes": ""
+}

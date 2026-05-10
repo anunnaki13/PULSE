@@ -1,0 +1,32 @@
+{
+  "source_path": "C:/Users/ANUNNAKI/Projects/PULSE/04_API_SPEC.md",
+  "type": "SPEC",
+  "confidence": "high",
+  "manifest_override": true,
+  "title": "04 — API Specification (FastAPI)",
+  "summary": "REST API contract for SISKONKIN built on FastAPI under /api/v1, covering auth, master data, assessment sessions, NKO dashboards, AI assistant, and WebSocket endpoints.",
+  "scope": [
+    "FastAPI REST API",
+    "JWT authentication",
+    "Konkin templates and indikator structure",
+    "Periode lifecycle",
+    "Assessment sessions (self-assessment and asesor review)",
+    "Recommendations and tindak lanjut",
+    "Compliance tracker",
+    "NKO snapshots and executive dashboard",
+    "Reports and exports",
+    "AI assistant endpoints",
+    "Notifications",
+    "Audit log",
+    "Health and metrics",
+    "WebSocket real-time updates",
+    "Rate limiting and security",
+    "OpenAPI/Swagger"
+  ],
+  "cross_refs": [
+    "05_FRONTEND_ARCHITECTURE.md"
+  ],
+  "locked": false,
+  "precedence": null,
+  "notes": ""
+}

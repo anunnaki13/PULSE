@@ -1,0 +1,39 @@
+{
+  "source_path": "C:/Users/ANUNNAKI/Projects/PULSE/10_CLAUDE_CODE_INSTRUCTIONS.md",
+  "type": "DOC",
+  "confidence": "high",
+  "manifest_override": true,
+  "title": "10 — Instruksi untuk Claude Code (di VPS)",
+  "summary": "Onboarding and operating instructions directing Claude Code on a VPS to read SISKONKIN blueprints, scaffold the repo, follow coding rules, and ship MVP for PT PLN Nusantara Power.",
+  "scope": [
+    "SISKONKIN",
+    "Claude Code onboarding",
+    "VPS environment",
+    "repo scaffolding (backend, frontend, nginx, infra)",
+    "development roadmap phases",
+    "coding standards (Python, TypeScript, database, git)",
+    "MVP definition",
+    "operational rules (do/don't lists)",
+    "PT PLN Nusantara Power PLTU Tenayan context"
+  ],
+  "cross_refs": [
+    "README.md",
+    "docs/01_DOMAIN_MODEL.md",
+    "docs/02_FUNCTIONAL_SPEC.md",
+    "docs/03_DATA_MODEL.md",
+    "docs/04_API_SPEC.md",
+    "docs/05_FRONTEND_ARCHITECTURE.md",
+    "docs/06_DESIGN_SYSTEM_SKEUOMORPHIC.md",
+    "docs/07_AI_INTEGRATION.md",
+    "docs/08_DEPLOYMENT.md",
+    "docs/09_DEVELOPMENT_ROADMAP.md",
+    "CHANGELOG.md",
+    "app/scripts/seed_konkin_2026.py",
+    "tailwind.config.ts",
+    "src/styles/skeuomorphic.css",
+    "kertas_kerja_Kepatuhan_2026.xlsx"
+  ],
+  "locked": false,
+  "precedence": null,
+  "notes": ""
+}

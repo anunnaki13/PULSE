@@ -1,0 +1,34 @@
+{
+  "source_path": "C:/Users/ANUNNAKI/Projects/PULSE/02_FUNCTIONAL_SPEC.md",
+  "type": "SPEC",
+  "confidence": "high",
+  "manifest_override": true,
+  "title": "02 — Functional Specification",
+  "summary": "Functional specification of SISKONKIN modules, user roles, workflows, forms, and end-to-end quarterly assessment process for PT PLN Nusantara Power.",
+  "scope": [
+    "User Roles",
+    "Master Data Module",
+    "Periode Management",
+    "Self-Assessment Workspace",
+    "Asesor Workspace",
+    "Recommendation & Action Tracker",
+    "NKO Calculator & Aggregator",
+    "Dashboard & Analytics",
+    "Compliance Tracker",
+    "Reports & Export",
+    "AI Assistant",
+    "Audit Log",
+    "Quarterly Workflow",
+    "Maturity Level JSONB Schema",
+    "KPI Forms",
+    "Indikator-Bidang Mapping"
+  ],
+  "cross_refs": [
+    "07_AI_INTEGRATION.md",
+    "03_DATA_MODEL.md",
+    "08_Draft_NKO_UP_Tenayan_SMT_2_2025"
+  ],
+  "locked": false,
+  "precedence": null,
+  "notes": ""
+}
