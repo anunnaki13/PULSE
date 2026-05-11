@@ -1,0 +1,9 @@
+# Frontend build / typecheck artifacts (per-folder; root .gitignore handles node_modules + dist/)
+*.tsbuildinfo
+.vite/
+.vitest/
+coverage/
+*.local
+
+# Vite production build (also covered by root .gitignore "dist/" but kept here for clarity)
+dist/

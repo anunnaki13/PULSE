@@ -1,0 +1,71 @@
+/* PULSE signature animation — DEC-003 "Pulse Heartbeat"
+   Two distinct keyframes per B-03 fix:
+     - pulse-heartbeat-healthy : yellow glow, 70 BPM cycle (≈ 0.857s)
+     - pulse-heartbeat-alert   : red glow,    120 BPM cycle (= 0.5s)
+   Per-state --sk-led-glow custom property guarantees the computed
+   glow color for [data-state="alert"] differs from [data-state="on"]. */
+
+/* Healthy heartbeat — yellow (PLN). 70 BPM ≈ 0.857s cycle. */
+@keyframes pulse-heartbeat-healthy {
+  0%, 60%, 100% {
+    transform: scale(1);
+    opacity: 1;
+    box-shadow: 0 0 8px var(--sk-pln-yellow-glow);
+  }
+  30% {
+    transform: scale(1.15);
+    opacity: 0.85;
+    box-shadow: 0 0 16px var(--sk-pln-yellow-glow);
+  }
+}
+
+/* Alert heartbeat — red glow, faster (~120 BPM ≈ 0.5s). The glow color
+   MUST differ from the healthy keyframe's glow (B-03 contract). */
+@keyframes pulse-heartbeat-alert {
+  0%, 60%, 100% {
+    transform: scale(1);
+    opacity: 1;
+    box-shadow: 0 0 8px var(--sk-led-alert-glow);
+  }
+  30% {
+    transform: scale(1.18);
+    opacity: 0.85;
+    box-shadow: 0 0 18px var(--sk-led-alert-glow);
+  }
+}
+
+.sk-led {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--sk-pln-yellow);
+  transform-origin: center;
+  will-change: transform, opacity, box-shadow;
+}
+
+/* Per-state glow custom property — read by SkLed.test.tsx via getComputedStyle.
+   Each state declares a distinct --sk-led-glow so the B-03 contract holds. */
+.sk-led[data-state="off"] {
+  background: var(--sk-text-lo);
+  box-shadow: none;
+  --sk-led-glow: transparent;
+}
+.sk-led[data-state="on"] {
+  animation: pulse-heartbeat-healthy 0.857s ease-in-out infinite;
+  --sk-led-glow: var(--sk-pln-yellow-glow);
+}
+.sk-led[data-state="alert"] {
+  background: var(--sk-level-0);
+  animation: pulse-heartbeat-alert 0.5s ease-in-out infinite;
+  --sk-led-glow: var(--sk-led-alert-glow);
+}
+
+/* Reduced motion gate — disable both keyframes when the user opts out.
+   MotionConfig reducedMotion="user" in App.tsx covers framer-motion siblings. */
+@media (prefers-reduced-motion: reduce) {
+  .sk-led[data-state="on"],
+  .sk-led[data-state="alert"] {
+    animation: none;
+  }
+}
