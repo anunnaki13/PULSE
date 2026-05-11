@@ -34,6 +34,8 @@ const id = {
     konkin: "Template Konkin 2026",
     bidang: "Master Bidang",
     stream: "Maturity Level Stream",
+    pengurang: "Pengurang",
+    penambah: "Penambah",
   },
   common: {
     loading: "Memuat…",
