@@ -10,7 +10,7 @@
 
 ## Phases
 
-- [ ] **Phase 1: Foundation (Master Data + Auth)** — App boots, login works, master data Konkin 2026 ter-seed, struktur stream bisa dibrowse, docker compose + nginx stack online di port 3399, design-system primitives dipakai.
+- [x] **Phase 1: Foundation (Master Data + Auth)** — App boots, login works, master data Konkin 2026 ter-seed, struktur stream bisa dibrowse, docker compose + nginx stack online di port 3399, design-system primitives dipakai. *Closed 2026-05-11 — operator-verified E2E.*
 - [ ] **Phase 2: Assessment Workflow (PIC + Asesor)** — End-to-end self-assessment + asesor review + rekomendasi tracker untuk indikator pilot (Outage + SMAP + EAF + EFOR), notifications + audit log live.
 - [ ] **Phase 3: NKO Calculator + Dashboard** — NKO terhitung otomatis multi-tier, dashboard eksekutif + heatmap + trend live via WebSocket. Akhir fase ini = MVP USABLE.
 - [ ] **Phase 4: Compliance Tracker + Reports** — 9 laporan rutin + komponen lain ter-track, pengurang terintegrasi ke NKO, export PDF/Excel/Word resmi.
@@ -52,7 +52,7 @@
 - [x] 01-04-frontend-skeleton-design-system-PLAN.md — **Wave 2.** React 18 + Vite + Tailwind v4 + motion 12; full DEC-003 token palette plus `--sk-led-glow` / `--sk-led-alert-glow`; **two** heartbeat keyframes (healthy / alert — B-03); reduced-motion gate; **six** primitives `SkLed`/`SkButton`/`SkPanel`/`SkInput`/`SkSelect`/`SkBadge` + barrel `@/components/skeuomorphic` (W-01/W-10); vitest globals + jest-dom in `tsconfig.app.json` (B-05); BI i18n lookup; real `pnpm install` + `vitest --passWithNoTests` smoke (B-06). *Status (2026-05-11):* Complete. 31/31 tests pass. SUMMARY: `01-04-frontend-skeleton-design-system-SUMMARY.md`.
 - [x] 01-05-auth-backend-jwt-rbac-PLAN.md — **Wave 3.** Users/roles models + Alembic 0002 seeding **six spec roles** (`super_admin`, `admin_unit`, `pic_bidang`, `asesor`, `manajer_unit`, `viewer` — B-01/B-02); JWT dual-mode (Bearer/cookie) with refresh-token jti rotation in Redis; `require_role` dep; CSRF double-submit; brute-force lockout; `users.bidang_id` is NOT created (B-04 — moves to Plan 06); wires `metrics_admin_dep` to `require_role("super_admin","admin_unit")` (W-02 closure). *Status (2026-05-11):* Complete. 22/22 backend tests pass. SUMMARY: `01-05-auth-backend-jwt-rbac-SUMMARY.md`.
 - [x] 01-06-master-data-backend-PLAN.md — **Wave 4 (sequential).** Bidang / Konkin / Perspektif (with `is_pengurang` + `pengurang_cap` — W-07) / Indikator / MlStream / `konkin_import_log` models + Alembic 0003 (JSONB+GIN) **plus `users.bidang_id` column + `fk_users_bidang_id` FK (B-04)**; admin-gated CRUD via spec role names (`super_admin`, `admin_unit`); template lock filters bobot by `is_pengurang=False` (W-07); admin-only Excel import as the single multipart endpoint **with `require_csrf`** (B-07). *Status (2026-05-11):* Complete in 14m18s. B-04 / W-07 / B-07 / B-01-B-02 all closed. SUMMARY: `01-06-master-data-backend-SUMMARY.md`.
-- [ ] 01-07-frontend-wire-seed-verify-PLAN.md — **Wave 5.** Zustand auth store; `Role` TS union and `ProtectedRoute` use the six spec names (B-01/B-02); Login + master screens consume only skeuomorphic primitives via barrel (W-01/W-10); idempotent seed (bidang + Konkin 2026 with VI as pengurang per W-07 + Outage/SMAP/EAF/EFOR + **admin_unit** user per CONTEXT.md Auth); Phase-1 e2e verification checkpoint covering W-02/W-07/W-08/B-03/B-04/B-07 evidence steps.
+- [x] 01-07-frontend-wire-seed-verify-PLAN.md — **Wave 5.** Zustand auth store; `Role` TS union and `ProtectedRoute` use the six spec names (B-01/B-02); Login + master screens consume only skeuomorphic primitives via barrel (W-01/W-10); idempotent seed (bidang + Konkin 2026 with VI as pengurang per W-07 + Outage/SMAP/EAF/EFOR + **admin_unit** user per CONTEXT.md Auth); Phase-1 e2e verification checkpoint covering W-02/W-07/W-08/B-03/B-04/B-07 evidence steps. *Status (2026-05-11):* Complete. Automation + operator browser walk PASS (admin login, 6 perspektif + 26 bidang + ml_stream tree, PIC/manajer redirect from /master/*). 44/44 vitest. SUMMARY: `01-07-frontend-wire-seed-verify-SUMMARY.md`.
 
 **UI hint**: yes
 
@@ -156,7 +156,7 @@
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation (Master Data + Auth) | 6/7 | In progress | - |
+| 1. Foundation (Master Data + Auth) | 7/7 | **Complete** | 2026-05-11 |
 | 2. Assessment Workflow (PIC + Asesor) | 0/0 | Not started | - |
 | 3. NKO Calculator + Dashboard | 0/0 | Not started | - |
 | 4. Compliance Tracker + Reports | 0/0 | Not started | - |

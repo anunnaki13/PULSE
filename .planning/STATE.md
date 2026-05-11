@@ -2,17 +2,17 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-current_phase: 01
-current_plan: 7
-status: executing
-last_updated: "2026-05-11T13:00:00.000Z"
+current_phase: 02
+current_plan: 0
+status: phase-complete
+last_updated: "2026-05-11T15:30:00.000Z"
 progress:
   total_phases: 6
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 7
-  completed_plans: 6
+  completed_plans: 7
   in_progress_plans: 0
-  percent: 14
+  percent: 17
 ---
 
 # STATE — PULSE
@@ -32,13 +32,13 @@ progress:
 
 ## Current Position
 
-Phase: 01 (foundation-master-data-auth) — EXECUTING
-Plan: 7 of 7 (Wave 5 — 01-07 frontend wire + seed + E2E verify, depends_on=01-02+01-04+01-05+01-06, has human-action checkpoint)
+Phase: 01 (foundation-master-data-auth) — **COMPLETE** ✓
+Phase: 02 (assessment-workflow) — pending discuss/plan/execute
 
-- **Current Phase:** 01
-- **Current Plan:** 7 (Wave 5 dispatch — 01-07 frontend wire + idempotent seed + Phase-1 E2E verification)
-- **Status:** Executing Phase 01 — Waves 1/2/3/4 complete (6/7 plans). Wave 4: 01-06 master-data (commits `59163a6` / `e5a7bf8` / `09ce3bf` / `525499c`) — 5 master tables + konkin_import_log + Alembic 0003 chained on 0002. All four spec-validator codes closed in this plan: B-04 (users.bidang_id FK), W-07 (perspektif.is_pengurang + pengurang_cap), B-07 (Excel import CSRF + admin), B-01/B-02 (spec role names). OpenAPI surface confirms exactly ONE multipart endpoint.
-- **Progress:** 14% — `[██████░░░░] 6/7 plans complete (Phase 01)`
+- **Current Phase:** 02 (Assessment Workflow — PIC self-assessment + Asesor review + rekomendasi tracker)
+- **Current Plan:** none (Phase 02 not yet planned — needs `/gsd-discuss-phase 2` then `/gsd-plan-phase 2`)
+- **Status:** Phase 01 closed 2026-05-11. All 7 plans complete; operator verified Phase-1 E2E walk-through in browser (Login + heartbeat + admin master-data + PIC/manajer redirect — all PASS).
+- **Progress:** 17% — `[█████████░░░░░░] 1/6 phases complete (Phase 01 of 6)` · `MVP boundary` = end of Phase 03 → 1/3 of MVP done
 
 ---
 
@@ -49,9 +49,9 @@ Plan: 7 of 7 (Wave 5 — 01-07 frontend wire + seed + E2E verify, depends_on=01-
 - **Total Phases:** 6 (Phase 1 → Phase 6)
 - **MVP Boundary:** End of Phase 3 (per source §5)
 - **Coverage:** 50/50 v1 requirements mapped ✓
-- **Plans Completed:** 6 (01-01, 01-02, 01-03, 01-04, 01-05, 01-06)
+- **Plans Completed:** 7 of 7 in Phase 1 (all closed 2026-05-11)
 - **Plans In Progress:** 0
-- **Plans Remaining:** 1 of 7 in Phase 1 (01-07 frontend wire+seed+verify → Wave 5, autonomous=false, ends Phase 1 at the E2E browser-verification checkpoint)
+- **Plans Remaining (Phase 2+):** Phase 2 (Assessment Workflow) → Phase 3 (NKO Calculator + Dashboard — MVP boundary) → Phase 4 (Compliance + Reports) → Phase 5 (AI Integration) → Phase 6 (Stream Coverage Lengkap + HCR + Go-Live)
 - **Locked Decisions:** 11 (DEC-001 → DEC-011, all from ADR UPDATE-001, precedence=0)
 
 ---
@@ -99,7 +99,7 @@ None yet — created during phase planning.
 
 ### Blockers
 
-- None. Docker host gate cleared 2026-05-11 via WSL2 alternative (`docker-ce 29.4.3` + `docker-compose-plugin v5.1.3` inside `Ubuntu-22.04` distro, user `zzz` in docker group, daemon auto-starts via systemd). Wave 2+ plans invoke docker via `wsl -d Ubuntu-22.04 -- docker …` from PowerShell, or `cd /mnt/c/Users/ANUNNAKI/projects/PULSE` inside WSL.
+- None. Phase 1 fully verified end-to-end (automation + operator browser walk). Toolchain decision recorded: all dev tooling lives inside `Ubuntu-22.04` WSL2 distro (docker-ce 29.4.3 + compose v5.1.3, python 3.11.15, node 20.20.2 + pnpm 10.15.0). Invoke from PowerShell via `wsl -d Ubuntu-22.04 -- <tool> …`. Idle-VM suspends port forwarding — for live browser sessions, keep a heartbeat task in WSL or set `vmIdleTimeout=-1` in `~/.wslconfig`.
 
 ### Open Items (deferred — DEC-011, NOT locked)
 
@@ -114,26 +114,30 @@ None yet — created during phase planning.
 
 ### Last Session
 
-- **Activity:** Waves 1+2 fully executed and merged. Wave 1: Plan 01-01 closed via WSL2 alternative (Docker Desktop install abandoned after `PendingFileRenameOperations` blockage; switched to `docker-ce` inside `Ubuntu-22.04` WSL2). Wave 2 (parallel, isolation=worktree): 01-02 infra (16 files, 5 commits — 6-service compose + Nginx with security headers + dcron backup sidecar; `docker compose config` + `nginx -t` + `docker compose build pulse-backup` all pass), 01-03 backend skeleton (28 files, 4 commits — FastAPI + Alembic + auto-discovery routers/models + /health family + Wave-0 pytest bootstrap; 7/7 tests pass), 01-04 frontend skeleton (29 files, 4 commits — React 18 + Vite + Tailwind v4 + 6 skeuomorphic primitives + DEC-003 tokens + dual heartbeat keyframes + BI i18n; 31/31 vitest tests pass). All toolchain calls routed through `wsl -d Ubuntu-22.04 -- …`.
+- **Activity:** Phase 1 (Foundation: Master Data + Auth) completed end-to-end in a single long session (2026-05-11). All 5 waves executed: Wave 1 (01-01 scaffold) → Wave 2 (01-02 infra / 01-03 backend skeleton / 01-04 frontend skeleton — parallel worktree) → Wave 3 (01-05 auth) → Wave 4 (01-06 master-data) → Wave 5 (01-07 frontend wire + seed + E2E). Toolchain pivoted from Docker Desktop to WSL2 native (docker-ce + python 3.11 + node 20 + pnpm 10) after Windows installers blocked by `PendingFileRenameOperations`. Operator verified Phase-1 E2E in browser at http://localhost:3399 (admin login + master/* nav + PIC/manajer redirect — all PASS).
 - **Date:** 2026-05-11
-- **Outcome:** 4/7 Phase-1 plans complete. Three worktree merges + cleanup complete (74 files added, 0 deletions). Worktree branches deleted, `.claude/` added to .gitignore.
-- **Next:** Wave 3 — Plan 01-05 (auth backend, JWT dual-mode + 6 spec roles + CSRF + brute-force lockout + W-02 metrics_admin_dep wiring). Sequential after Wave 2 (depends_on=01-03 satisfied).
+- **Outcome:** Phase 1 [x] — 7/7 plans complete, all spec-validator codes closed (B-01/B-02 spec role names, B-03 dual heartbeat keyframes, B-04 users.bidang_id FK in 0003, B-05 vitest globals in tsconfig, B-06 real test runs in verifies, B-07 Excel import CSRF, W-01 SK primitive barrel, W-02 metrics_admin require_role wiring, W-04 sequential master-data wave, W-07 perspektif.is_pengurang, W-08 dcron, W-10 barrel imports). Backup/restore drill executed. `grep -ri siskonkin` on source files = zero hits.
+- **Next:** Phase 02 (Assessment Workflow — PIC self-assessment + Asesor review + rekomendasi tracker + notifications + audit log). Run `/gsd-discuss-phase 2` to gather context, then `/gsd-plan-phase 2`, then `/gsd-execute-phase 2`.
 
 ### Resume Pointer
 
 ```
-Status: Wave 2 merged. Ready to dispatch Wave 3 (Plan 01-05 — auth backend).
+Status: Phase 01 closed. Ready for Phase 02 kickoff.
 
-Plan 01-05 (auth-backend-jwt-rbac):
-  - Depends on 01-03 (✓ merged)
-  - Sequential, autonomous, isolation=worktree
-  - Creates: backend/app/{models,schemas,deps,services,routers}/auth + 0002_auth_users_roles migration + 3 test files
-  - Seeds SIX spec roles: super_admin, admin_unit, pic_bidang, asesor, manajer_unit, viewer
-  - Wires placeholder metrics_admin_dep → require_role("super_admin","admin_unit") (W-02 closure)
-  - Tests run via `wsl -d Ubuntu-22.04 -- python3.11 -m pytest backend/tests/`
+Phase 02 (Assessment Workflow — see ROADMAP.md):
+  - Depends on Phase 01 (✓ complete)
+  - Requirements (10): REQ-periode-lifecycle, REQ-self-assessment-kpi-form,
+    REQ-self-assessment-ml-form, REQ-auto-save, REQ-pic-actions,
+    REQ-asesor-review, REQ-recommendation-create,
+    REQ-recommendation-lifecycle, REQ-notifications, REQ-audit-log
+  - Plans: TBD (run /gsd-plan-phase 2)
+  - UI hint: yes (skeuomorphic forms + LevelSelector dial + auto-save indicator)
+  - Pilot indicators: Outage + SMAP + EAF + EFOR (already seeded by Plan 01-07)
 
-After 01-05: Wave 4 (Plan 01-06 master-data, sequential, depends_on=01-03+01-05)
-                → Wave 5 (Plan 01-07 frontend wire+seed+verify, depends_on=01-02+01-04+01-05+01-06).
+To resume the running stack later (operator-driven dev):
+  cd /mnt/c/Users/ANUNNAKI/projects/PULSE
+  wsl -d Ubuntu-22.04 -- docker compose up -d --wait
+  # Open http://localhost:3399
 ```
 
 ### Key File Pointers
