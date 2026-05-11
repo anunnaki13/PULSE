@@ -41,6 +41,13 @@ pulse-seed = "app.seed.__main__:main"  # wired in Plan 07; declared here for sta
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
+# Use a single session-scoped event loop so the async SQLAlchemy engine
+# (lazy-imported in conftest.db_session) stays bound to one loop across all
+# tests. With function-scoped loops the engine's connection pool tries to
+# re-use connections across closed loops and explodes with
+# "Event loop is closed". Set both default loop scope and fixture loop scope.
+asyncio_default_fixture_loop_scope = "session"
+asyncio_default_test_loop_scope = "session"
 testpaths = ["tests"]
 pythonpath = ["."]
 addopts = "-q --strict-markers"
