@@ -17,14 +17,20 @@ from __future__ import annotations
 
 from uuid import UUID
 
-from pydantic import BaseModel, ConfigDict, EmailStr, model_validator
+from pydantic import BaseModel, ConfigDict, model_validator
+
+# We deliberately use `str` (not pydantic EmailStr) on response models because
+# email-validator rejects RFC 6762 special-use TLDs like `.local` — which is
+# exactly the production hostname scheme for this deployment
+# (CONTEXT.md: INITIAL_ADMIN_EMAIL=admin@pulse.local). Inbound requests still
+# get cheap shape validation via LoginRequest._email_shape below.
 
 
 class UserPublic(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
     id: UUID
-    email: EmailStr
+    email: str
     full_name: str
     is_active: bool
     bidang_id: UUID | None = None

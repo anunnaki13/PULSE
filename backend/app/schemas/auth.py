@@ -11,14 +11,33 @@ form-encoded body for OpenAPI / Swagger-UI compatibility (per the plan's
 
 from __future__ import annotations
 
-from pydantic import BaseModel, EmailStr, Field
+import re
+
+from pydantic import BaseModel, Field, field_validator
 
 from app.schemas.user import UserPublic
 
+# RFC 5322 cheap-shape regex. We deliberately don't use pydantic.EmailStr
+# (email-validator) because it rejects the `.local` TLD that the production
+# deployment uses (CONTEXT.md: INITIAL_ADMIN_EMAIL=admin@pulse.local —
+# RFC 6762 mDNS reserved, but legitimate for our internal hostname scheme).
+# This regex matches `local-part@domain.tld` with at least one dot in the
+# domain part — sufficient validation for the login path. Final deliverability
+# is gated by Postgres uniqueness + bcrypt verify, not by client-side regex.
+_EMAIL_RE = re.compile(r"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$")
+
 
 class LoginRequest(BaseModel):
-    email: EmailStr
+    email: str = Field(min_length=3, max_length=255)
     password: str = Field(min_length=1)
+
+    @field_validator("email")
+    @classmethod
+    def _email_shape(cls, v: str) -> str:
+        v = v.strip().lower()
+        if not _EMAIL_RE.match(v):
+            raise ValueError("Invalid email format")
+        return v
 
 
 class TokenPair(BaseModel):
