@@ -36,8 +36,8 @@ Phase: 01 (foundation-master-data-auth) — **COMPLETE** ✓
 Phase: 02 (assessment-workflow) — pending discuss/plan/execute
 
 - **Current Phase:** 02 (Assessment Workflow — PIC self-assessment + Asesor review + rekomendasi tracker)
-- **Current Plan:** none (Phase 02 not yet planned — needs `/gsd-discuss-phase 2` then `/gsd-plan-phase 2`)
-- **Status:** Phase 01 closed 2026-05-11. All 7 plans complete; operator verified Phase-1 E2E walk-through in browser (Login + heartbeat + admin master-data + PIC/manajer redirect — all PASS).
+- **Current Plan:** none (Phase 02 CONTEXT gathered 2026-05-11, commit `a056fa4`; next is `/gsd-plan-phase 2`)
+- **Status:** Phase 01 closed 2026-05-11 (browser-verified). Phase 02 CONTEXT.md committed with 16 sub-decisions across 6 topics (periode lifecycle, ML LevelSelector + auto-save, asesor override, recommendations, notifications, audit log). Notable scope reduction: email/SMTP notifications descoped at user direction.
 - **Progress:** 17% — `[█████████░░░░░░] 1/6 phases complete (Phase 01 of 6)` · `MVP boundary` = end of Phase 03 → 1/3 of MVP done
 
 ---
