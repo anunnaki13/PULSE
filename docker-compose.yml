@@ -115,7 +115,30 @@ services:
       retries: 5
       start_period: 30s
 
-  # NOTE: pulse-backup is appended to this file in Task 2 of Plan 01-02.
+  # ---------------------------------------------------------------------------
+  # pulse-backup — sidecar that owns pg_dump/gzip + rsync schedule via internal cron.
+  # CONSTR-backup acceptance: daily 02:00 backup, Sunday 03:00 rsync to NAS.
+  # ---------------------------------------------------------------------------
+  pulse-backup:
+    build:
+      context: ./infra/backup
+    container_name: pulse-backup
+    restart: unless-stopped
+    depends_on:
+      pulse-db:
+        condition: service_healthy
+    environment:
+      PGHOST: pulse-db
+      PGUSER: ${POSTGRES_USER}
+      PGPASSWORD: ${POSTGRES_PASSWORD}
+      PGDATABASE: ${POSTGRES_DB}
+      BACKUP_DIR: /backups
+      RETAIN_DAYS: ${BACKUP_RETAIN_DAYS:-30}
+      NAS_DEST: ${NAS_DEST:-/mnt/nas/pulse-backups}
+    volumes:
+      - pulse_backups:/backups
+    networks:
+      - pulse-net
 
 networks:
   pulse-net:
@@ -125,4 +148,12 @@ networks:
 volumes:
   pulse_db_data:
   pulse_redis_data:
-  # pulse_backups is declared in Task 2 (alongside the pulse-backup service).
+  # pulse_backups bind-mounts to the host BACKUP_DIR. The path MUST exist on the host
+  # (inside the docker daemon's filesystem — i.e. WSL2 Ubuntu in this project)
+  # BEFORE `docker compose up`. Operator runs: `mkdir -p $BACKUP_DIR`.
+  pulse_backups:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${BACKUP_DIR:-/var/backups/pulse}
