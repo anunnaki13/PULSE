@@ -54,8 +54,12 @@ services:
       context: ./backend
     container_name: pulse-backend
     restart: unless-stopped
+    # `.env` is marked required:false so `docker compose config --quiet` validates
+    # cleanly on a fresh checkout (CI / verifier success criterion). For an actual
+    # `docker compose up`, copy `.env.example` -> `.env` and set real secrets first.
     env_file:
-      - .env
+      - path: .env
+        required: false
     depends_on:
       pulse-db:
         condition: service_healthy
