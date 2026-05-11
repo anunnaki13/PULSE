@@ -1,0 +1,163 @@
+# PULSE — Docker Compose (production-shape; dev overrides live in docker-compose.override.yml)
+# DEC-002 identifiers locked: pulse-db / pulse-redis / pulse-backend / pulse-frontend / pulse-nginx / pulse-backup / pulse-net.
+# `version:` key intentionally omitted (Compose v2 ignores it and prints a warning if present).
+
+services:
+
+  # ---------------------------------------------------------------------------
+  # pulse-db — PostgreSQL 16 + pgvector. Internal-only (NO `ports:`, CONSTR-host-port).
+  # ---------------------------------------------------------------------------
+  pulse-db:
+    image: pgvector/pgvector:pg16
+    container_name: pulse-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - pulse_db_data:/var/lib/postgresql/data
+      - ./infra/db/init:/docker-entrypoint-initdb.d:ro
+    networks:
+      - pulse-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  # ---------------------------------------------------------------------------
+  # pulse-redis — cache + (later) rate-limit/session backing. 256mb LRU.
+  # ---------------------------------------------------------------------------
+  pulse-redis:
+    image: redis:7-alpine
+    container_name: pulse-redis
+    restart: unless-stopped
+    command: ["redis-server", "--maxmemory", "256mb", "--maxmemory-policy", "allkeys-lru"]
+    volumes:
+      - pulse_redis_data:/data
+    networks:
+      - pulse-net
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  # ---------------------------------------------------------------------------
+  # pulse-backend — FastAPI + gunicorn 4×UvicornWorker (Plan 03 ships app/).
+  # ---------------------------------------------------------------------------
+  pulse-backend:
+    build:
+      context: ./backend
+    container_name: pulse-backend
+    restart: unless-stopped
+    # `.env` is marked required:false so `docker compose config --quiet` validates
+    # cleanly on a fresh checkout (CI / verifier success criterion). For an actual
+    # `docker compose up`, copy `.env.example` -> `.env` and set real secrets first.
+    env_file:
+      - path: .env
+        required: false
+    depends_on:
+      pulse-db:
+        condition: service_healthy
+      pulse-redis:
+        condition: service_healthy
+    networks:
+      - pulse-net
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8000/api/v1/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+
+  # ---------------------------------------------------------------------------
+  # pulse-frontend — Vite build served by an internal nginx:alpine on :80.
+  # Public-facing security headers / rate limits are owned by pulse-nginx upstream.
+  # ---------------------------------------------------------------------------
+  pulse-frontend:
+    build:
+      context: ./frontend
+    container_name: pulse-frontend
+    restart: unless-stopped
+    depends_on:
+      pulse-backend:
+        condition: service_started
+    networks:
+      - pulse-net
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost/"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  # ---------------------------------------------------------------------------
+  # pulse-nginx — public reverse proxy. ONLY service that publishes a host port.
+  # ---------------------------------------------------------------------------
+  pulse-nginx:
+    build:
+      context: ./nginx
+    container_name: pulse-nginx
+    restart: unless-stopped
+    ports:
+      - "${APP_HOST_PORT:-3399}:80"
+    depends_on:
+      pulse-backend:
+        condition: service_healthy
+      pulse-frontend:
+        condition: service_started
+    networks:
+      - pulse-net
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost/api/v1/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  # ---------------------------------------------------------------------------
+  # pulse-backup — sidecar that owns pg_dump/gzip + rsync schedule via internal cron.
+  # CONSTR-backup acceptance: daily 02:00 backup, Sunday 03:00 rsync to NAS.
+  # ---------------------------------------------------------------------------
+  pulse-backup:
+    build:
+      context: ./infra/backup
+    container_name: pulse-backup
+    restart: unless-stopped
+    depends_on:
+      pulse-db:
+        condition: service_healthy
+    environment:
+      PGHOST: pulse-db
+      PGUSER: ${POSTGRES_USER}
+      PGPASSWORD: ${POSTGRES_PASSWORD}
+      PGDATABASE: ${POSTGRES_DB}
+      BACKUP_DIR: /backups
+      RETAIN_DAYS: ${BACKUP_RETAIN_DAYS:-30}
+      NAS_DEST: ${NAS_DEST:-/mnt/nas/pulse-backups}
+    volumes:
+      - pulse_backups:/backups
+    networks:
+      - pulse-net
+
+networks:
+  pulse-net:
+    driver: bridge
+    name: pulse-net
+
+volumes:
+  pulse_db_data:
+  pulse_redis_data:
+  # pulse_backups bind-mounts to the host BACKUP_DIR. The path MUST exist on the host
+  # (inside the docker daemon's filesystem — i.e. WSL2 Ubuntu in this project)
+  # BEFORE `docker compose up`. Operator runs: `mkdir -p $BACKUP_DIR`.
+  pulse_backups:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${BACKUP_DIR:-/var/backups/pulse}
