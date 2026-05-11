@@ -1,24 +1,23 @@
 """Contract test for REQ-no-evidence-upload (DEC-010, CONSTR-no-file-upload).
 
-Phase 1 contract (Wave 2): ZERO multipart endpoints. Plan 06 (master data)
-will add the only allowed multipart route —
-`POST /api/v1/konkin/templates/{template_id}/import-from-excel` — and
-amend `ALLOWED_MULTIPART_PATHS` below to `{that one path}`. Until then,
-the allow-list is empty so the assertion fires the moment anyone (or any
-Plan-04/05 mistake) introduces a multipart endpoint.
+Plan 06 (master data) introduces the ONLY allowed multipart endpoint
+``POST /api/v1/konkin/templates/{template_id}/import-from-excel`` — the
+admin-only Konkin Excel-template import (B-07: CSRF-protected). Every other
+multipart endpoint in the OpenAPI surface is a regression.
 
-The companion `test_link_eviden_is_url_only` walks the OpenAPI components
-schema and rejects any property named `link_eviden` that is not declared
-as `format=uri` (i.e. Pydantic `HttpUrl`). Plan 06 introduces models with
-`link_eviden`; this test guards the contract from the moment they land.
+The companion ``test_link_eviden_is_url_only`` walks the OpenAPI components
+schemas and rejects any ``link_eviden`` property that is NOT declared as
+``format=uri`` (i.e. Pydantic ``HttpUrl``). Nullable HttpUrl fields render
+as ``{"anyOf": [{"format": "uri", ...}, {"type": "null"}]}`` in Pydantic
+v2 — we walk into ``anyOf`` to find the URI branch.
 """
 
 from app.main import app
 
-# Phase 1 contract: ZERO multipart endpoints in Wave 2.
-# Plan 06 will add /api/v1/konkin/templates/{template_id}/import-from-excel AND update
-# ALLOWED_MULTIPART_PATHS in this test to {that path}.
-ALLOWED_MULTIPART_PATHS: set[str] = set()
+# Plan 06 locked allow-list — exactly one multipart endpoint.
+ALLOWED_MULTIPART_PATHS: set[str] = {
+    "/api/v1/konkin/templates/{template_id}/import-from-excel",
+}
 
 
 def _multipart_paths() -> set[str]:
@@ -35,6 +34,31 @@ def _multipart_paths() -> set[str]:
     return paths
 
 
+def _is_uri_spec(spec: dict) -> bool:
+    """True if `spec` (or any anyOf/oneOf branch of it) declares format=uri.
+
+    Pydantic v2 renders ``HttpUrl | None`` as::
+
+        {"anyOf": [{"format": "uri", "type": "string", ...},
+                   {"type": "null"}], ...}
+
+    and a non-nullable ``HttpUrl`` as::
+
+        {"format": "uri", "type": "string", ...}
+
+    Both shapes must satisfy the URI-only contract for ``link_eviden``.
+    """
+    if spec.get("format") == "uri":
+        return True
+    for key in ("anyOf", "oneOf", "allOf"):
+        branches = spec.get(key) or []
+        if isinstance(branches, list):
+            for b in branches:
+                if isinstance(b, dict) and _is_uri_spec(b):
+                    return True
+    return False
+
+
 def test_only_allowed_multipart_endpoints():
     got = _multipart_paths()
     extras = got - ALLOWED_MULTIPART_PATHS
@@ -48,6 +72,8 @@ def test_link_eviden_is_url_only():
     offenders: list[str] = []
     for name, s in (schema.get("components", {}).get("schemas") or {}).items():
         for prop, spec in (s.get("properties") or {}).items():
-            if prop == "link_eviden" and spec.get("format") != "uri":
+            if prop == "link_eviden" and not _is_uri_spec(spec):
                 offenders.append(f"{name}.{prop}")
-    assert not offenders, f"link_eviden must be format=uri (Pydantic HttpUrl): {offenders}"
+    assert not offenders, (
+        f"link_eviden must be format=uri (Pydantic HttpUrl): {offenders}"
+    )

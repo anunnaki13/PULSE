@@ -1,11 +1,12 @@
 """User model (REQ-auth-jwt, REQ-user-roles).
 
-B-04 fix (deliberate omission): the `bidang_id` column is NOT declared in
-this model. Plan 06 (master-data) declares it via `op.add_column` +
-`op.create_foreign_key` to `bidang(id)` AFTER the `bidang` table is created,
-and amends this model file in-place at that time. Until Plan 06 lands, the
-auth router reads the future-claim via `getattr(user, "bidang_id", None)`
-so login compiles and works.
+B-04 fix (amended by Plan 06): the ``bidang_id`` column is declared below.
+Plan 05's 0002 migration intentionally does NOT create the column — it is
+added in Plan 06's 0003_master_data migration via ``op.add_column`` +
+``op.create_foreign_key`` to ``bidang(id)`` AFTER the ``bidang`` table
+exists (CONTEXT.md "Migration FK ordering"). This file is now the
+authoritative declaration of the column; ``getattr(user, "bidang_id",
+None)`` reads in the auth router still work and now return real values.
 
 Audit columns follow CONTEXT.md "Data Model" lock: `created_at`,
 `updated_at`, `deleted_at` (soft-delete). `created_by` / `updated_by` are
@@ -18,7 +19,7 @@ from __future__ import annotations
 import uuid
 from datetime import datetime
 
-from sqlalchemy import Boolean, DateTime, String, text
+from sqlalchemy import Boolean, DateTime, ForeignKey, String, text
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -42,15 +43,17 @@ class User(Base):
     is_active: Mapped[bool] = mapped_column(
         Boolean, nullable=False, server_default=text("true")
     )
-    # NOTE: bidang_id column intentionally NOT declared here per CONTEXT.md
-    # "Migration FK ordering" (B-04 fix). Plan 06 (master data) declares it
-    # via op.add_column + op.create_foreign_key after `bidang` is created,
-    # and amends this model file in-place to add:
-    #   bidang_id: Mapped[uuid.UUID | None] = mapped_column(
-    #       UUID(as_uuid=True),
-    #       ForeignKey("bidang.id", ondelete="SET NULL"),
-    #       nullable=True,
-    #   )
+    # B-04: bidang_id is added here AFTER the bidang table is created in
+    # Plan 06's 0003_master_data migration (op.add_column + create_foreign_key
+    # with ondelete="SET NULL"). Plan 05's 0002 migration deliberately did
+    # NOT touch this column to avoid an FK-ordering hazard. The auth router
+    # reads it via `getattr(user, "bidang_id", None)` so legacy code paths
+    # don't break; new code can use `user.bidang_id` directly.
+    bidang_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("bidang.id", ondelete="SET NULL"),
+        nullable=True,
+    )
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=text("now()"), nullable=False
     )
