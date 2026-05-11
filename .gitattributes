@@ -1,0 +1,27 @@
+# PULSE — line endings + diff hints.
+# Force LF on files that run inside Linux containers (shell, Dockerfiles, compose, nginx).
+# This matters on Windows hosts where core.autocrlf=true would otherwise CRLF-ify them
+# and break container-side execution (e.g. /bin/sh sees `\r` in shebang and fails).
+
+*.sh           text eol=lf
+*.bash         text eol=lf
+Dockerfile     text eol=lf
+*.dockerfile   text eol=lf
+docker-compose*.yml text eol=lf
+nginx.conf     text eol=lf
+*.nginx        text eol=lf
+*.conf         text eol=lf
+*.yml          text eol=lf
+*.yaml         text eol=lf
+
+# Binary defaults (don't touch).
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.ico  binary
+*.woff  binary
+*.woff2 binary
+*.ttf  binary
+*.otf  binary
+*.pdf  binary
