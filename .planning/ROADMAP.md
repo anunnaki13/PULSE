@@ -46,7 +46,7 @@
 | 4 | 01-06 | Master data (depends on 03, 05). Sequential after 05 (W-04 Option A). 0003 migration adds master tables AND `users.bidang_id` + `fk_users_bidang_id` (B-04). Perspektif gets `is_pengurang` + `pengurang_cap` (W-07). `import-from-excel` adds `require_csrf` (B-07). |
 | 5 | 01-07 | Integration (depends on 02, 04, 05, 06). Frontend Role union + ProtectedRoute use spec roles (B-01/B-02). Login + master screens consume the six skeuomorphic primitives via barrel (W-01/W-10). Seed sets perspektif VI as `is_pengurang=True` (W-07) and creates the admin user with role `admin_unit` (CONTEXT.md Auth). |
 
-- [~] 01-01-repo-scaffold-docker-verify-PLAN.md — **Wave 1.** Monorepo scaffold, .env.example, Makefile + PowerShell fallback, README "About the Name" (mentions admin_unit role per CONTEXT.md Auth), Docker-installed verify checkpoint. *Status (2026-05-11):* Task 1 complete (commit `ae7130f`); Task 2 paused at `checkpoint:human-action` — awaiting user Docker install verification. SUMMARY: `01-01-repo-scaffold-docker-verify-SUMMARY.md`.
+- [x] 01-01-repo-scaffold-docker-verify-PLAN.md — **Wave 1.** Monorepo scaffold, .env.example, Makefile + PowerShell fallback, README "About the Name" (mentions admin_unit role per CONTEXT.md Auth), Docker-installed verify checkpoint. *Status (2026-05-11):* Task 1 complete (commit `ae7130f`); Task 2 resolved via WSL2 alternative — `docker compose version` returns v5.1.3 inside `Ubuntu-22.04` WSL2 distro. SUMMARY: `01-01-repo-scaffold-docker-verify-SUMMARY.md`.
 - [ ] 01-02-infra-compose-nginx-backup-PLAN.md — **Wave 2.** 6-service Docker Compose (pgvector + Redis + backend + frontend + nginx + backup sidecar), Nginx with security headers + rate-limit zones; backup sidecar uses **dcron** (W-08); Task 2 verify runs `docker compose build pulse-backup` (B-06).
 - [ ] 01-03-backend-skeleton-health-PLAN.md — **Wave 2.** FastAPI app skeleton (pinned stack with `[dev]` extras); `/api/v1/health` plus admin-only `/api/v1/health/detail` and `/api/v1/metrics` (Prometheus text — W-02); Wave-0 test bootstrap with real `pytest --collect-only` smoke (B-06); router + model auto-discovery; `metrics_admin_dep` placeholder for Plan 05 to swap.
 - [ ] 01-04-frontend-skeleton-design-system-PLAN.md — **Wave 2.** React 18 + Vite + Tailwind v4 + motion 12; full DEC-003 token palette plus `--sk-led-glow` / `--sk-led-alert-glow`; **two** heartbeat keyframes (healthy / alert — B-03); reduced-motion gate; **six** primitives `SkLed`/`SkButton`/`SkPanel`/`SkInput`/`SkSelect`/`SkBadge` + barrel `@/components/skeuomorphic` (W-01/W-10); vitest globals + jest-dom in `tsconfig.app.json` (B-05); BI i18n lookup; real `pnpm install` + `vitest --passWithNoTests` smoke (B-06).
@@ -156,7 +156,7 @@
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation (Master Data + Auth) | 0/7 | Planned | - |
+| 1. Foundation (Master Data + Auth) | 1/7 | In progress | - |
 | 2. Assessment Workflow (PIC + Asesor) | 0/0 | Not started | - |
 | 3. NKO Calculator + Dashboard | 0/0 | Not started | - |
 | 4. Compliance Tracker + Reports | 0/0 | Not started | - |

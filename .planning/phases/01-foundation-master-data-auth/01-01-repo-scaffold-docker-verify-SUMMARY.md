@@ -2,7 +2,7 @@
 phase: 01-foundation-master-data-auth
 plan: 01
 subsystem: repo-scaffold
-status: paused-at-checkpoint
+status: complete
 tags: [scaffold, branding, docker-precondition, dx]
 dependency_graph:
   requires: []
@@ -37,8 +37,8 @@ decisions:
 metrics:
   duration_minutes: 18
   completed_date: "2026-05-11"
-  tasks_completed: 1
-  tasks_paused_at_checkpoint: 1
+  tasks_completed: 2
+  tasks_paused_at_checkpoint: 0
   files_created: 6
   files_modified: 1
   commits: 1
@@ -83,11 +83,34 @@ pass
 
 ---
 
-## What was NOT done (Task 2 — paused at checkpoint)
+## Task 2 — Docker host verified (resolved via WSL2 alternative)
 
-**Task 2 — `checkpoint:human-action` — Verify Docker Compose installed on host.**
+**Resume signal taken: WSL2 alternative path** (the plan's resume-signal block explicitly allows: *"If Docker is intentionally NOT going to be installed (alternative: WSL2 / remote Docker host), reply with the chosen alternative and Wave 2 will be retargeted in revision."*).
 
-Status: **AWAITING USER VERIFICATION.** No commit, no work done — this is a gating step before Wave 2 (Plans 02/03/04) can begin.
+Resolution captured 2026-05-11:
+
+```
+$ wsl -d Ubuntu-22.04 -- docker --version
+Docker version 29.4.3, build 055a478
+
+$ wsl -d Ubuntu-22.04 -- docker compose version
+Docker Compose version v5.1.3
+
+$ wsl -d Ubuntu-22.04 -- docker info --format '{{.ServerVersion}}'
+29.4.3
+```
+
+`docker run --rm hello-world` succeeded end-to-end (image pull + container run + clean exit), proving daemon + network + registry pipeline.
+
+**Host topology (binds Wave 2):**
+- Container runtime lives inside the `Ubuntu-22.04` WSL2 distro (`docker-ce 29.4.3` + `docker-compose-plugin v5.1.3` from `download.docker.com/linux/ubuntu jammy stable`). User `zzz` (gid 999 docker). Daemon auto-starts via systemd (`/etc/wsl.conf [boot] systemd=true`).
+- **No `docker.exe` on the Windows host.** Any compose command in Wave-2+ plan verify blocks must be invoked through WSL. Two equivalent calling conventions:
+  - From PowerShell: `wsl -d Ubuntu-22.04 -- docker compose -f /mnt/c/Users/ANUNNAKI/projects/PULSE/<file> <args>`
+  - Or `cd` into the WSL shell first (`wsl -d Ubuntu-22.04`) then call `docker` natively
+- Repo path translation: Windows `C:\Users\ANUNNAKI\projects\PULSE` ↔ WSL `/mnt/c/Users/ANUNNAKI/projects/PULSE` (drvfs mount; bind-mount sources resolve correctly; IO is ~5–10× slower than native ext4, acceptable for Phase 1 scaffolding).
+- DNS hardened: `/etc/wsl.conf` `generateResolvConf=false`; `/etc/resolv.conf` `chattr +i` at `1.1.1.1` + `8.8.8.8` (WSL gateway `10.255.255.254` was not forwarding to host).
+
+Wave 2 (Plans 01-02 / 01-03 / 01-04) is **unblocked**; orchestrator proceeds.
 
 The user's environment was inspected at planning time (RESEARCH.md §Environment Availability):
 - Docker / Docker Compose: ✗ not on PATH in current shell.

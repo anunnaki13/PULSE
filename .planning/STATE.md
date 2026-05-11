@@ -3,16 +3,16 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 current_phase: 01
-current_plan: 1
+current_plan: 2
 status: executing
-last_updated: "2026-05-11T00:00:00.000Z"
+last_updated: "2026-05-11T03:30:00.000Z"
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 7
-  completed_plans: 0
-  in_progress_plans: 1
-  percent: 0
+  completed_plans: 1
+  in_progress_plans: 0
+  percent: 2
 ---
 
 # STATE — PULSE
@@ -33,12 +33,12 @@ progress:
 ## Current Position
 
 Phase: 01 (foundation-master-data-auth) — EXECUTING
-Plan: 1 of 7
+Plan: 2 of 7 (Wave 2 — 01-02 / 01-03 / 01-04 in parallel)
 
 - **Current Phase:** 01
-- **Current Plan:** 1 (paused at `checkpoint:human-action` — Docker install verify)
-- **Status:** Executing Phase 01 — Plan 01-01 Task 1 complete (commit `ae7130f`); Task 2 awaiting user
-- **Progress:** 0% — `[░░░░░░░░░░] 0/6 phases complete`
+- **Current Plan:** 2 (Wave 2 dispatch — 01-02, 01-03, 01-04 in parallel)
+- **Status:** Executing Phase 01 — Plan 01-01 complete (commit `ae7130f`). Docker host gate cleared via WSL2 (`docker compose version` = v5.1.3 inside `Ubuntu-22.04`). Wave 2 dispatched.
+- **Progress:** 2% — `[█░░░░░░░░░] 1/7 plans complete (Phase 01)`
 
 ---
 
@@ -49,9 +49,9 @@ Plan: 1 of 7
 - **Total Phases:** 6 (Phase 1 → Phase 6)
 - **MVP Boundary:** End of Phase 3 (per source §5)
 - **Coverage:** 50/50 v1 requirements mapped ✓
-- **Plans Completed:** 0
-- **Plans In Progress:** 1 (01-01 — Task 1 done, Task 2 awaiting human-action checkpoint)
-- **Plans Remaining:** 6 of 7 in Phase 1 (01-02 through 01-07; gated on 01-01 Task 2)
+- **Plans Completed:** 1 (01-01)
+- **Plans In Progress:** 3 (Wave 2 — 01-02 / 01-03 / 01-04 dispatched in parallel)
+- **Plans Remaining:** 6 of 7 in Phase 1 (01-02 through 01-07; Wave-2 Docker gate cleared via WSL2)
 - **Locked Decisions:** 11 (DEC-001 → DEC-011, all from ADR UPDATE-001, precedence=0)
 
 ---
@@ -99,7 +99,7 @@ None yet — created during phase planning.
 
 ### Blockers
 
-- **Plan 01-01 Task 2 — Docker Compose not on PATH (human-action checkpoint).** User must install Docker Desktop for Windows (or any Docker Engine), launch it, and confirm `docker --version` / `docker compose version` / `docker info` all succeed in PowerShell. Wave 2 (Plans 01-02 / 01-03 / 01-04) cannot start until this clears. See `.planning/phases/01-foundation-master-data-auth/01-01-repo-scaffold-docker-verify-SUMMARY.md` "Awaiting" block for the exact resume signal.
+- None. Docker host gate cleared 2026-05-11 via WSL2 alternative (`docker-ce 29.4.3` + `docker-compose-plugin v5.1.3` inside `Ubuntu-22.04` distro, user `zzz` in docker group, daemon auto-starts via systemd). Wave 2+ plans invoke docker via `wsl -d Ubuntu-22.04 -- docker …` from PowerShell, or `cd /mnt/c/Users/ANUNNAKI/projects/PULSE` inside WSL.
 
 ### Open Items (deferred — DEC-011, NOT locked)
 
@@ -114,33 +114,22 @@ None yet — created during phase planning.
 
 ### Last Session
 
-- **Activity:** Plan 01-01 (Repo Scaffold + Docker Verify) executed. Task 1 committed (`ae7130f`) — seven brand/scaffold files created: `.gitignore`, `.env.example`, `Makefile`, `scripts/dev.ps1`, `scripts/dev.sh`, `README.md`, `docs/ABOUT-THE-NAME.md`. Brand audit on the new files passed (zero `siskonkin` hits, README contains `Performance & Unit Live Scoring Engine`, `Denyut Kinerja Pembangkit`, `admin_unit`).
+- **Activity:** Plan 01-01 closed (Wave 1 done). Task 1 committed (`ae7130f`) — seven brand/scaffold files. Task 2 (Docker host verify) resolved via WSL2 alternative — Docker Desktop install path was abandoned after two failed silent installs blamed on `PendingFileRenameOperations`; user explicitly approved switching to `docker-ce` inside the existing `Ubuntu-22.04` WSL2 distro. `docker compose version` = v5.1.3, `docker run hello-world` succeeded.
 - **Date:** 2026-05-11
-- **Outcome:** Task 1 done. Task 2 paused at `checkpoint:human-action` — Docker Compose verification on Windows host. SUMMARY written at `.planning/phases/01-foundation-master-data-auth/01-01-repo-scaffold-docker-verify-SUMMARY.md`.
-- **Next:** User must verify Docker Compose installation (see Resume Pointer below); then orchestrator resumes Plan 01-01 Task 2 to confirm the gate, mark plan complete, and unblock Wave 2.
+- **Outcome:** Plan 01-01 marked complete. SUMMARY status flipped paused-at-checkpoint→complete. ROADMAP `[~]` → `[x]`. Wave 2 (01-02 infra, 01-03 backend skeleton, 01-04 frontend skeleton) dispatched in parallel.
+- **Next:** Collect Wave 2 SUMMARY files, verify commits, then proceed Wave 3 (01-05 auth — depends on 01-03).
 
 ### Resume Pointer
 
 ```
-Status: Plan 01-01 paused at checkpoint:human-action (Task 2 — Verify Docker Compose installed)
-User action required (in PowerShell on the Windows host):
+Status: Wave 2 dispatched (Plans 01-02 / 01-03 / 01-04 in parallel, isolation=worktree).
+Docker host gate cleared via WSL2; no further user action required.
 
-  docker --version
-  docker compose version
-  docker info
+Docker invocation convention from PowerShell (for any plan with `docker compose ...` in verify):
+  wsl -d Ubuntu-22.04 -- docker compose -f /mnt/c/Users/ANUNNAKI/projects/PULSE/<file> <args>
+Or inside WSL: `cd /mnt/c/Users/ANUNNAKI/projects/PULSE && docker compose ...`
 
-Expected:
-  - docker --version            → "Docker version 24.x" or newer
-  - docker compose version      → "Docker Compose version v2.x" or newer
-  - docker info                 → engine running (no "Cannot connect to the Docker daemon")
-
-If any fail: install Docker Desktop from https://www.docker.com/products/docker-desktop/,
-launch the engine, reopen the terminal, and retry. Then reply with the version strings
-or the resume signal `docker ready`. Wave 2 (Plans 01-02 / 01-03 / 01-04) is blocked
-until this gate clears.
-
-After resume: Plan 01-01 Task 2 closes, ROADMAP checkbox flips from [~] → [x], and
-orchestrator dispatches Wave 2.
+After Wave 2 completes: orchestrator collects 3 SUMMARY files, advances to Wave 3 (Plan 01-05 — auth).
 ```
 
 ### Key File Pointers
