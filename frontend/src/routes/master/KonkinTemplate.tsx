@@ -23,17 +23,20 @@ interface PerspektifPublic {
   sort_order: number;
 }
 
-interface TemplateDetail {
+interface TemplateHeader {
   id: string;
   tahun: number;
   nama: string;
   locked: boolean;
-  perspektif: PerspektifPublic[];
 }
 
 interface TemplateListEnvelope {
-  data: Array<{ id: string; tahun: number; nama: string; locked: boolean }>;
+  data: TemplateHeader[];
   meta?: unknown;
+}
+
+interface PerspektifListEnvelope {
+  data: PerspektifPublic[];
 }
 
 export default function KonkinTemplate() {
@@ -51,11 +54,16 @@ export default function KonkinTemplate() {
 
   const match = listQuery.data?.data.find((tpl) => tpl.tahun === tahunNum);
 
-  // Step 2: load the template detail (perspektif rows + W-07 flags).
+  // Step 2: load the perspektif rows via the separate endpoint
+  // GET /konkin/templates/{id}/perspektif. The template detail endpoint
+  // returns only the header (id/tahun/nama/locked); perspektif rows live
+  // under a child collection so the lock-validator can paginate.
   const detailQuery = useQuery({
-    queryKey: ["konkin", "template", match?.id],
+    queryKey: ["konkin", "template", match?.id, "perspektif"],
     queryFn: async () => {
-      const { data } = await api.get<TemplateDetail>(`/konkin/templates/${match!.id}`);
+      const { data } = await api.get<PerspektifListEnvelope>(
+        `/konkin/templates/${match!.id}/perspektif`,
+      );
       return data;
     },
     enabled: !!match,
@@ -85,14 +93,15 @@ export default function KonkinTemplate() {
     );
   }
 
-  const tpl = detailQuery.data;
-  const perspektif = [...tpl.perspektif].sort((a, b) => a.sort_order - b.sort_order);
+  const perspektif = [...(detailQuery.data?.data ?? [])].sort(
+    (a, b) => a.sort_order - b.sort_order,
+  );
 
   return (
     <div style={{ display: "grid", gap: "1rem" }}>
-      <SkPanel title={`${t("master.konkin")} — ${tpl.nama}`} style={{ padding: "1.5rem" }}>
+      <SkPanel title={`${t("master.konkin")} — ${match.nama}`} style={{ padding: "1.5rem" }}>
         <p style={{ color: "var(--sk-text-mid)", margin: 0 }}>
-          Tahun {tpl.tahun} · {tpl.locked ? "Locked" : "Draft"} · {perspektif.length} perspektif
+          Tahun {match.tahun} · {match.locked ? "Locked" : "Draft"} · {perspektif.length} perspektif
         </p>
       </SkPanel>
 
