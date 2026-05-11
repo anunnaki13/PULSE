@@ -1,0 +1,83 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "./styles/pulse-heartbeat.css";
+
+/* PULSE Design Tokens — DEC-003 (skeuomorphic dark theme default, light variant)
+   Full palette per CONTEXT.md §"Design System (LOCKED — DEC-003, DEC-010)"
+   and CONSTR-design-tokens. B-03 fix: parameterized --sk-led-glow + alert variant. */
+:root {
+  /* Surfaces — control-room dark */
+  --sk-surface-0:  #0a0e14;
+  --sk-surface-1:  #11161f;
+  --sk-surface-2:  #1a2030;
+  --sk-surface-3:  #232a3d;
+  --sk-bevel-light: rgba(255, 255, 255, 0.06);
+  --sk-bevel-dark:  rgba(0, 0, 0, 0.40);
+
+  /* PLN brand */
+  --sk-pln-blue:        #1e3a8a;
+  --sk-pln-blue-glow:   rgba(30, 58, 138, 0.55);
+  --sk-pln-yellow:      #fbbf24;
+  --sk-pln-yellow-glow: rgba(251, 191, 36, 0.55);
+
+  /* Level palette — red → emerald (L0..L4) */
+  --sk-level-0: #dc2626;  /* red */
+  --sk-level-1: #f59e0b;  /* amber */
+  --sk-level-2: #facc15;  /* yellow */
+  --sk-level-3: #84cc16;  /* lime */
+  --sk-level-4: #10b981;  /* emerald */
+
+  /* LED glow — B-03 fix: parameterized + alert variant.
+     The .sk-led[data-state="..."] rules in pulse-heartbeat.css override
+     --sk-led-glow per state so getComputedStyle yields distinct values. */
+  --sk-led-glow:        var(--sk-pln-yellow-glow);   /* default healthy */
+  --sk-led-alert-glow:  rgba(239, 68, 68, 0.65);     /* L0-derived red glow */
+
+  /* LCD */
+  --sk-lcd-bg:    #0d1610;
+  --sk-lcd-green: #4ade80;
+  --sk-lcd-glow:  rgba(74, 222, 128, 0.65);
+
+  /* Text */
+  --sk-text-hi:  #e5e7eb;
+  --sk-text-mid: #9ca3af;
+  --sk-text-lo:  #6b7280;
+
+  /* Typography stack (CONSTR-design-tokens) */
+  --sk-font-display: "Bebas Neue", "Oswald", system-ui, sans-serif;
+  --sk-font-body:    "Barlow", system-ui, sans-serif;
+  --sk-font-mono:    "JetBrains Mono", ui-monospace, monospace;
+  --sk-font-lcd:     "Share Tech Mono", "JetBrains Mono", monospace;
+}
+
+/* Tailwind v4: expose tokens to utilities via @theme inline.
+   Replaces v3's tailwind.config.js theme.extend.colors mapping. */
+@theme inline {
+  --color-surface-0: var(--sk-surface-0);
+  --color-surface-1: var(--sk-surface-1);
+  --color-surface-2: var(--sk-surface-2);
+  --color-surface-3: var(--sk-surface-3);
+  --color-pln-blue: var(--sk-pln-blue);
+  --color-pln-yellow: var(--sk-pln-yellow);
+  --color-lcd-green: var(--sk-lcd-green);
+  --color-level-0: var(--sk-level-0);
+  --color-level-1: var(--sk-level-1);
+  --color-level-2: var(--sk-level-2);
+  --color-level-3: var(--sk-level-3);
+  --color-level-4: var(--sk-level-4);
+  --font-display: var(--sk-font-display);
+  --font-body: var(--sk-font-body);
+  --font-mono: var(--sk-font-mono);
+  --font-lcd: var(--sk-font-lcd);
+}
+
+html, body, #root { height: 100%; }
+
+body {
+  margin: 0;
+  background: var(--sk-surface-0);
+  color: var(--sk-text-hi);
+  font-family: var(--sk-font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
