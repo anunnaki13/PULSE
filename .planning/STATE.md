@@ -3,16 +3,16 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 current_phase: 01
-current_plan: 5
+current_plan: 6
 status: executing
-last_updated: "2026-05-11T12:00:00.000Z"
+last_updated: "2026-05-11T12:30:00.000Z"
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 7
-  completed_plans: 4
+  completed_plans: 5
   in_progress_plans: 0
-  percent: 10
+  percent: 12
 ---
 
 # STATE — PULSE
@@ -33,12 +33,12 @@ progress:
 ## Current Position
 
 Phase: 01 (foundation-master-data-auth) — EXECUTING
-Plan: 5 of 7 (Wave 3 — 01-05 auth, sequential, depends_on=01-03)
+Plan: 6 of 7 (Wave 4 — 01-06 master-data, sequential, depends_on=01-03+01-05)
 
 - **Current Phase:** 01
-- **Current Plan:** 5 (Wave 3 dispatch — 01-05 auth backend JWT+RBAC)
-- **Status:** Executing Phase 01 — Waves 1+2 complete (4/7 plans). Wave 1: 01-01 scaffold (`ae7130f` + `234ba02`); Wave 2 parallel merges: 01-02 infra (`cec909e`/`be2812e`/`faae5f0`/`ee10531`/`5b27921`), 01-03 backend skeleton (`f09bc9b`/`6b8fa8a`/`e9c7190`/`2753c5c`), 01-04 frontend skeleton (`856b215`/`14bc5f1`/`5322ab6`/`8bd98b8`).
-- **Progress:** 10% — `[████░░░░░░] 4/7 plans complete (Phase 01)`
+- **Current Plan:** 6 (Wave 4 dispatch — 01-06 master-data backend)
+- **Status:** Executing Phase 01 — Waves 1/2/3 complete (5/7 plans). Wave 3: 01-05 auth backend (commits `ca54e72` / `764a506` / `acb98b4` / `bb57519`) — JWT dual-mode, 6 spec roles seeded in Alembic 0002, CSRF double-submit dep, brute-force lockout, W-02 metrics_admin_dep wired. 22/22 backend tests pass.
+- **Progress:** 12% — `[█████░░░░░] 5/7 plans complete (Phase 01)`
 
 ---
 
@@ -49,9 +49,9 @@ Plan: 5 of 7 (Wave 3 — 01-05 auth, sequential, depends_on=01-03)
 - **Total Phases:** 6 (Phase 1 → Phase 6)
 - **MVP Boundary:** End of Phase 3 (per source §5)
 - **Coverage:** 50/50 v1 requirements mapped ✓
-- **Plans Completed:** 4 (01-01, 01-02, 01-03, 01-04)
+- **Plans Completed:** 5 (01-01, 01-02, 01-03, 01-04, 01-05)
 - **Plans In Progress:** 0
-- **Plans Remaining:** 3 of 7 in Phase 1 (01-05 auth → Wave 3; 01-06 master-data → Wave 4 seq; 01-07 frontend wire+seed → Wave 5)
+- **Plans Remaining:** 2 of 7 in Phase 1 (01-06 master-data → Wave 4 seq; 01-07 frontend wire+seed → Wave 5, has human-action checkpoint)
 - **Locked Decisions:** 11 (DEC-001 → DEC-011, all from ADR UPDATE-001, precedence=0)
 
 ---
