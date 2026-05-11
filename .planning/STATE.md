@@ -3,16 +3,16 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 current_phase: 01
-current_plan: 2
+current_plan: 5
 status: executing
-last_updated: "2026-05-11T03:30:00.000Z"
+last_updated: "2026-05-11T12:00:00.000Z"
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 7
-  completed_plans: 1
+  completed_plans: 4
   in_progress_plans: 0
-  percent: 2
+  percent: 10
 ---
 
 # STATE — PULSE
@@ -33,12 +33,12 @@ progress:
 ## Current Position
 
 Phase: 01 (foundation-master-data-auth) — EXECUTING
-Plan: 2 of 7 (Wave 2 — 01-02 / 01-03 / 01-04 in parallel)
+Plan: 5 of 7 (Wave 3 — 01-05 auth, sequential, depends_on=01-03)
 
 - **Current Phase:** 01
-- **Current Plan:** 2 (Wave 2 dispatch — 01-02, 01-03, 01-04 in parallel)
-- **Status:** Executing Phase 01 — Plan 01-01 complete (commit `ae7130f`). Docker host gate cleared via WSL2 (`docker compose version` = v5.1.3 inside `Ubuntu-22.04`). Wave 2 dispatched.
-- **Progress:** 2% — `[█░░░░░░░░░] 1/7 plans complete (Phase 01)`
+- **Current Plan:** 5 (Wave 3 dispatch — 01-05 auth backend JWT+RBAC)
+- **Status:** Executing Phase 01 — Waves 1+2 complete (4/7 plans). Wave 1: 01-01 scaffold (`ae7130f` + `234ba02`); Wave 2 parallel merges: 01-02 infra (`cec909e`/`be2812e`/`faae5f0`/`ee10531`/`5b27921`), 01-03 backend skeleton (`f09bc9b`/`6b8fa8a`/`e9c7190`/`2753c5c`), 01-04 frontend skeleton (`856b215`/`14bc5f1`/`5322ab6`/`8bd98b8`).
+- **Progress:** 10% — `[████░░░░░░] 4/7 plans complete (Phase 01)`
 
 ---
 
@@ -49,9 +49,9 @@ Plan: 2 of 7 (Wave 2 — 01-02 / 01-03 / 01-04 in parallel)
 - **Total Phases:** 6 (Phase 1 → Phase 6)
 - **MVP Boundary:** End of Phase 3 (per source §5)
 - **Coverage:** 50/50 v1 requirements mapped ✓
-- **Plans Completed:** 1 (01-01)
-- **Plans In Progress:** 3 (Wave 2 — 01-02 / 01-03 / 01-04 dispatched in parallel)
-- **Plans Remaining:** 6 of 7 in Phase 1 (01-02 through 01-07; Wave-2 Docker gate cleared via WSL2)
+- **Plans Completed:** 4 (01-01, 01-02, 01-03, 01-04)
+- **Plans In Progress:** 0
+- **Plans Remaining:** 3 of 7 in Phase 1 (01-05 auth → Wave 3; 01-06 master-data → Wave 4 seq; 01-07 frontend wire+seed → Wave 5)
 - **Locked Decisions:** 11 (DEC-001 → DEC-011, all from ADR UPDATE-001, precedence=0)
 
 ---
@@ -114,22 +114,26 @@ None yet — created during phase planning.
 
 ### Last Session
 
-- **Activity:** Plan 01-01 closed (Wave 1 done). Task 1 committed (`ae7130f`) — seven brand/scaffold files. Task 2 (Docker host verify) resolved via WSL2 alternative — Docker Desktop install path was abandoned after two failed silent installs blamed on `PendingFileRenameOperations`; user explicitly approved switching to `docker-ce` inside the existing `Ubuntu-22.04` WSL2 distro. `docker compose version` = v5.1.3, `docker run hello-world` succeeded.
+- **Activity:** Waves 1+2 fully executed and merged. Wave 1: Plan 01-01 closed via WSL2 alternative (Docker Desktop install abandoned after `PendingFileRenameOperations` blockage; switched to `docker-ce` inside `Ubuntu-22.04` WSL2). Wave 2 (parallel, isolation=worktree): 01-02 infra (16 files, 5 commits — 6-service compose + Nginx with security headers + dcron backup sidecar; `docker compose config` + `nginx -t` + `docker compose build pulse-backup` all pass), 01-03 backend skeleton (28 files, 4 commits — FastAPI + Alembic + auto-discovery routers/models + /health family + Wave-0 pytest bootstrap; 7/7 tests pass), 01-04 frontend skeleton (29 files, 4 commits — React 18 + Vite + Tailwind v4 + 6 skeuomorphic primitives + DEC-003 tokens + dual heartbeat keyframes + BI i18n; 31/31 vitest tests pass). All toolchain calls routed through `wsl -d Ubuntu-22.04 -- …`.
 - **Date:** 2026-05-11
-- **Outcome:** Plan 01-01 marked complete. SUMMARY status flipped paused-at-checkpoint→complete. ROADMAP `[~]` → `[x]`. Wave 2 (01-02 infra, 01-03 backend skeleton, 01-04 frontend skeleton) dispatched in parallel.
-- **Next:** Collect Wave 2 SUMMARY files, verify commits, then proceed Wave 3 (01-05 auth — depends on 01-03).
+- **Outcome:** 4/7 Phase-1 plans complete. Three worktree merges + cleanup complete (74 files added, 0 deletions). Worktree branches deleted, `.claude/` added to .gitignore.
+- **Next:** Wave 3 — Plan 01-05 (auth backend, JWT dual-mode + 6 spec roles + CSRF + brute-force lockout + W-02 metrics_admin_dep wiring). Sequential after Wave 2 (depends_on=01-03 satisfied).
 
 ### Resume Pointer
 
 ```
-Status: Wave 2 dispatched (Plans 01-02 / 01-03 / 01-04 in parallel, isolation=worktree).
-Docker host gate cleared via WSL2; no further user action required.
+Status: Wave 2 merged. Ready to dispatch Wave 3 (Plan 01-05 — auth backend).
 
-Docker invocation convention from PowerShell (for any plan with `docker compose ...` in verify):
-  wsl -d Ubuntu-22.04 -- docker compose -f /mnt/c/Users/ANUNNAKI/projects/PULSE/<file> <args>
-Or inside WSL: `cd /mnt/c/Users/ANUNNAKI/projects/PULSE && docker compose ...`
+Plan 01-05 (auth-backend-jwt-rbac):
+  - Depends on 01-03 (✓ merged)
+  - Sequential, autonomous, isolation=worktree
+  - Creates: backend/app/{models,schemas,deps,services,routers}/auth + 0002_auth_users_roles migration + 3 test files
+  - Seeds SIX spec roles: super_admin, admin_unit, pic_bidang, asesor, manajer_unit, viewer
+  - Wires placeholder metrics_admin_dep → require_role("super_admin","admin_unit") (W-02 closure)
+  - Tests run via `wsl -d Ubuntu-22.04 -- python3.11 -m pytest backend/tests/`
 
-After Wave 2 completes: orchestrator collects 3 SUMMARY files, advances to Wave 3 (Plan 01-05 — auth).
+After 01-05: Wave 4 (Plan 01-06 master-data, sequential, depends_on=01-03+01-05)
+                → Wave 5 (Plan 01-07 frontend wire+seed+verify, depends_on=01-02+01-04+01-05+01-06).
 ```
 
 ### Key File Pointers

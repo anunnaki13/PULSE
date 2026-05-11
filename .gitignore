@@ -4,6 +4,9 @@
 .env.local
 .env.*.local
 
+# Claude Code runtime state (worktrees, agent transcripts, cache)
+.claude/
+
 # Python
 .venv/
 venv/
