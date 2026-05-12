@@ -12,7 +12,11 @@ Referensi: **Peraturan Direksi PT PLN Nusantara Power Nomor 0019.P/DIR/2025** (1
 
 Nama, akronim, tagline, dan riwayat rebrand (DEC-001) ke PULSE didokumentasikan lengkap di [`docs/ABOUT-THE-NAME.md`](docs/ABOUT-THE-NAME.md). Singkatnya: **P**erformance & **U**nit **L**ive **S**coring **E**ngine, dengan **Pulse Heartbeat** sebagai tanda tangan visual (LED berdenyut 60–80 BPM saat sehat).
 
-Panduan fungsi menu aplikasi tersedia di [`docs/MENU-GUIDE.md`](docs/MENU-GUIDE.md).
+Dokumentasi operator dan handoff:
+
+- Panduan fungsi menu aplikasi: [`docs/MENU-GUIDE.md`](docs/MENU-GUIDE.md)
+- Handoff final local build: [`docs/FINAL-LOCAL-HANDOFF.md`](docs/FINAL-LOCAL-HANDOFF.md)
+- Backlog penyederhanaan UX: [`docs/UX-SIMPLIFICATION-BACKLOG.md`](docs/UX-SIMPLIFICATION-BACKLOG.md)
 
 ---
 

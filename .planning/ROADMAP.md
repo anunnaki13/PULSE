@@ -19,6 +19,7 @@
 - [x] **Phase 7: Operator Onboarding + Guided Help** — Panduan menu dan alur Konkin tersedia langsung di aplikasi agar operator dapat mempelajari fungsi menu, role, dan perbedaan formula/satuan tiap stream sambil production gates Phase 6 diselesaikan. *Closed 2026-05-12 — `/guide` in-app guide build/test passed.*
 - [x] **Phase 8: Formula + Stream Dictionary** — Kamus formula tersedia langsung di aplikasi untuk mempelajari family rumus, satuan, polaritas, bobot, agregasi, dan contoh stream. *Closed 2026-05-13 — `/formula-dictionary` build/test/smoke passed.*
 - [x] **Phase 9: Workflow Playbook** — Playbook alur kerja tersedia langsung di aplikasi untuk memahami status, handoff role, checklist harian, dan kontrol sebelum finalisasi. *Closed 2026-05-13 — `/workflow-playbook` build/test/smoke passed.*
+- [x] **Phase 10: Final Local Freeze + UX Simplification Backlog** — Local build dibekukan untuk studi/UAT, handoff akhir ditulis, dan backlog simplifikasi UX dicatat agar fase berikutnya mengurangi kebingungan alur sebelum menambah fitur. *Closed 2026-05-13 — documentation-only freeze, no new app surface added.*
 
 ---
 
@@ -195,6 +196,7 @@
 | 7. Operator Onboarding + Guided Help | 1/1 | **Complete** | 2026-05-12 |
 | 8. Formula + Stream Dictionary | 1/1 | **Complete** | 2026-05-13 |
 | 9. Workflow Playbook | 1/1 | **Complete** | 2026-05-13 |
+| 10. Final Local Freeze + UX Simplification Backlog | 1/1 | **Complete** | 2026-05-13 |
 
 ---
 
@@ -255,6 +257,26 @@
 **Plans**: 1 planned execution slice
 
 - [x] 09-01-in-app-workflow-playbook-PLAN.md — In-app workflow playbook. SUMMARY: `09-01-in-app-workflow-playbook-SUMMARY.md`.
+
+---
+
+### Phase 10: Final Local Freeze + UX Simplification Backlog
+**Goal**: Local build dibekukan untuk dipelajari/UAT tanpa menambah menu baru, production blockers tetap jelas, dan backlog perbaikan UX dicatat untuk menyederhanakan alur berikutnya.
+
+**Depends on**: Phase 9
+
+**Requirements**: REQ-final-local-freeze
+
+**Success Criteria** (what must be TRUE):
+  1. `docs/FINAL-LOCAL-HANDOFF.md` menjelaskan status local-ready vs production-blocked, credential dev, active dummy periode, dan gate production tersisa.
+  2. `docs/UX-SIMPLIFICATION-BACKLOG.md` mencatat backlog simplifikasi navigasi, role-based home, dashboard density, dummy data label, terminology, dan formula/help placement.
+  3. README menautkan handoff dan UX backlog.
+  4. Planning state mencatat Phase 10 complete tanpa mengubah status blocked Phase 6 production handover.
+  5. Tidak ada app route, menu, schema, endpoint, atau fitur baru yang ditambahkan.
+
+**Plans**: 1 planned execution slice
+
+- [x] 10-01-final-local-freeze-PLAN.md — Final local freeze and UX simplification backlog. SUMMARY: `10-01-final-local-freeze-SUMMARY.md`.
 
 ---
 

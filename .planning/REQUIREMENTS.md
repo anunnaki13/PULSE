@@ -582,6 +582,16 @@
   - Playbook explains periode, assessment, recommendation, and compliance statuses.
   - Playbook includes role handoffs and daily checks.
 
+### REQ-final-local-freeze
+- source: user request 2026-05-13
+- description: Documentation-only local freeze and UX simplification backlog after the app was judged powerful but confusing.
+- acceptance:
+  - Final local handoff exists and separates local-ready from production-blocked.
+  - UX simplification backlog exists and prioritizes navigation, role landing pages, dashboard density, dummy labels, terminology, and help placement.
+  - README links the handoff and UX backlog.
+  - Phase 6 production handover remains blocked until external go-live gates are resolved.
+  - No new app route, menu, schema, endpoint, or feature is added for this freeze.
+
 ---
 
 ## Traceability
@@ -646,5 +656,6 @@
 | REQ-operator-onboarding-guide | Phase 7 | Complete | |
 | REQ-formula-stream-dictionary | Phase 8 | Complete | |
 | REQ-workflow-playbook | Phase 9 | Complete | |
+| REQ-final-local-freeze | Phase 10 | Complete | |
 
 **Coverage:** 50 / 50 requirements mapped (note: 53 rows above include REQ-ai-rag-chat, REQ-ai-summary-periode, REQ-ai-action-plan-generator from Section L which the synthesis count rolls into the 50-total via the §K cross-count footnote). All sections A–S accounted for.
