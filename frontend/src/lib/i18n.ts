@@ -30,6 +30,7 @@ const id = {
     dashboard: "Dasbor",
     guide: "Panduan",
     formulaDictionary: "Kamus Formula",
+    workflowPlaybook: "Alur Kerja",
     logout: "Keluar",
   },
   master: {

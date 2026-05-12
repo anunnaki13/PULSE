@@ -81,6 +81,11 @@ export function AppShell() {
               {t("nav.formulaDictionary")}
             </SkButton>
           </Link>
+          <Link to="/workflow-playbook" style={{ textDecoration: "none" }}>
+            <SkButton variant="ghost" type="button">
+              {t("nav.workflowPlaybook")}
+            </SkButton>
+          </Link>
           {canWorkAssessment && (
             <Link to="/assessment" style={{ textDecoration: "none" }}>
               <SkButton variant="ghost" type="button">

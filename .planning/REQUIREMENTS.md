@@ -572,6 +572,16 @@
   - Dictionary includes representative KPI, maturity, HCR/OCR, sub-indicator, and compliance rows.
   - Dictionary supports text search and formula-family filtering.
 
+### REQ-workflow-playbook
+- source: user request 2026-05-13
+- description: In-app workflow playbook for understanding operational steps, status transitions, role handoffs, and daily checks.
+- acceptance:
+  - Authenticated users can open `/workflow-playbook`.
+  - Header navigation includes `Alur Kerja`.
+  - Playbook explains period setup, session generation, PIC self-assessment, asesor review, recommendation follow-up, compliance deduction, and dashboard/reporting.
+  - Playbook explains periode, assessment, recommendation, and compliance statuses.
+  - Playbook includes role handoffs and daily checks.
+
 ---
 
 ## Traceability
@@ -635,5 +645,6 @@
 | REQ-prod-checklist | Phase 6 | Pending | |
 | REQ-operator-onboarding-guide | Phase 7 | Complete | |
 | REQ-formula-stream-dictionary | Phase 8 | Complete | |
+| REQ-workflow-playbook | Phase 9 | Complete | |
 
 **Coverage:** 50 / 50 requirements mapped (note: 53 rows above include REQ-ai-rag-chat, REQ-ai-summary-periode, REQ-ai-action-plan-generator from Section L which the synthesis count rolls into the 50-total via the §K cross-count footnote). All sections A–S accounted for.

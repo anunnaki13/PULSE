@@ -18,6 +18,7 @@
 - [ ] **Phase 6: Stream Coverage Lengkap + HCR + Go-Live Hardening** — Semua 14 sub-stream ML Pilar II + HCR + sub-indikator Pilar I/IV/V ter-implementasi, prod checklist passed.
 - [x] **Phase 7: Operator Onboarding + Guided Help** — Panduan menu dan alur Konkin tersedia langsung di aplikasi agar operator dapat mempelajari fungsi menu, role, dan perbedaan formula/satuan tiap stream sambil production gates Phase 6 diselesaikan. *Closed 2026-05-12 — `/guide` in-app guide build/test passed.*
 - [x] **Phase 8: Formula + Stream Dictionary** — Kamus formula tersedia langsung di aplikasi untuk mempelajari family rumus, satuan, polaritas, bobot, agregasi, dan contoh stream. *Closed 2026-05-13 — `/formula-dictionary` build/test/smoke passed.*
+- [x] **Phase 9: Workflow Playbook** — Playbook alur kerja tersedia langsung di aplikasi untuk memahami status, handoff role, checklist harian, dan kontrol sebelum finalisasi. *Closed 2026-05-13 — `/workflow-playbook` build/test/smoke passed.*
 
 ---
 
@@ -193,6 +194,7 @@
 | 6. Stream Coverage Lengkap + HCR + Go-Live Hardening | 5/5 local, prod gates blocked | Blocked | - |
 | 7. Operator Onboarding + Guided Help | 1/1 | **Complete** | 2026-05-12 |
 | 8. Formula + Stream Dictionary | 1/1 | **Complete** | 2026-05-13 |
+| 9. Workflow Playbook | 1/1 | **Complete** | 2026-05-13 |
 
 ---
 
@@ -233,6 +235,26 @@
 **Plans**: 1 planned execution slice
 
 - [x] 08-01-formula-stream-dictionary-PLAN.md — In-app formula and stream dictionary. SUMMARY: `08-01-formula-stream-dictionary-SUMMARY.md`.
+
+---
+
+### Phase 9: Workflow Playbook
+**Goal**: Operator dapat mengikuti alur operasional PULSE dari setup periode sampai finalisasi melalui playbook in-app berisi langkah, owner, status, handoff, dan checklist kontrol.
+
+**Depends on**: Phase 8
+
+**Requirements**: REQ-workflow-playbook
+
+**Success Criteria** (what must be TRUE):
+  1. User authenticated melihat menu `Alur Kerja` di header aplikasi.
+  2. `/workflow-playbook` menjelaskan langkah setup periode, generate session, self-assessment, review asesor, rekomendasi, compliance, dan dashboard/laporan.
+  3. `/workflow-playbook` menjelaskan status periode, assessment, rekomendasi, dan compliance.
+  4. `/workflow-playbook` memuat handoff antar role dan checklist harian.
+  5. Frontend build dan test pass.
+
+**Plans**: 1 planned execution slice
+
+- [x] 09-01-in-app-workflow-playbook-PLAN.md — In-app workflow playbook. SUMMARY: `09-01-in-app-workflow-playbook-SUMMARY.md`.
 
 ---
 

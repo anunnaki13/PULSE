@@ -38,6 +38,7 @@ import Notifications from "@/routes/Notifications";
 import AuditLogs from "@/routes/AuditLogs";
 import MenuGuide from "@/routes/MenuGuide";
 import FormulaDictionary from "@/routes/FormulaDictionary";
+import WorkflowPlaybook from "@/routes/WorkflowPlaybook";
 import { AppShell } from "@/routes/AppShell";
 import { MasterLayout } from "@/routes/master/MasterLayout";
 import KonkinTemplate from "@/routes/master/KonkinTemplate";
@@ -63,6 +64,7 @@ export default function App() {
             <Route path="/dashboard/executive" element={<Dashboard />} />
             <Route path="/guide" element={<MenuGuide />} />
             <Route path="/formula-dictionary" element={<FormulaDictionary />} />
+            <Route path="/workflow-playbook" element={<WorkflowPlaybook />} />
             <Route path="/assessment" element={<AssessmentList />} />
             <Route path="/recommendations" element={<Recommendations />} />
             <Route path="/notifications" element={<Notifications />} />
