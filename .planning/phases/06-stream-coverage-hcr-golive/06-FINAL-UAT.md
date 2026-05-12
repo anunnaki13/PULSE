@@ -2,7 +2,7 @@
 status: passed-with-production-blockers
 phase: 06-stream-coverage-hcr-golive
 plan: 05
-tested_at: "2026-05-12T14:41:00.000+07:00"
+tested_at: "2026-05-12T23:41:00.000+07:00"
 ---
 
 # Phase 06 Final UAT
@@ -40,6 +40,11 @@ Local workflow UAT passed. Production release remains blocked by the items in `0
   - RAG chat returned 5 source citations.
   - Periode summary returned `417` words and 5 source citations.
   - Action plan returned 2 structured action items and 5 source citations.
+- Local production smoke re-run on 2026-05-12 23:41 WIB:
+  - `health_detail_status=ok`
+  - `ai_mode=mock`
+  - `dashboard_nko=2.2500`
+  - `report_pdf_bytes=1138`
 - Backup/restore drill passed:
   - backup file: `/backups/pulse-20260512T074046Z.sql.gz`
   - temporary restore database: `pulse_restore_probe`

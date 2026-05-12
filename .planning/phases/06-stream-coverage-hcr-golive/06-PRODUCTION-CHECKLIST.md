@@ -2,7 +2,7 @@
 status: blocked
 phase: 06-stream-coverage-hcr-golive
 plan: 05
-checked_at: "2026-05-12T14:40:00.000+07:00"
+checked_at: "2026-05-12T23:41:00.000+07:00"
 ---
 
 # Phase 06 Production Checklist
@@ -39,6 +39,11 @@ checked_at: "2026-05-12T14:40:00.000+07:00"
   - `./scripts/dev.sh prod-smoke`
   - `make prod-smoke`
 - [x] Production smoke scripts verified on Bash and PowerShell against the active local stack, including dashboard and PDF export when `PERIODE_ID` is provided.
+- [x] Local smoke re-run on 2026-05-12 23:41 WIB:
+  - `health_detail_status=ok`
+  - `ai_mode=mock`
+  - `dashboard_nko=2.2500`
+  - `report_pdf_bytes=1138`
 - [x] Go-live runbook created: `06-GO-LIVE-RUNBOOK.md`.
 - [x] `/api/v1/health/detail` passed:
   - DB ok

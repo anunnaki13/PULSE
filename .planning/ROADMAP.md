@@ -175,7 +175,7 @@
 - [x] 06-02-hcr-ocr-assessment-coverage-PLAN.md — HCR/OCR dynamic maturity assessment coverage and special OCR weighting. SUMMARY: `06-02-hcr-ocr-assessment-coverage-SUMMARY.md`.
 - [x] 06-03-subindikator-formula-coverage-nko-PLAN.md — Complete Pilar I/IV/V formula coverage and NKO integration. SUMMARY: `06-03-subindikator-formula-coverage-nko-SUMMARY.md`.
 - [x] 06-04-pedoman-rag-summary-action-plan-PLAN.md — Deferred Phase 5b RAG, summary, and SMART action-plan endpoints. SUMMARY: `06-04-pedoman-rag-summary-action-plan-SUMMARY.md`.
-- [ ] 06-05-production-hardening-final-uat-PLAN.md — Production checklist, backup/restore, security, OpenRouter, and final UAT.
+- [ ] 06-05-production-hardening-final-uat-PLAN.md — Production checklist, backup/restore, security, OpenRouter, and final UAT. SUMMARY: `06-05-production-hardening-final-uat-SUMMARY.md`; local hardening/UAT passed, production gates remain blocked.
 
 ---
 
@@ -188,7 +188,7 @@
 | 3. NKO Calculator + Dashboard | 2/2 | **Complete** | 2026-05-12 |
 | 4. Compliance Tracker + Reports | 3/3 | **Complete** | 2026-05-12 |
 | 5. AI Integration | 3/3 | **Complete** | 2026-05-12 |
-| 6. Stream Coverage Lengkap + HCR + Go-Live Hardening | 4/5 | In progress | - |
+| 6. Stream Coverage Lengkap + HCR + Go-Live Hardening | 5/5 local, prod gates blocked | Blocked | - |
 
 ---
 

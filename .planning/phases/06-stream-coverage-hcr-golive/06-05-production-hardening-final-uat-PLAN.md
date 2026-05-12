@@ -1,5 +1,5 @@
 ---
-status: planned
+status: blocked
 phase: 06-stream-coverage-hcr-golive
 plan: 05
 requirements_addressed:
