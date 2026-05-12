@@ -19,7 +19,7 @@ from __future__ import annotations
 
 import uuid
 
-from fastapi import Cookie, Depends, Header, HTTPException, status
+from fastapi import Cookie, Depends, Header, HTTPException, Request, status
 from jose import JWTError
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -85,6 +85,35 @@ async def current_user(
     if not user:
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, "User no longer active")
     return user
+
+
+async def current_user_optional(request: Request, db: AsyncSession) -> User | None:
+    """Best-effort user resolver for cross-cutting middleware.
+
+    Middleware cannot use FastAPI dependency injection, so this mirrors
+    ``current_user`` with explicit request/session inputs and returns ``None``
+    for anonymous or invalid credentials.
+    """
+    token = _extract_token(
+        request.headers.get("authorization"),
+        request.cookies.get("access_token"),
+    )
+    if not token:
+        return None
+    try:
+        payload = decode_token(token)
+        if payload.get("typ") != "access":
+            return None
+        user_id = uuid.UUID(str(payload.get("sub")))
+    except (JWTError, ValueError, TypeError):
+        return None
+    return await db.scalar(
+        select(User).where(
+            User.id == user_id,
+            User.is_active.is_(True),
+            User.deleted_at.is_(None),
+        )
+    )
 
 
 def require_role(*allowed: str):

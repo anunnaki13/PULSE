@@ -1,0 +1,81 @@
+import { computeDashboard, type DashboardComputationInput } from "@/lib/dashboard-calculations";
+
+export const dashboardInput: DashboardComputationInput = {
+  periode: "Semester 2 2025",
+  updatedAt: "12 Mei 2026 00:02 WIB",
+  changedIndikator: "EAF",
+  forecastDelta: 0.82,
+  complianceDeductionFactor: 6.9,
+  pillars: [
+    { code: "I", name: "Economic & Social Value", weight: 46, trend: 1.42 },
+    { code: "II", name: "Model Business Innovation", weight: 25, trend: 0.88 },
+    { code: "III", name: "Technology Leadership", weight: 6, trend: 0.18 },
+    { code: "IV", name: "Energize Investment", weight: 8, trend: -0.31 },
+    { code: "V", name: "Unleash Talent", weight: 15, trend: 0.54 },
+  ],
+  // Represents non-pilot indicators/sub-streams that are not wired to live sessions yet.
+  // Kept explicit so dummy totals still reconcile to the worked example NKO 103.36.
+  pillarComplements: {
+    I: 35.95,
+    II: 4.99,
+    III: 6.22,
+    IV: 8.37,
+    V: 16.25,
+  },
+  streams: [
+    {
+      code: "EAF",
+      name: "Equivalent Availability Factor",
+      kind: "quantitative",
+      pillar: "I",
+      unit: "%",
+      formula: "Pencapaian = Realisasi / Target x 100%",
+      polarity: "positif",
+      actualValue: 88.6,
+      targetValue: 85,
+      weight: 6,
+      note: "Makin tinggi makin baik; sesi aggregate untuk OM-1..OM-RE.",
+    },
+    {
+      code: "EFOR",
+      name: "Equivalent Forced Outage Rate",
+      kind: "quantitative",
+      pillar: "I",
+      unit: "%",
+      formula: "Pencapaian = {2 - (Realisasi / Target)} x 100%",
+      polarity: "negatif",
+      actualValue: 3.7,
+      targetValue: 4.2,
+      weight: 6,
+      note: "Makin rendah makin baik; formula negatif tidak boleh disamakan dengan EAF.",
+    },
+    {
+      code: "OUTAGE",
+      name: "Outage Management",
+      kind: "maturity",
+      pillar: "II",
+      unit: "Level 0-4",
+      formula: "Rata-rata sub-area -> area -> stream maturity",
+      polarity: "rubric",
+      actualValue: 3.42,
+      targetValue: 3.25,
+      weight: 25,
+      note: "Dinilai dari ml_stream.structure; setiap area punya rubrik L0-L4.",
+    },
+    {
+      code: "SMAP",
+      name: "Sistem Manajemen Anti Penyuapan",
+      kind: "compliance",
+      pillar: "VI",
+      unit: "Level 0-4",
+      formula: "Maturity compliance -> pengurang terkontrol",
+      polarity: "rubric",
+      actualValue: 3.1,
+      targetValue: 3.5,
+      weight: 0,
+      note: "Masuk area compliance; berdampak sebagai kontrol risiko/pengurang.",
+    },
+  ],
+};
+
+export const dashboardModel = computeDashboard(dashboardInput);

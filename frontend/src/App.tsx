@@ -30,6 +30,12 @@ import { useAuthStore } from "@/lib/auth-store";
 import { ProtectedRoute } from "@/routes/ProtectedRoute";
 import Login from "@/routes/Login";
 import Dashboard from "@/routes/Dashboard";
+import ComplianceTracker from "@/routes/ComplianceTracker";
+import AssessmentList from "@/routes/AssessmentList";
+import PeriodeAdmin from "@/routes/PeriodeAdmin";
+import Recommendations from "@/routes/Recommendations";
+import Notifications from "@/routes/Notifications";
+import AuditLogs from "@/routes/AuditLogs";
 import { AppShell } from "@/routes/AppShell";
 import { MasterLayout } from "@/routes/master/MasterLayout";
 import KonkinTemplate from "@/routes/master/KonkinTemplate";
@@ -52,6 +58,17 @@ export default function App() {
         <Route element={<ProtectedRoute />}>
           <Route element={<AppShell />}>
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/dashboard/executive" element={<Dashboard />} />
+            <Route path="/assessment" element={<AssessmentList />} />
+            <Route path="/recommendations" element={<Recommendations />} />
+            <Route path="/notifications" element={<Notifications />} />
+            <Route element={<ProtectedRoute allow={["super_admin"]} />}>
+              <Route path="/periode" element={<PeriodeAdmin />} />
+              <Route path="/audit-logs" element={<AuditLogs />} />
+            </Route>
+            <Route element={<ProtectedRoute allow={["super_admin", "admin_unit"]} />}>
+              <Route path="/compliance" element={<ComplianceTracker />} />
+            </Route>
 
             {/* B-01/B-02: spec role names verbatim. pic_bidang / asesor /
                 manajer_unit / viewer hit this gate and get redirected to

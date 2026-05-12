@@ -20,6 +20,7 @@ interface AuthState {
   user: UserPublic | null;
   accessToken: string | null;
   isAuthenticated: boolean;
+  hasHydrated: boolean;
   /** Set the session from an external source (e.g. login response). */
   setSession(user: UserPublic, accessToken: string): void;
   /** POST /auth/login + populate session on 200. Throws on 401. */
@@ -38,12 +39,16 @@ export const useAuthStore = create<AuthState>((set) => ({
   user: null,
   accessToken: null,
   isAuthenticated: false,
+  hasHydrated: false,
 
   setSession: (user, accessToken) =>
-    set({ user, accessToken, isAuthenticated: true }),
+    set({ user, accessToken, isAuthenticated: true, hasHydrated: true }),
 
   async login(email, password) {
-    const { data } = await api.post("/auth/login", { email, password });
+    const { data } = await api.post("/auth/login", {
+      email: email.trim().toLowerCase(),
+      password,
+    });
     // Backend returns { access_token, refresh_token, user }. We keep the
     // access_token in memory for Bearer-mode header echoes (used by tests),
     // but the httpOnly cookie is the authoritative auth carrier.
@@ -51,6 +56,7 @@ export const useAuthStore = create<AuthState>((set) => ({
       user: data.user as UserPublic,
       accessToken: data.access_token as string,
       isAuthenticated: true,
+      hasHydrated: true,
     });
     api.defaults.headers.common.Authorization = `Bearer ${data.access_token}`;
   },
@@ -63,15 +69,18 @@ export const useAuthStore = create<AuthState>((set) => ({
       // Either way, scrub local state.
     }
     delete api.defaults.headers.common.Authorization;
-    set({ user: null, accessToken: null, isAuthenticated: false });
+    set({ user: null, accessToken: null, isAuthenticated: false, hasHydrated: true });
   },
 
   async hydrateFromCookie() {
+    set({ hasHydrated: false });
     try {
       const { data } = await api.get("/auth/me");
-      set({ user: data as UserPublic, isAuthenticated: true });
+      set({ user: data as UserPublic, isAuthenticated: true, hasHydrated: true });
     } catch {
       // Not authenticated — stay logged out. Login flow takes care of the rest.
+      delete api.defaults.headers.common.Authorization;
+      set({ user: null, accessToken: null, isAuthenticated: false, hasHydrated: true });
     }
   },
 }));

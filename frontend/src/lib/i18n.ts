@@ -20,7 +20,7 @@ const id = {
   },
   login: {
     title: "Masuk ke PULSE",
-    username: "Pengguna",
+    username: "Email",
     password: "Kata Sandi",
     submit: "Masuk",
     wrong: "Pengguna atau kata sandi salah.",

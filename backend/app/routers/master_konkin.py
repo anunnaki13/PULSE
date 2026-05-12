@@ -219,6 +219,7 @@ async def _clone_template(
     response_model=TemplatePublic,
     status_code=status.HTTP_201_CREATED,
     summary="Create or clone konkin template (super_admin|admin_unit + CSRF)",
+    tags=["audit:konkin_template"],
     dependencies=[
         Depends(require_role("super_admin", "admin_unit")),
         Depends(require_csrf),
@@ -270,6 +271,7 @@ async def create_template(
     "/konkin/templates/{template_id}",
     response_model=TemplatePublic,
     summary="Update konkin template (super_admin|admin_unit + CSRF)",
+    tags=["audit:konkin_template"],
     dependencies=[
         Depends(require_role("super_admin", "admin_unit")),
         Depends(require_csrf),
@@ -376,6 +378,7 @@ async def _validate_template_for_lock(
     "/konkin/templates/{template_id}/lock",
     response_model=TemplatePublic,
     summary="Lock template (W-07 bobot validator; super_admin|admin_unit + CSRF)",
+    tags=["audit:konkin_template"],
     dependencies=[
         Depends(require_role("super_admin", "admin_unit")),
         Depends(require_csrf),
@@ -404,6 +407,7 @@ async def lock_template(
 @router.post(
     "/konkin/templates/{template_id}/import-from-excel",
     status_code=status.HTTP_201_CREATED,
+    tags=["audit:konkin_template"],
     summary="Import perspektif + indikator from .xlsx (admin + CSRF — B-07)",
     dependencies=[
         # B-07 fix: cookie-mode CSRF defense, same as every other mutating
@@ -491,6 +495,7 @@ async def list_perspektif(
     response_model=PerspektifPublic,
     status_code=status.HTTP_201_CREATED,
     summary="Add perspektif (super_admin|admin_unit + CSRF)",
+    tags=["audit:perspektif"],
     dependencies=[
         Depends(require_role("super_admin", "admin_unit")),
         Depends(require_csrf),
@@ -533,6 +538,7 @@ async def create_perspektif(
     "/konkin/perspektif/{perspektif_id}",
     response_model=PerspektifPublic,
     summary="Update perspektif (super_admin|admin_unit + CSRF)",
+    tags=["audit:perspektif"],
     dependencies=[
         Depends(require_role("super_admin", "admin_unit")),
         Depends(require_csrf),
@@ -562,6 +568,7 @@ async def update_perspektif(
     "/konkin/perspektif/{perspektif_id}",
     status_code=status.HTTP_204_NO_CONTENT,
     summary="Delete perspektif (super_admin|admin_unit + CSRF)",
+    tags=["audit:perspektif"],
     dependencies=[
         Depends(require_role("super_admin", "admin_unit")),
         Depends(require_csrf),
@@ -621,6 +628,7 @@ async def list_indikator(
     response_model=IndikatorPublic,
     status_code=status.HTTP_201_CREATED,
     summary="Add indikator (super_admin|admin_unit + CSRF)",
+    tags=["audit:indikator"],
     dependencies=[
         Depends(require_role("super_admin", "admin_unit")),
         Depends(require_csrf),
@@ -658,6 +666,7 @@ async def create_indikator(
     "/konkin/indikator/{indikator_id}",
     response_model=IndikatorPublic,
     summary="Update indikator (super_admin|admin_unit + CSRF)",
+    tags=["audit:indikator"],
     dependencies=[
         Depends(require_role("super_admin", "admin_unit")),
         Depends(require_csrf),
@@ -694,6 +703,7 @@ async def update_indikator(
     "/konkin/indikator/{indikator_id}",
     status_code=status.HTTP_204_NO_CONTENT,
     summary="Soft-delete indikator (super_admin|admin_unit + CSRF)",
+    tags=["audit:indikator"],
     dependencies=[
         Depends(require_role("super_admin", "admin_unit")),
         Depends(require_csrf),
@@ -780,6 +790,7 @@ async def get_ml_stream(
     response_model=MlStreamDetail,
     status_code=status.HTTP_201_CREATED,
     summary="Create ML stream (super_admin|admin_unit + CSRF)",
+    tags=["audit:ml_stream"],
     dependencies=[
         Depends(require_role("super_admin", "admin_unit")),
         Depends(require_csrf),
@@ -813,6 +824,7 @@ async def create_ml_stream(
     "/ml-stream/{stream_id}",
     response_model=MlStreamDetail,
     summary="Update ML stream (super_admin|admin_unit + CSRF)",
+    tags=["audit:ml_stream"],
     dependencies=[
         Depends(require_role("super_admin", "admin_unit")),
         Depends(require_csrf),
@@ -842,6 +854,7 @@ async def update_ml_stream(
     "/ml-stream/{stream_id}",
     status_code=status.HTTP_204_NO_CONTENT,
     summary="Soft-delete ML stream (super_admin|admin_unit + CSRF)",
+    tags=["audit:ml_stream"],
     dependencies=[
         Depends(require_role("super_admin", "admin_unit")),
         Depends(require_csrf),

@@ -29,9 +29,11 @@ from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app import __version__
+from app.core.config import settings
 from app.deps.db import get_db
 from app.deps.metrics_admin import metrics_admin_dep
 from app.deps.redis import get_redis
+from app.services.openrouter_client import ai_available, ai_mode
 
 router = APIRouter(tags=["health"])
 
@@ -89,6 +91,13 @@ async def health_detail(
             "ok": redis_s == "ok",
             "latency_ms": round(redis_ms, 2),
             "used_memory": redis_mem,
+        },
+        "ai": {
+            "available": ai_available(),
+            "mode": ai_mode(),
+            "routine_model": settings.OPENROUTER_ROUTINE_MODEL,
+            "complex_model": settings.OPENROUTER_COMPLEX_MODEL,
+            "monthly_budget_usd": settings.AI_MONTHLY_BUDGET_USD,
         },
         "version": __version__,
         "uptime_s": round(uptime_s, 1),

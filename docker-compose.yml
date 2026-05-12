@@ -2,6 +2,12 @@
 # DEC-002 identifiers locked: pulse-db / pulse-redis / pulse-backend / pulse-frontend / pulse-nginx / pulse-backup / pulse-net.
 # `version:` key intentionally omitted (Compose v2 ignores it and prints a warning if present).
 
+x-logging: &default-logging
+  driver: json-file
+  options:
+    max-size: "10m"
+    max-file: "5"
+
 services:
 
   # ---------------------------------------------------------------------------
@@ -20,6 +26,7 @@ services:
       - ./infra/db/init:/docker-entrypoint-initdb.d:ro
     networks:
       - pulse-net
+    logging: *default-logging
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
       interval: 10s
@@ -39,6 +46,7 @@ services:
       - pulse_redis_data:/data
     networks:
       - pulse-net
+    logging: *default-logging
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 10s
@@ -67,6 +75,7 @@ services:
         condition: service_healthy
     networks:
       - pulse-net
+    logging: *default-logging
     healthcheck:
       test: ["CMD", "curl", "-fsS", "http://localhost:8000/api/v1/health"]
       interval: 15s
@@ -88,6 +97,7 @@ services:
         condition: service_started
     networks:
       - pulse-net
+    logging: *default-logging
     healthcheck:
       test: ["CMD", "wget", "--spider", "-q", "http://localhost/"]
       interval: 15s
@@ -112,6 +122,7 @@ services:
         condition: service_started
     networks:
       - pulse-net
+    logging: *default-logging
     healthcheck:
       test: ["CMD", "wget", "--spider", "-q", "http://localhost/api/v1/health"]
       interval: 15s
@@ -143,6 +154,13 @@ services:
       - pulse_backups:/backups
     networks:
       - pulse-net
+    logging: *default-logging
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h $$PGHOST -U $$PGUSER -d $$PGDATABASE"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
 
 networks:
   pulse-net:

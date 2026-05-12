@@ -30,8 +30,13 @@ async def run_seed() -> None:
     # Lazy imports so the module is cheap to import (tests that just want
     # ``run_seed`` don't pay for the full domain stack).
     from .bidang import seed_bidang
+    from .indikator_applicability import seed_indikator_applicability
     from .konkin_2026 import seed_konkin_2026
     from .pilot_rubrics import seed_pilot_rubrics
+    from .stream_coverage import seed_stream_coverage
+    from .hcr_ocr import seed_hcr_ocr
+    from .subindikator_coverage import seed_subindikator_coverage
+    from .pedoman_chunks import seed_pedoman_chunks
     from .admin_user import seed_admin_user
 
     async with SessionLocal() as db:
@@ -40,6 +45,16 @@ async def run_seed() -> None:
         await seed_konkin_2026(db)
         await db.commit()
         await seed_pilot_rubrics(db)
+        await db.commit()
+        await seed_stream_coverage(db)
+        await db.commit()
+        await seed_hcr_ocr(db)
+        await db.commit()
+        await seed_subindikator_coverage(db)
+        await db.commit()
+        await seed_pedoman_chunks(db)
+        await db.commit()
+        await seed_indikator_applicability(db)
         await db.commit()
         await seed_admin_user(db)
         await db.commit()

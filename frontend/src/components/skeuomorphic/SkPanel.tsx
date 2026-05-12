@@ -19,9 +19,9 @@ export interface SkPanelProps extends HTMLAttributes<HTMLDivElement> {
  */
 export function SkPanel({ inset, title, className = "", style, children, ...rest }: SkPanelProps) {
   const raisedShadow =
-    "inset 0 1px 0 var(--sk-bevel-light), 0 2px 6px var(--sk-bevel-dark)";
+    "inset 0 1px 0 var(--sk-bevel-light), 0 8px 18px rgba(84, 101, 121, 0.14), 0 1px 3px var(--sk-bevel-dark)";
   const insetShadow =
-    "inset 0 2px 6px var(--sk-bevel-dark), inset 0 -1px 0 var(--sk-bevel-light)";
+    "inset 0 2px 7px rgba(84, 101, 121, 0.18), inset 0 -1px 0 var(--sk-bevel-light)";
 
   const panelStyle: CSSProperties = {
     background: inset ? "var(--sk-surface-1)" : "var(--sk-surface-2)",
@@ -52,7 +52,7 @@ export function SkPanel({ inset, title, className = "", style, children, ...rest
             textTransform: "uppercase",
             color: "var(--sk-text-mid)",
             marginBottom: "0.5rem",
-            borderBottom: "1px solid var(--sk-bevel-dark)",
+            borderBottom: "1px solid rgba(96, 112, 134, 0.24)",
             paddingBottom: "0.25rem",
           }}
         >

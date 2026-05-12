@@ -28,8 +28,12 @@ export interface ProtectedRouteProps {
 }
 
 export function ProtectedRoute({ allow, redirectTo = "/login" }: ProtectedRouteProps) {
-  const { user, isAuthenticated } = useAuthStore();
+  const { user, isAuthenticated, hasHydrated } = useAuthStore();
   const location = useLocation();
+
+  if (!hasHydrated) {
+    return null;
+  }
 
   if (!isAuthenticated || !user) {
     // Auth gate. Preserve the original target so login can bounce back.

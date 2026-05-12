@@ -14,10 +14,10 @@ export interface SkBadgeProps extends HTMLAttributes<HTMLSpanElement> {
  * meaning stays consistent with NKO indicator colors elsewhere.
  */
 const TONE: Record<NonNullable<SkBadgeProps["tone"]>, { fg: string; bg: string }> = {
-  neutral: { fg: "var(--sk-text-mid)", bg: "var(--sk-surface-2)" },
-  info: { fg: "#dbeafe", bg: "var(--sk-pln-blue)" },
-  success: { fg: "#0a0e14", bg: "var(--sk-level-4)" },
-  warning: { fg: "#1f1300", bg: "var(--sk-level-2)" },
+  neutral: { fg: "var(--sk-text-mid)", bg: "var(--sk-surface-3)" },
+  info: { fg: "#ffffff", bg: "var(--sk-pln-blue)" },
+  success: { fg: "#ffffff", bg: "var(--sk-level-4)" },
+  warning: { fg: "#243044", bg: "var(--sk-level-2)" },
   danger: { fg: "#ffffff", bg: "var(--sk-level-0)" },
 };
 
@@ -34,6 +34,7 @@ export function SkBadge({ tone = "neutral", style, children, ...rest }: SkBadgeP
         borderRadius: 999,
         background: c.bg,
         color: c.fg,
+        boxShadow: "inset 0 1px 0 rgba(255,255,255,0.35), 0 1px 2px rgba(74,92,112,0.14)",
         fontFamily: "var(--sk-font-mono)",
         fontSize: "0.75rem",
         letterSpacing: "0.03em",

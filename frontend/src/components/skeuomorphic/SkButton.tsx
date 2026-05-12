@@ -32,9 +32,9 @@ export const SkButton = forwardRef<HTMLButtonElement, SkButtonProps>(function Sk
   // Bevel shadow stack: top-inner light + bottom-inner dark = raised key. When
   // pressed, swap the stack to push the bevel inward (sunk key).
   const raisedShadow =
-    "inset 0 1px 0 var(--sk-bevel-light), inset 0 -2px 4px var(--sk-bevel-dark), 0 1px 2px rgba(0,0,0,0.35)";
+    "inset 0 1px 0 var(--sk-bevel-light), inset 0 -2px 4px rgba(74, 92, 112, 0.20), 0 2px 5px rgba(74, 92, 112, 0.16)";
   const sunkShadow =
-    "inset 0 -1px 0 var(--sk-bevel-light), inset 0 2px 6px var(--sk-bevel-dark)";
+    "inset 0 -1px 0 var(--sk-bevel-light), inset 0 2px 7px rgba(74, 92, 112, 0.22)";
 
   const visualStyle: CSSProperties = {
     background: tone.bg,

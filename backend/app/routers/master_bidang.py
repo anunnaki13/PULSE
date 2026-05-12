@@ -127,6 +127,7 @@ async def get_bidang(
     response_model=BidangPublic,
     status_code=status.HTTP_201_CREATED,
     summary="Create bidang (super_admin|admin_unit + CSRF)",
+    tags=["audit:bidang"],
     dependencies=[
         Depends(require_role("super_admin", "admin_unit")),
         Depends(require_csrf),
@@ -174,6 +175,7 @@ async def create_bidang(
     "/{bidang_id}",
     response_model=BidangPublic,
     summary="Update bidang (super_admin|admin_unit + CSRF)",
+    tags=["audit:bidang"],
     dependencies=[
         Depends(require_role("super_admin", "admin_unit")),
         Depends(require_csrf),
@@ -216,6 +218,7 @@ async def update_bidang(
     "/{bidang_id}",
     status_code=status.HTTP_204_NO_CONTENT,
     summary="Soft-delete bidang (super_admin|admin_unit + CSRF)",
+    tags=["audit:bidang"],
     dependencies=[
         Depends(require_role("super_admin", "admin_unit")),
         Depends(require_csrf),

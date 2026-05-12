@@ -81,6 +81,7 @@ def create_access_token(
         "sub": sub,
         "roles": roles,
         "bidang_id": bidang_id,
+        "jti": uuid4().hex,
         "iat": now,
         "exp": exp,
         "typ": "access",

@@ -3,6 +3,7 @@
 .env
 .env.local
 .env.*.local
+.env.production*
 
 # Claude Code runtime state (worktrees, agent transcripts, cache)
 .claude/

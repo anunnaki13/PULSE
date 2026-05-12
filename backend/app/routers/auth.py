@@ -59,6 +59,7 @@ from app.deps.redis import get_redis
 from app.models.user import User
 from app.schemas.auth import LoginRequest, RefreshRequest, TokenPair
 from app.schemas.user import UserPublic
+from app.services.audit_immediate import audit_emit_immediately
 from app.services.refresh_tokens import is_revoked, revoke_jti
 
 router = APIRouter(prefix="/auth", tags=["auth"])
@@ -158,8 +159,14 @@ async def _reset_login_fail(r: Redis, email: str) -> None:
 # --- /login -----------------------------------------------------------------
 
 
-@router.post("/login", response_model=TokenPair, summary="Email+password login (dual-mode)")
+@router.post(
+    "/login",
+    response_model=TokenPair,
+    summary="Email+password login (dual-mode)",
+    tags=["audit:auth"],
+)
 async def login(
+    request: Request,
     response: Response,
     payload: LoginRequest = Body(...),
     db: AsyncSession = Depends(get_db),
@@ -182,6 +189,16 @@ async def login(
 
     # Lockout check BEFORE any DB / bcrypt work (cheap deny).
     if await _is_locked(r, email):
+        await audit_emit_immediately(
+            db,
+            user_id=None,
+            action="POST /api/v1/auth/login",
+            before=None,
+            after={"event": "login.failure", "email": email, "reason": "locked"},
+            entity_type="auth",
+            entity_id=None,
+            request=request,
+        )
         raise HTTPException(
             status.HTTP_429_TOO_MANY_REQUESTS,
             "Too many failed login attempts; account temporarily locked",
@@ -195,7 +212,18 @@ async def login(
         )
     )
     if not user or not user.is_active or not verify_password(payload.password, user.password_hash):
+        reason = "inactive" if user and not user.is_active else "bad_password"
         await _record_login_fail(r, email)
+        await audit_emit_immediately(
+            db,
+            user_id=user.id if user else None,
+            action="POST /api/v1/auth/login",
+            before=None,
+            after={"event": "login.failure", "email": email, "reason": reason},
+            entity_type="auth",
+            entity_id=user.id if user else None,
+            request=request,
+        )
         # Re-check lockout: the failure we just recorded may have crossed the threshold.
         # On the threshold-crossing failure we still want the user to see 401 (consistent
         # with "wrong password") — the NEXT request from the same email is what gets 429.
@@ -222,6 +250,12 @@ async def login(
         refresh_exp,
         csrf_token,
     )
+    request.state.audit_after = {
+        "event": "login.success",
+        "email": email,
+        "user_id": str(user.id),
+    }
+    request.state.audit_entity_id = str(user.id)
 
     return TokenPair(
         access_token=access_token,
@@ -331,8 +365,10 @@ async def refresh(
     "/logout",
     status_code=status.HTTP_204_NO_CONTENT,
     summary="Revoke active refresh token + clear cookies",
+    tags=["audit:auth"],
 )
 async def logout(
+    request: Request,
     response: Response,
     refresh_token_cookie: str | None = Cookie(default=None, alias="refresh_token"),
     payload: RefreshRequest | None = Body(default=None),
@@ -349,6 +385,7 @@ async def logout(
         token = payload.refresh_token
     elif refresh_token_cookie:
         token = refresh_token_cookie
+    audit_user_id = None
 
     if token:
         try:
@@ -358,6 +395,12 @@ async def logout(
                 jti = claims.get("jti")
                 exp_ts = claims.get("exp")
                 if sub and jti and exp_ts is not None:
+                    import uuid as _uuid
+
+                    try:
+                        audit_user_id = _uuid.UUID(str(sub))
+                    except (TypeError, ValueError):
+                        audit_user_id = None
                     exp = datetime.fromtimestamp(int(exp_ts), tz=timezone.utc)
                     await revoke_jti(r, sub, jti, exp)
         except JWTError:
@@ -365,6 +408,11 @@ async def logout(
             pass
 
     _clear_auth_cookies(response)
+    request.state.audit_after = {
+        "event": "logout",
+        "user_id": str(audit_user_id) if audit_user_id else None,
+    }
+    request.state.audit_entity_id = str(audit_user_id) if audit_user_id else None
     response.status_code = status.HTTP_204_NO_CONTENT
     return response
 

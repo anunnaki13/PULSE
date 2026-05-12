@@ -1,0 +1,14 @@
+{
+  "friendly_name": "PULSE Production Health",
+  "type": "HTTP(s)",
+  "url": "https://pulse.tenayan.local/api/v1/health",
+  "interval_seconds": 60,
+  "timeout_seconds": 10,
+  "expected_status": 200,
+  "alert_contacts": ["ops-team"],
+  "notes": [
+    "Alert on HTTP non-2xx.",
+    "Enable SSL certificate expiry alert.",
+    "Use /api/v1/health/detail only from trusted networks because it requires authentication."
+  ]
+}

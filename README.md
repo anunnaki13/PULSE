@@ -12,6 +12,8 @@ Referensi: **Peraturan Direksi PT PLN Nusantara Power Nomor 0019.P/DIR/2025** (1
 
 Nama, akronim, tagline, dan riwayat rebrand (DEC-001) ke PULSE didokumentasikan lengkap di [`docs/ABOUT-THE-NAME.md`](docs/ABOUT-THE-NAME.md). Singkatnya: **P**erformance & **U**nit **L**ive **S**coring **E**ngine, dengan **Pulse Heartbeat** sebagai tanda tangan visual (LED berdenyut 60–80 BPM saat sehat).
 
+Panduan fungsi menu aplikasi tersedia di [`docs/MENU-GUIDE.md`](docs/MENU-GUIDE.md).
+
 ---
 
 ## Quick Start
@@ -69,6 +71,9 @@ Dua entrypoint, perilaku identik. `make` untuk Linux/macOS/Git Bash; `./scripts/
 | restore  | `make restore FILE=…` | `./scripts/dev.ps1 restore -File …` | `FILE=… ./scripts/dev.sh restore`   | Restore dari file backup `.sql.gz`                |
 | logs     | `make logs`     | `./scripts/dev.ps1 logs`            | `./scripts/dev.sh logs`                | `docker compose logs -f --tail=200`               |
 | lint     | `make lint`     | `./scripts/dev.ps1 lint`            | `./scripts/dev.sh lint`                | ruff (backend) + eslint (frontend)                |
+| prod-env | `make prod-env` | `./scripts/dev.ps1 prod-env`        | `./scripts/dev.sh prod-env`            | Generate `.env.production.generated`              |
+| prod-check | `make prod-check` | `./scripts/dev.ps1 prod-check`   | `./scripts/dev.sh prod-check`          | Validasi gate go-live production                  |
+| prod-smoke | `BASE_URL=… EMAIL=… PASSWORD=… make prod-smoke` | `./scripts/dev.ps1 prod-smoke -BaseUrl … -Email … -Password …` | `BASE_URL=… EMAIL=… PASSWORD=… ./scripts/dev.sh prod-smoke` | Smoke test deploy production/local                |
 
 ---
 
@@ -141,8 +146,7 @@ PULSE/
 └── .planning/                     # GSD planning artifacts (PHASE/PLAN/SUMMARY)
 ```
 
+Tambahan Phase 6 production hardening:
+`infra/production/` berisi template host Nginx TLS, script firewall UFW, dan contoh konfigurasi external monitor untuk go-live.
+
 ---
-
-## Lisensi & Kerahasiaan
-
-Proyek internal CV Panda Global Teknologi untuk PT PLN Nusantara Power UP Tenayan. Tidak untuk distribusi publik.

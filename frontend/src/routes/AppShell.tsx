@@ -13,13 +13,18 @@ import { Outlet, useNavigate, Link } from "react-router-dom";
 import { useAuthStore } from "@/lib/auth-store";
 import { t } from "@/lib/i18n";
 import { SkButton, SkLed, SkBadge } from "@/components/skeuomorphic";
+import { useNotifications } from "@/lib/phase2-api";
 
 export function AppShell() {
   const navigate = useNavigate();
   const { user, logout } = useAuthStore();
+  const notifications = useNotifications();
 
   const canSeeMaster =
     user?.roles.includes("super_admin") || user?.roles.includes("admin_unit");
+  const canWorkAssessment =
+    !!user && user.roles.some((role) => ["super_admin", "pic_bidang", "asesor"].includes(role));
+  const unread = (notifications.data?.data ?? []).filter((row) => !row.read_at).length;
 
   const handleLogout = async () => {
     await logout();
@@ -60,19 +65,53 @@ export function AppShell() {
           {t("app.name")}
         </Link>
 
-        <nav style={{ display: "flex", gap: "0.5rem", marginLeft: "1rem" }}>
+        <nav style={{ display: "flex", gap: "0.5rem", marginLeft: "1rem", flexWrap: "wrap" }}>
           <Link to="/dashboard" style={{ textDecoration: "none" }}>
             <SkButton variant="ghost" type="button">
               {t("nav.dashboard")}
             </SkButton>
           </Link>
-          {canSeeMaster && (
-            <Link to="/master/konkin-template/2026" style={{ textDecoration: "none" }}>
+          {canWorkAssessment && (
+            <Link to="/assessment" style={{ textDecoration: "none" }}>
               <SkButton variant="ghost" type="button">
-                {t("nav.master")}
+                Assessment
               </SkButton>
             </Link>
           )}
+          <Link to="/recommendations" style={{ textDecoration: "none" }}>
+            <SkButton variant="ghost" type="button">
+              Rekomendasi
+            </SkButton>
+          </Link>
+          {canSeeMaster && (
+            <>
+              <Link to="/periode" style={{ textDecoration: "none" }}>
+                <SkButton variant="ghost" type="button">
+                  Periode
+                </SkButton>
+              </Link>
+              <Link to="/compliance" style={{ textDecoration: "none" }}>
+                <SkButton variant="ghost" type="button">
+                  Compliance
+                </SkButton>
+              </Link>
+              <Link to="/audit-logs" style={{ textDecoration: "none" }}>
+                <SkButton variant="ghost" type="button">
+                  Audit
+                </SkButton>
+              </Link>
+              <Link to="/master/konkin-template/2026" style={{ textDecoration: "none" }}>
+                <SkButton variant="ghost" type="button">
+                  {t("nav.master")}
+                </SkButton>
+              </Link>
+            </>
+          )}
+          <Link to="/notifications" style={{ textDecoration: "none" }}>
+            <SkButton variant="ghost" type="button">
+              Notifikasi {unread > 0 ? `(${unread})` : ""}
+            </SkButton>
+          </Link>
         </nav>
 
         <div

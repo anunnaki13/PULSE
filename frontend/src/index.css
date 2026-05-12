@@ -7,41 +7,41 @@
    and CONSTR-design-tokens. B-03 fix: parameterized --sk-led-glow + alert variant. */
 :root {
   /* Surfaces — control-room dark */
-  --sk-surface-0:  #0a0e14;
-  --sk-surface-1:  #11161f;
-  --sk-surface-2:  #1a2030;
-  --sk-surface-3:  #232a3d;
-  --sk-bevel-light: rgba(255, 255, 255, 0.06);
-  --sk-bevel-dark:  rgba(0, 0, 0, 0.40);
+  --sk-surface-0:  #dce7ef;
+  --sk-surface-1:  #e8f0f6;
+  --sk-surface-2:  #f4f8fb;
+  --sk-surface-3:  #cbd9e4;
+  --sk-bevel-light: rgba(255, 255, 255, 0.90);
+  --sk-bevel-dark:  rgba(74, 92, 112, 0.24);
 
   /* PLN brand */
-  --sk-pln-blue:        #1e3a8a;
-  --sk-pln-blue-glow:   rgba(30, 58, 138, 0.55);
-  --sk-pln-yellow:      #fbbf24;
-  --sk-pln-yellow-glow: rgba(251, 191, 36, 0.55);
+  --sk-pln-blue:        #2f6fa3;
+  --sk-pln-blue-glow:   rgba(47, 111, 163, 0.35);
+  --sk-pln-yellow:      #f4b942;
+  --sk-pln-yellow-glow: rgba(244, 185, 66, 0.42);
 
   /* Level palette — red → emerald (L0..L4) */
-  --sk-level-0: #dc2626;  /* red */
-  --sk-level-1: #f59e0b;  /* amber */
-  --sk-level-2: #facc15;  /* yellow */
-  --sk-level-3: #84cc16;  /* lime */
-  --sk-level-4: #10b981;  /* emerald */
+  --sk-level-0: #d95b59;  /* soft red */
+  --sk-level-1: #e99b45;  /* soft amber */
+  --sk-level-2: #e7c850;  /* soft yellow */
+  --sk-level-3: #8fbd62;  /* soft green */
+  --sk-level-4: #45b987;  /* soft emerald */
 
   /* LED glow — B-03 fix: parameterized + alert variant.
      The .sk-led[data-state="..."] rules in pulse-heartbeat.css override
      --sk-led-glow per state so getComputedStyle yields distinct values. */
   --sk-led-glow:        var(--sk-pln-yellow-glow);   /* default healthy */
-  --sk-led-alert-glow:  rgba(239, 68, 68, 0.65);     /* L0-derived red glow */
+  --sk-led-alert-glow:  rgba(217, 91, 89, 0.55);      /* L0-derived red glow */
 
   /* LCD */
-  --sk-lcd-bg:    #0d1610;
-  --sk-lcd-green: #4ade80;
-  --sk-lcd-glow:  rgba(74, 222, 128, 0.65);
+  --sk-lcd-bg:    #e5f1e9;
+  --sk-lcd-green: #2f9d63;
+  --sk-lcd-glow:  rgba(47, 157, 99, 0.38);
 
   /* Text */
-  --sk-text-hi:  #e5e7eb;
-  --sk-text-mid: #9ca3af;
-  --sk-text-lo:  #6b7280;
+  --sk-text-hi:  #223043;
+  --sk-text-mid: #607086;
+  --sk-text-lo:  #8a99aa;
 
   /* Typography stack (CONSTR-design-tokens) */
   --sk-font-display: "Bebas Neue", "Oswald", system-ui, sans-serif;
@@ -80,4 +80,43 @@ body {
   font-family: var(--sk-font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.sk-slider {
+  height: 28px;
+  border-radius: 999px;
+}
+
+.sk-slider::-webkit-slider-runnable-track {
+  height: 10px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--sk-surface-3), var(--sk-surface-2));
+  border: 1px solid var(--sk-bevel-dark);
+  box-shadow: inset 0 2px 4px rgba(74, 92, 112, 0.18);
+}
+
+.sk-slider::-webkit-slider-thumb {
+  width: 24px;
+  height: 24px;
+  margin-top: -8px;
+  border-radius: 6px;
+  border: 1px solid var(--sk-bevel-dark);
+  background: var(--sk-pln-yellow);
+  box-shadow: 0 2px 5px rgba(74, 92, 112, 0.28), inset 0 1px 0 var(--sk-bevel-light);
+  appearance: none;
+}
+
+.sk-slider::-moz-range-track {
+  height: 10px;
+  border-radius: 999px;
+  background: var(--sk-surface-3);
+  border: 1px solid var(--sk-bevel-dark);
+}
+
+.sk-slider::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  border: 1px solid var(--sk-bevel-dark);
+  background: var(--sk-pln-yellow);
 }

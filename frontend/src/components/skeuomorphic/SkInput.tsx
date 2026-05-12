@@ -33,11 +33,12 @@ export const SkInput = forwardRef<HTMLInputElement, SkInputProps>(function SkInp
       style={{
         background: "var(--sk-surface-2)",
         color: "var(--sk-text-hi)",
-        border: invalid ? "1px solid var(--sk-level-0)" : "1px solid var(--sk-bevel-light)",
-        borderRadius: 4,
+        border: invalid ? "1px solid var(--sk-level-0)" : "1px solid rgba(96, 112, 134, 0.28)",
+        borderRadius: 6,
         padding: "0.5rem 0.75rem",
         fontFamily: "var(--sk-font-mono)",
         outline: "none",
+        boxShadow: "inset 0 2px 5px rgba(74, 92, 112, 0.12), inset 0 -1px 0 rgba(255,255,255,0.75)",
         ...style,
       }}
       {...rest}

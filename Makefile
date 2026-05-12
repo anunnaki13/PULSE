@@ -2,7 +2,7 @@
 # Cross-platform DX entrypoint. Use under Git Bash on Windows or directly on Linux/macOS.
 # Windows hosts without `make` should call `./scripts/dev.ps1 <verb>` (PowerShell fallback).
 
-.PHONY: help up down build seed migrate test backup restore lint logs
+.PHONY: help up down build seed migrate test backup restore lint logs prod-env prod-check prod-smoke
 
 help:
 	@echo "PULSE — Developer verbs"
@@ -16,6 +16,9 @@ help:
 	@echo "  make restore FILE=…  Restore from a backup file (gzipped pg_dump)"
 	@echo "  make logs            Tail logs from all services"
 	@echo "  make lint            Run ruff (backend) + eslint (frontend)"
+	@echo "  make prod-env        Generate .env.production.generated"
+	@echo "  make prod-check      Validate production readiness gates"
+	@echo "  BASE_URL=… EMAIL=… PASSWORD=… [PERIODE_ID=…] make prod-smoke"
 	@echo ""
 	@echo "Windows users without make: ./scripts/dev.ps1 <verb>"
 
@@ -49,3 +52,12 @@ logs:
 
 lint:
 	cd backend && ruff check . ; cd ../frontend && pnpm run lint
+
+prod-env:
+	./scripts/generate-prod-env.sh
+
+prod-check:
+	./scripts/prod-readiness.sh
+
+prod-smoke:
+	./scripts/prod-smoke.sh

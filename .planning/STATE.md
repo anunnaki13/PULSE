@@ -2,17 +2,17 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-current_phase: 02
-current_plan: 0
-status: phase-complete
-last_updated: "2026-05-11T15:30:00.000Z"
+current_phase: 06
+current_plan: 5
+status: in-progress
+last_updated: "2026-05-12T15:10:00.000+07:00"
 progress:
   total_phases: 6
-  completed_phases: 1
-  total_plans: 7
-  completed_plans: 7
-  in_progress_plans: 0
-  percent: 17
+  completed_phases: 5
+  total_plans: 24
+  completed_plans: 23
+  in_progress_plans: 1
+  percent: 88
 ---
 
 # STATE — PULSE
@@ -25,20 +25,23 @@ progress:
 
 - **Name:** PULSE — Performance & Unit Live Scoring Engine
 - **Core Value:** Kertas kerja digital + workflow asesmen real-time NKO untuk Kontrak Kinerja Unit di PLTU Tenayan, PT PLN Nusantara Power. Replaces Excel-based per-stream kertas kerja with structured, auditable, collaborative platform.
-- **Current Focus:** Phase 01 — foundation-master-data-auth
+- **Current Focus:** Phase 06 - Stream Coverage Lengkap + HCR + Go-Live Hardening
 - **Reference Doc:** Peraturan Direksi PT PLN Nusantara Power Nomor 0019.P/DIR/2025 (17 Juli 2025)
 
 ---
 
 ## Current Position
 
-Phase: 01 (foundation-master-data-auth) — **COMPLETE** ✓
-Phase: 02 (assessment-workflow) — pending discuss/plan/execute
+Phase: 01 (foundation-master-data-auth) - **COMPLETE**
+Phase: 02 (assessment-workflow) - **COMPLETE** (UAT closed 2026-05-12)
+Phase: 03 (nko-calculator-dashboard) - **COMPLETE** (UAT closed 2026-05-12)
+Phase: 04 (compliance-tracker-reports) - **COMPLETE** (UAT closed 2026-05-12)
+Phase: 05 (ai-integration) - **COMPLETE** (UAT closed 2026-05-12)
 
-- **Current Phase:** 02 (Assessment Workflow — PIC self-assessment + Asesor review + rekomendasi tracker)
-- **Current Plan:** none (Phase 02 CONTEXT gathered 2026-05-11, commit `a056fa4`; next is `/gsd-plan-phase 2`)
-- **Status:** Phase 01 closed 2026-05-11 (browser-verified). Phase 02 CONTEXT.md committed with 16 sub-decisions across 6 topics (periode lifecycle, ML LevelSelector + auto-save, asesor override, recommendations, notifications, audit log). Notable scope reduction: email/SMTP notifications descoped at user direction.
-- **Progress:** 17% — `[█████████░░░░░░] 1/6 phases complete (Phase 01 of 6)` · `MVP boundary` = end of Phase 03 → 1/3 of MVP done
+- **Current Phase:** 06 (Stream Coverage Lengkap + HCR + Go-Live Hardening)
+- **Current Plan:** 06-05 Production hardening and final UAT in progress; local UAT passed, production handover gates remain.
+- **Status:** Phase 01 closed 2026-05-11. Phase 02 closed 2026-05-12. Phase 03 closed 2026-05-12 after Chrome headless operator verification. Phase 04 closed 2026-05-12 after compliance API/UI/NKO/export UAT. Phase 05 closed 2026-05-12 after core AI UAT. Phase 06 Plans 06-01 through 06-04 closed after stream, HCR/OCR, subindikator formula coverage, and Pedoman RAG/summary/action-plan coverage.
+- **Progress:** 88% - `5/6 phases complete`; MVP boundary reached at end of Phase 03.
 
 ---
 
@@ -49,9 +52,9 @@ Phase: 02 (assessment-workflow) — pending discuss/plan/execute
 - **Total Phases:** 6 (Phase 1 → Phase 6)
 - **MVP Boundary:** End of Phase 3 (per source §5)
 - **Coverage:** 50/50 v1 requirements mapped ✓
-- **Plans Completed:** 7 of 7 in Phase 1 (all closed 2026-05-11)
-- **Plans In Progress:** 0
-- **Plans Remaining (Phase 2+):** Phase 2 (Assessment Workflow) → Phase 3 (NKO Calculator + Dashboard — MVP boundary) → Phase 4 (Compliance + Reports) → Phase 5 (AI Integration) → Phase 6 (Stream Coverage Lengkap + HCR + Go-Live)
+- **Plans Completed:** 7 of 7 in Phase 1, 4 of 4 in Phase 2, 2 of 2 implementation plans in Phase 3, 3 of 3 implementation plans in Phase 4, 3 of 3 implementation plans in Phase 5, and 4 of 5 implementation plans in Phase 6
+- **Plans In Progress:** 1
+- **Plans Remaining:** Phase 6 (5 planned execution slices)
 - **Locked Decisions:** 11 (DEC-001 → DEC-011, all from ADR UPDATE-001, precedence=0)
 
 ---
@@ -95,11 +98,12 @@ See `PROJECT.md` `<decisions status="LOCKED">` block for full text. Summary:
 
 ### Active Todos
 
-None yet — created during phase planning.
+- Phase 06 Plan 06-05: resolve production handover gates before closing the milestone.
 
 ### Blockers
 
-- None. Phase 1 fully verified end-to-end (automation + operator browser walk). Toolchain decision recorded: all dev tooling lives inside `Ubuntu-22.04` WSL2 distro (docker-ce 29.4.3 + compose v5.1.3, python 3.11.15, node 20.20.2 + pnpm 10.15.0). Invoke from PowerShell via `wsl -d Ubuntu-22.04 -- <tool> …`. Idle-VM suspends port forwarding — for live browser sessions, keep a heartbeat task in WSL or set `vmIdleTimeout=-1` in `~/.wslconfig`.
+- Phase 06 Plan 06-05 local hardening/UAT passed. Production release remains blocked until `.env` secrets are rotated, OpenRouter key/quota is provisioned with `AI_MOCK_MODE=false`, SSL is provisioned, VPS firewall is applied, and external health monitoring is configured. Secret generation, readiness validation, and deploy smoke tooling are available via `prod-env`, `prod-check`, and `prod-smoke`; see `06-PRODUCTION-CHECKLIST.md` and `06-GO-LIVE-RUNBOOK.md`.
+- Toolchain decision recorded: all dev tooling lives inside `Ubuntu-22.04` WSL2 distro (docker-ce 29.4.3 + compose v5.1.3, python 3.11.15, node 20.20.2 + pnpm 10.15.0). Invoke from PowerShell via `wsl -d Ubuntu-22.04 -- <tool> ...`. Idle-VM suspends port forwarding; for live browser sessions, keep a heartbeat task in WSL or set `vmIdleTimeout=-1` in `~/.wslconfig`.
 
 ### Open Items (deferred — DEC-011, NOT locked)
 
@@ -122,7 +126,7 @@ None yet — created during phase planning.
 ### Resume Pointer
 
 ```
-Status: Phase 01 closed. Ready for Phase 02 kickoff.
+Status: Phase 02 Plan 04 frontend shell substantially complete. Authoritative indikator/ML stream rubric rendering is covered by backend contract test and frontend parser compatibility; ready for operator browser verification.
 
 Phase 02 (Assessment Workflow — see ROADMAP.md):
   - Depends on Phase 01 (✓ complete)

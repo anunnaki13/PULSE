@@ -27,6 +27,7 @@ import pytest
 from sqlalchemy import func, select
 
 from app.models.bidang import Bidang
+from app.models.indikator_applicable_bidang import IndikatorApplicableBidang
 from app.models.konkin_template import KonkinTemplate
 from app.models.ml_stream import MlStream
 from app.models.perspektif import Perspektif
@@ -52,6 +53,9 @@ async def test_seed_runs_idempotently(db_session):
                 select(func.count()).select_from(Perspektif)
             ),
             "ml_stream": await db_session.scalar(select(func.count()).select_from(MlStream)),
+            "indikator_applicable_bidang": await db_session.scalar(
+                select(func.count()).select_from(IndikatorApplicableBidang)
+            ),
         }
 
     counts1 = await _counts()
@@ -66,8 +70,49 @@ async def test_seed_runs_idempotently(db_session):
     assert counts1["bidang"] >= 20, f"expected ≥20 bidang rows, got {counts1['bidang']}"
     assert counts1["templates"] >= 1
     assert counts1["perspektif"] >= 6
-    assert counts1["ml_stream"] >= 4
+    assert counts1["ml_stream"] >= 18
+    assert counts1["indikator_applicable_bidang"] >= 30
     assert counts1["users"] >= 1
+
+
+@pytest.mark.asyncio
+async def test_phase6_remaining_stream_blueprints_seeded(db_session):
+    from app.seed import run_seed
+    from app.seed.stream_coverage import REMAINING_STREAMS
+
+    await run_seed()
+
+    rows = (
+        await db_session.execute(
+            select(MlStream.kode, MlStream.structure).where(
+                MlStream.kode.in_([stream["kode"] for stream in REMAINING_STREAMS])
+            )
+        )
+    ).all()
+    by_kode = {kode: structure for kode, structure in rows}
+
+    assert set(by_kode) == {stream["kode"] for stream in REMAINING_STREAMS}
+    assert all((structure.get("areas") or []) for structure in by_kode.values())
+    assert all(structure.get("placeholder") is True for structure in by_kode.values())
+
+
+@pytest.mark.asyncio
+async def test_phase6_hcr_ocr_blueprints_seeded(db_session):
+    from app.seed import run_seed
+
+    await run_seed()
+
+    rows = (
+        await db_session.execute(
+            select(MlStream.kode, MlStream.structure).where(MlStream.kode.in_(["HCR", "OCR"]))
+        )
+    ).all()
+    by_kode = {kode: structure for kode, structure in rows}
+
+    assert set(by_kode) == {"HCR", "OCR"}
+    assert len(by_kode["HCR"]["areas"]) == 7
+    owm = next(area for area in by_kode["OCR"]["areas"] if area["kode"] == "OCR-OWM")
+    assert [sub["weight"] for sub in owm["sub_areas"]] == [0.55, 0.45]
 
 
 @pytest.mark.asyncio

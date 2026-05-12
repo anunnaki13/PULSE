@@ -11,10 +11,10 @@
 ## Phases
 
 - [x] **Phase 1: Foundation (Master Data + Auth)** — App boots, login works, master data Konkin 2026 ter-seed, struktur stream bisa dibrowse, docker compose + nginx stack online di port 3399, design-system primitives dipakai. *Closed 2026-05-11 — operator-verified E2E.*
-- [ ] **Phase 2: Assessment Workflow (PIC + Asesor)** — End-to-end self-assessment + asesor review + rekomendasi tracker untuk indikator pilot (Outage + SMAP + EAF + EFOR), notifications + audit log live.
-- [ ] **Phase 3: NKO Calculator + Dashboard** — NKO terhitung otomatis multi-tier, dashboard eksekutif + heatmap + trend live via WebSocket. Akhir fase ini = MVP USABLE.
-- [ ] **Phase 4: Compliance Tracker + Reports** — 9 laporan rutin + komponen lain ter-track, pengurang terintegrasi ke NKO, export PDF/Excel/Word resmi.
-- [ ] **Phase 5: AI Integration** — OpenRouter routing + 5 fitur AI MVP (Draft Justifikasi, Draft Rekomendasi, Anomaly Detection, AI Inline Help, Comparative Analysis) + sub-fase 5b RAG/Summary/SMART.
+- [x] **Phase 2: Assessment Workflow (PIC + Asesor)** — End-to-end self-assessment + asesor review + rekomendasi tracker untuk indikator pilot (Outage + SMAP + EAF + EFOR), notifications + audit log live. *Closed 2026-05-12 — role-specific UAT passed for super_admin, pic_bidang, and asesor.*
+- [x] **Phase 3: NKO Calculator + Dashboard** — NKO terhitung otomatis multi-tier, dashboard eksekutif + heatmap + trend live via WebSocket. Akhir fase ini = MVP USABLE. *Closed 2026-05-12 — Chrome headless operator verification passed.*
+- [x] **Phase 4: Compliance Tracker + Reports** — 9 laporan rutin + komponen lain ter-track, pengurang terintegrasi ke NKO, export PDF/Excel/Word resmi. *Closed 2026-05-12 — compliance UI, NKO deduction, and report export UAT passed.*
+- [x] **Phase 5: AI Integration** — OpenRouter routing + 5 fitur AI MVP (Draft Justifikasi, Draft Rekomendasi, Anomaly Detection, AI Inline Help, Comparative Analysis) + sub-fase 5b RAG/Summary/SMART. *Closed 2026-05-12 — Phase 5 core AI UAT passed; Phase 5b optional items deferred to Phase 6/go-live hardening.*
 - [ ] **Phase 6: Stream Coverage Lengkap + HCR + Go-Live Hardening** — Semua 14 sub-stream ML Pilar II + HCR + sub-indikator Pilar I/IV/V ter-implementasi, prod checklist passed.
 
 ---
@@ -72,7 +72,14 @@
   4. PIC dapat update progress rekomendasi (`PATCH /recommendations/{id}/progress`), mark-completed → pending_review; asesor verify-close menutup rekomendasi; periode close otomatis carry-over rekomendasi yang belum tuntas.
   5. Notifikasi `assessment_due` / `review_pending` / `recommendation_assigned` terkirim via WebSocket `/ws/notifications` dan email SMTP untuk deadline; setiap mutating action tercatat di `audit_log` dengan `before_data`/`after_data`.
 
-**Plans**: TBD
+**Plans**: 4 plans across 4 waves
+
+- [x] 02-01-backend-schema-and-migrations-PLAN.md — Backend schema, Alembic migrations, assessment/periode/recommendation foundations. SUMMARY: `02-01-backend-schema-and-migrations-SUMMARY.md`.
+- [x] 02-02-periode-assessment-recommendation-routers-PLAN.md — Periode lifecycle, assessment-session, recommendation routers and services. SUMMARY: `02-02-periode-assessment-recommendation-routers-SUMMARY.md`.
+- [x] 02-03-audit-middleware-notifications-websocket-PLAN.md — Audit log, notification dispatcher, REST routes, WebSocket notifications. SUMMARY: `02-03-audit-middleware-notifications-websocket-SUMMARY.md`.
+- [x] 02-04-frontend-assessment-workflow-shell-PLAN.md — Frontend periode, assessment, recommendation, notification, audit-log surfaces plus ML rubric rendering and autosave support. SUMMARY: `02-04-frontend-assessment-workflow-shell-SUMMARY.md`.
+
+**UAT**: `02-UAT.md` — 7/7 automated role-specific tests passed on 2026-05-12.
 **UI hint**: yes
 
 ---
@@ -91,7 +98,10 @@
   4. Saat asesor approve sebuah indikator di workspace, NkoGauge di dashboard manajer ter-update tanpa manual refresh via `WS /ws/dashboard` payload `{type: "nko_updated", periode_id, nko_total, changed_indikator}`.
   5. Drill-down navigation berfungsi: Pilar → Indikator → komponen detail; minimum 4 indikator (EAF, EFOR, Outage ML, SMAP) sudah ter-track dan terhitung dalam NKO total — **MVP USABLE**.
 
-**Plans**: TBD
+**Plans**: 2 planned execution slices (created 2026-05-12)
+
+- [x] 03-01-nko-snapshot-engine-dashboard-api-PLAN.md — Persisted NKO snapshot engine, blueprint-aware aggregation rules, executive dashboard/heatmap/trend APIs, and dashboard WebSocket broadcast. SUMMARY: `03-01-nko-snapshot-engine-dashboard-api-SUMMARY.md`.
+- [x] 03-02-executive-dashboard-live-integration-PLAN.md — Connect the existing dashboard prototype to live APIs/WS, keep dummy fallback data for unavailable live history, and preserve stream-specific formulas/units in drilldowns. SUMMARY: `03-02-executive-dashboard-live-integration-SUMMARY.md`.
 **UI hint**: yes
 
 ---
@@ -110,7 +120,13 @@
   4. Komponen non-laporan (PACA, Critical Event, ICOFR, NAC) ter-track via `compliance_komponen` + `compliance_komponen_realisasi` dengan formula configurable per komponen.
   5. Manajer dapat export `GET /reports/nko-semester?periode_id=&format=pdf` dengan format mirror `08_Draft_NKO_UP_Tenayan_SMT_2_2025`, export Excel kertas-kerja per session, multi-sheet compliance detail, dan recommendation tracker — semua membuka tanpa error di MS Excel/Word/Acrobat.
 
-**Plans**: TBD
+**Plans**: 3 planned execution slices (created 2026-05-12)
+
+- [x] 04-01-compliance-backend-summary-nko-PLAN.md — Compliance persistence, deduction summary, and NKO integration. SUMMARY: `04-01-compliance-backend-summary-nko-SUMMARY.md`.
+- [x] 04-02-compliance-frontend-dashboard-PLAN.md — Compliance tracker UI and dashboard deduction surfacing. SUMMARY: `04-02-compliance-frontend-dashboard-SUMMARY.md`.
+- [x] 04-03-report-exports-PLAN.md — NKO, assessment, compliance, and recommendation export endpoints. SUMMARY: `04-03-report-exports-SUMMARY.md`.
+
+**UAT**: `04-UAT.md` — compliance API/UI/NKO/export checks passed on 2026-05-12.
 
 ---
 
@@ -129,7 +145,12 @@
   5. Saat OpenRouter unavailable, semua AI button disabled dengan tooltip "Layanan AI sementara tidak tersedia"; form workflows tetap fungsional 100%; error tercatat dengan exponential backoff. Sub-fase 5b: chat RAG dengan Pedoman Konkin (Claude Sonnet, k=5 ivfflat cosine, sources cited) + summary periode 400–600 kata + SMART action-plan generator JSON — semua opsional, tidak block Phase 5 inti.
   6. Total biaya AI ter-track per use-case dan per user; bulan pertama actual spend ≤ $5 (target ~$3.15); 100% AI request tercatat di `ai_suggestion_log`.
 
-**Plans**: TBD
+**Plans**: 3 planned execution slices (created 2026-05-12)
+
+- [x] 05-01-ai-backend-foundation-PLAN.md — AI persistence, PII masking, OpenRouter/mock client, and backend endpoints. SUMMARY: `05-01-ai-backend-foundation-SUMMARY.md`.
+- [x] 05-02-ai-frontend-assist-surfaces-PLAN.md — AI Assist controls in assessment workflow with fallback disabled state. SUMMARY: `05-02-ai-frontend-assist-surfaces-SUMMARY.md`.
+- [x] 05-03-ai-uat-eval-hardening-PLAN.md — UAT, eval notes, audit verification, and Phase 5b gap handling. SUMMARY: `05-03-ai-uat-eval-hardening-SUMMARY.md`.
+**UAT**: `05-UAT.md` — core AI integration checks passed on 2026-05-12; optional Phase 5b items deferred.
 **UI hint**: yes
 
 ---
@@ -148,7 +169,13 @@
   4. Production go-live checklist passed: semua `.env` secrets unique dan strong, Postgres tidak exposed publicly, backup verified (test restore sukses), SSL provisioned, firewall hanya 22 + 3399/443, log rotation configured, health-check external monitor live, first super_admin dengan strong password, Konkin 2026 master data fully seeded, Pedoman Konkin indexed ke pgvector, OpenRouter key valid + quota approved, end-to-end smoke test (login + create assessment + submit) pass.
   5. Demo final: Konkin 2026 PLTU Tenayan full coverage, semua indikator ter-track, NKO Semester 1 2026 dapat di-finalisasi dan di-export sebagai laporan resmi.
 
-**Plans**: TBD
+**Plans**: 5 planned execution slices (created 2026-05-12)
+
+- [x] 06-01-stream-blueprint-seed-and-tree-editor-PLAN.md — Seed remaining Pilar II maturity stream blueprints and admin tree editing support. SUMMARY: `06-01-stream-blueprint-seed-and-tree-editor-SUMMARY.md`.
+- [x] 06-02-hcr-ocr-assessment-coverage-PLAN.md — HCR/OCR dynamic maturity assessment coverage and special OCR weighting. SUMMARY: `06-02-hcr-ocr-assessment-coverage-SUMMARY.md`.
+- [x] 06-03-subindikator-formula-coverage-nko-PLAN.md — Complete Pilar I/IV/V formula coverage and NKO integration. SUMMARY: `06-03-subindikator-formula-coverage-nko-SUMMARY.md`.
+- [x] 06-04-pedoman-rag-summary-action-plan-PLAN.md — Deferred Phase 5b RAG, summary, and SMART action-plan endpoints. SUMMARY: `06-04-pedoman-rag-summary-action-plan-SUMMARY.md`.
+- [ ] 06-05-production-hardening-final-uat-PLAN.md — Production checklist, backup/restore, security, OpenRouter, and final UAT.
 
 ---
 
@@ -157,11 +184,11 @@
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation (Master Data + Auth) | 7/7 | **Complete** | 2026-05-11 |
-| 2. Assessment Workflow (PIC + Asesor) | 0/0 | Not started | - |
-| 3. NKO Calculator + Dashboard | 0/0 | Not started | - |
-| 4. Compliance Tracker + Reports | 0/0 | Not started | - |
-| 5. AI Integration | 0/0 | Not started | - |
-| 6. Stream Coverage Lengkap + HCR + Go-Live Hardening | 0/0 | Not started | - |
+| 2. Assessment Workflow (PIC + Asesor) | 4/4 | **Complete** | 2026-05-12 |
+| 3. NKO Calculator + Dashboard | 2/2 | **Complete** | 2026-05-12 |
+| 4. Compliance Tracker + Reports | 3/3 | **Complete** | 2026-05-12 |
+| 5. AI Integration | 3/3 | **Complete** | 2026-05-12 |
+| 6. Stream Coverage Lengkap + HCR + Go-Live Hardening | 4/5 | In progress | - |
 
 ---
 

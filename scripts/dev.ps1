@@ -10,11 +10,23 @@
 [CmdletBinding()]
 param(
     [Parameter(Position = 0)]
-    [ValidateSet('help','up','down','build','seed','migrate','test','backup','restore','logs','lint')]
+    [ValidateSet('help','up','down','build','seed','migrate','test','backup','restore','logs','lint','prod-env','prod-check','prod-smoke')]
     [string]$Verb = 'help',
 
     [Parameter()]
-    [string]$File
+    [string]$File,
+
+    [Parameter()]
+    [string]$BaseUrl,
+
+    [Parameter()]
+    [string]$Email,
+
+    [Parameter()]
+    [string]$Password,
+
+    [Parameter()]
+    [string]$PeriodeId
 )
 
 function Show-Help {
@@ -29,6 +41,9 @@ function Show-Help {
     Write-Host "  ./scripts/dev.ps1 restore -File … Restore from a backup file"
     Write-Host "  ./scripts/dev.ps1 logs            Tail logs from all services"
     Write-Host "  ./scripts/dev.ps1 lint            Run ruff + eslint"
+    Write-Host "  ./scripts/dev.ps1 prod-env        Generate .env.production.generated"
+    Write-Host "  ./scripts/dev.ps1 prod-check      Validate production readiness gates"
+    Write-Host "  ./scripts/dev.ps1 prod-smoke -BaseUrl … -Email … -Password … [-PeriodeId …]"
 }
 
 function Invoke-Cmd {
@@ -63,6 +78,16 @@ switch ($Verb) {
         try { Invoke-Cmd 'ruff check .' } finally { Pop-Location }
         Push-Location frontend
         try { Invoke-Cmd 'pnpm run lint' } finally { Pop-Location }
+    }
+    'prod-env'   { Invoke-Cmd './scripts/generate-prod-env.ps1' }
+    'prod-check' { Invoke-Cmd './scripts/prod-readiness.ps1' }
+    'prod-smoke' {
+        if (-not $BaseUrl -or -not $Email -or -not $Password) {
+            throw 'Usage: ./scripts/dev.ps1 prod-smoke -BaseUrl <url> -Email <email> -Password <password> [-PeriodeId <uuid>]'
+        }
+        $cmd = "./scripts/prod-smoke.ps1 -BaseUrl `"$BaseUrl`" -Email `"$Email`" -Password `"$Password`""
+        if ($PeriodeId) { $cmd += " -PeriodeId `"$PeriodeId`"" }
+        Invoke-Cmd $cmd
     }
     default   { Show-Help }
 }

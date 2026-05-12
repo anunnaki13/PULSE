@@ -23,6 +23,9 @@ PULSE — Developer verbs (bash)
   FILE=… ./scripts/dev.sh restore  Restore from a backup file
   ./scripts/dev.sh logs            Tail logs from all services
   ./scripts/dev.sh lint            Run ruff + eslint
+  ./scripts/dev.sh prod-env        Generate .env.production.generated
+  ./scripts/dev.sh prod-check      Validate production readiness gates
+  BASE_URL=… EMAIL=… PASSWORD=… [PERIODE_ID=…] ./scripts/dev.sh prod-smoke
 EOF
 }
 
@@ -52,5 +55,8 @@ case "$verb" in
         ( cd backend  && ruff check . )
         ( cd frontend && pnpm run lint )
         ;;
+    prod-env) ./scripts/generate-prod-env.sh ;;
+    prod-check) ./scripts/prod-readiness.sh ;;
+    prod-smoke) ./scripts/prod-smoke.sh ;;
     *)       show_help ;;
 esac

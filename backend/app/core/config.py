@@ -43,6 +43,15 @@ class Settings(BaseSettings):
     APP_VERSION: str = "0.1.0"
     DEBUG: bool = False
 
+    # --- AI / OpenRouter ---------------------------------------------------
+    OPENROUTER_API_KEY: SecretStr = SecretStr("")
+    OPENROUTER_BASE_URL: str = "https://openrouter.ai/api/v1"
+    OPENROUTER_ROUTINE_MODEL: str = "google/gemini-2.5-flash"
+    OPENROUTER_COMPLEX_MODEL: str = "anthropic/claude-sonnet-4"
+    OPENROUTER_TIMEOUT_SECONDS: float = 20.0
+    AI_MOCK_MODE: bool = True
+    AI_MONTHLY_BUDGET_USD: float = 5.0
+
     # --- First-admin bootstrap (CONTEXT.md "Auth" → first admin via .env) ---
     INITIAL_ADMIN_EMAIL: str = "admin@pulse.local"
     INITIAL_ADMIN_PASSWORD: SecretStr = SecretStr("change-me-on-first-login")

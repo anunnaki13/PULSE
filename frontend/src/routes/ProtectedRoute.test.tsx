@@ -46,7 +46,7 @@ function renderAt(initialEntry: string, allow?: Role[]) {
 describe("ProtectedRoute (REQ-route-guards, B-01/B-02)", () => {
   beforeEach(() => {
     // Reset store between tests so prior auth state doesn't leak.
-    useAuthStore.setState({ user: null, accessToken: null, isAuthenticated: false });
+    useAuthStore.setState({ user: null, accessToken: null, isAuthenticated: false, hasHydrated: true });
   });
 
   it("redirects unauthenticated user to /login", () => {
@@ -59,6 +59,7 @@ describe("ProtectedRoute (REQ-route-guards, B-01/B-02)", () => {
       user: makeUser(["admin_unit"]),
       accessToken: "stub",
       isAuthenticated: true,
+      hasHydrated: true,
     });
     renderAt("/master", ["super_admin", "admin_unit"]);
     expect(screen.getByTestId("master-screen")).toBeInTheDocument();
@@ -69,6 +70,7 @@ describe("ProtectedRoute (REQ-route-guards, B-01/B-02)", () => {
       user: makeUser(["super_admin"]),
       accessToken: "stub",
       isAuthenticated: true,
+      hasHydrated: true,
     });
     renderAt("/master", ["super_admin", "admin_unit"]);
     expect(screen.getByTestId("master-screen")).toBeInTheDocument();
@@ -79,6 +81,7 @@ describe("ProtectedRoute (REQ-route-guards, B-01/B-02)", () => {
       user: makeUser(["pic_bidang"]),
       accessToken: "stub",
       isAuthenticated: true,
+      hasHydrated: true,
     });
     renderAt("/master", ["super_admin", "admin_unit"]);
     expect(screen.getByTestId("dashboard-screen")).toBeInTheDocument();
@@ -89,6 +92,7 @@ describe("ProtectedRoute (REQ-route-guards, B-01/B-02)", () => {
       user: makeUser(["manajer_unit"]),
       accessToken: "stub",
       isAuthenticated: true,
+      hasHydrated: true,
     });
     renderAt("/master", ["super_admin", "admin_unit"]);
     expect(screen.getByTestId("dashboard-screen")).toBeInTheDocument();
@@ -99,6 +103,7 @@ describe("ProtectedRoute (REQ-route-guards, B-01/B-02)", () => {
       user: makeUser(["asesor"]),
       accessToken: "stub",
       isAuthenticated: true,
+      hasHydrated: true,
     });
     renderAt("/master", ["super_admin", "admin_unit"]);
     expect(screen.getByTestId("dashboard-screen")).toBeInTheDocument();
@@ -109,6 +114,7 @@ describe("ProtectedRoute (REQ-route-guards, B-01/B-02)", () => {
       user: makeUser(["viewer"]),
       accessToken: "stub",
       isAuthenticated: true,
+      hasHydrated: true,
     });
     renderAt("/master", ["super_admin", "admin_unit"]);
     expect(screen.getByTestId("dashboard-screen")).toBeInTheDocument();
