@@ -76,6 +76,11 @@ export function AppShell() {
               {t("nav.guide")}
             </SkButton>
           </Link>
+          <Link to="/formula-dictionary" style={{ textDecoration: "none" }}>
+            <SkButton variant="ghost" type="button">
+              {t("nav.formulaDictionary")}
+            </SkButton>
+          </Link>
           {canWorkAssessment && (
             <Link to="/assessment" style={{ textDecoration: "none" }}>
               <SkButton variant="ghost" type="button">

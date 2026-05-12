@@ -562,6 +562,16 @@
   - Guide explains the end-to-end Konkin flow from periode setup to dashboard/reporting.
   - Guide explains that each stream may use different formulas, units, polarities, weights, and aggregation rules.
 
+### REQ-formula-stream-dictionary
+- source: user request 2026-05-13
+- description: In-app formula dictionary for studying stream-specific formulas, units, polarities, weights, and aggregation behavior.
+- acceptance:
+  - Authenticated users can open `/formula-dictionary`.
+  - Header navigation includes `Kamus Formula`.
+  - Dictionary explains positive, negative, range-based, maturity average, weighted maturity, and compliance deduction families.
+  - Dictionary includes representative KPI, maturity, HCR/OCR, sub-indicator, and compliance rows.
+  - Dictionary supports text search and formula-family filtering.
+
 ---
 
 ## Traceability
@@ -624,5 +634,6 @@
 | REQ-ai-action-plan-generator | Phase 5 | Pending | |
 | REQ-prod-checklist | Phase 6 | Pending | |
 | REQ-operator-onboarding-guide | Phase 7 | Complete | |
+| REQ-formula-stream-dictionary | Phase 8 | Complete | |
 
 **Coverage:** 50 / 50 requirements mapped (note: 53 rows above include REQ-ai-rag-chat, REQ-ai-summary-periode, REQ-ai-action-plan-generator from Section L which the synthesis count rolls into the 50-total via the §K cross-count footnote). All sections A–S accounted for.

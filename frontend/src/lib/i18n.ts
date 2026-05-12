@@ -29,6 +29,7 @@ const id = {
     master: "Master Data",
     dashboard: "Dasbor",
     guide: "Panduan",
+    formulaDictionary: "Kamus Formula",
     logout: "Keluar",
   },
   master: {

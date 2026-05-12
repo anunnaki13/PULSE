@@ -17,6 +17,7 @@
 - [x] **Phase 5: AI Integration** — OpenRouter routing + 5 fitur AI MVP (Draft Justifikasi, Draft Rekomendasi, Anomaly Detection, AI Inline Help, Comparative Analysis) + sub-fase 5b RAG/Summary/SMART. *Closed 2026-05-12 — Phase 5 core AI UAT passed; Phase 5b optional items deferred to Phase 6/go-live hardening.*
 - [ ] **Phase 6: Stream Coverage Lengkap + HCR + Go-Live Hardening** — Semua 14 sub-stream ML Pilar II + HCR + sub-indikator Pilar I/IV/V ter-implementasi, prod checklist passed.
 - [x] **Phase 7: Operator Onboarding + Guided Help** — Panduan menu dan alur Konkin tersedia langsung di aplikasi agar operator dapat mempelajari fungsi menu, role, dan perbedaan formula/satuan tiap stream sambil production gates Phase 6 diselesaikan. *Closed 2026-05-12 — `/guide` in-app guide build/test passed.*
+- [x] **Phase 8: Formula + Stream Dictionary** — Kamus formula tersedia langsung di aplikasi untuk mempelajari family rumus, satuan, polaritas, bobot, agregasi, dan contoh stream. *Closed 2026-05-13 — `/formula-dictionary` build/test/smoke passed.*
 
 ---
 
@@ -191,6 +192,7 @@
 | 5. AI Integration | 3/3 | **Complete** | 2026-05-12 |
 | 6. Stream Coverage Lengkap + HCR + Go-Live Hardening | 5/5 local, prod gates blocked | Blocked | - |
 | 7. Operator Onboarding + Guided Help | 1/1 | **Complete** | 2026-05-12 |
+| 8. Formula + Stream Dictionary | 1/1 | **Complete** | 2026-05-13 |
 
 ---
 
@@ -211,6 +213,26 @@
 **Plans**: 1 planned execution slice
 
 - [x] 07-01-in-app-menu-guide-PLAN.md — In-app menu guide and operator onboarding surface. SUMMARY: `07-01-in-app-menu-guide-SUMMARY.md`.
+
+---
+
+### Phase 8: Formula + Stream Dictionary
+**Goal**: Operator dapat membuka kamus formula di aplikasi untuk memahami perbedaan family rumus, satuan, polaritas, bobot, agregasi, dan contoh stream tanpa harus membaca file blueprint.
+
+**Depends on**: Phase 7
+
+**Requirements**: REQ-formula-stream-dictionary
+
+**Success Criteria** (what must be TRUE):
+  1. User authenticated melihat menu `Kamus Formula` di header aplikasi.
+  2. `/formula-dictionary` menjelaskan family rumus positif, negatif, range, maturity, weighted maturity, dan compliance pengurang.
+  3. `/formula-dictionary` memuat contoh stream KPI, maturity, HCR/OCR, sub-indikator, dan compliance.
+  4. Halaman memiliki filter pencarian dan filter family formula.
+  5. Frontend build dan test pass.
+
+**Plans**: 1 planned execution slice
+
+- [x] 08-01-formula-stream-dictionary-PLAN.md — In-app formula and stream dictionary. SUMMARY: `08-01-formula-stream-dictionary-SUMMARY.md`.
 
 ---
 
