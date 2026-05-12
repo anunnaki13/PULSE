@@ -36,6 +36,7 @@ import PeriodeAdmin from "@/routes/PeriodeAdmin";
 import Recommendations from "@/routes/Recommendations";
 import Notifications from "@/routes/Notifications";
 import AuditLogs from "@/routes/AuditLogs";
+import MenuGuide from "@/routes/MenuGuide";
 import { AppShell } from "@/routes/AppShell";
 import { MasterLayout } from "@/routes/master/MasterLayout";
 import KonkinTemplate from "@/routes/master/KonkinTemplate";
@@ -59,6 +60,7 @@ export default function App() {
           <Route element={<AppShell />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/dashboard/executive" element={<Dashboard />} />
+            <Route path="/guide" element={<MenuGuide />} />
             <Route path="/assessment" element={<AssessmentList />} />
             <Route path="/recommendations" element={<Recommendations />} />
             <Route path="/notifications" element={<Notifications />} />

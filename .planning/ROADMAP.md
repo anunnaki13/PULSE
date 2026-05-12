@@ -16,6 +16,7 @@
 - [x] **Phase 4: Compliance Tracker + Reports** — 9 laporan rutin + komponen lain ter-track, pengurang terintegrasi ke NKO, export PDF/Excel/Word resmi. *Closed 2026-05-12 — compliance UI, NKO deduction, and report export UAT passed.*
 - [x] **Phase 5: AI Integration** — OpenRouter routing + 5 fitur AI MVP (Draft Justifikasi, Draft Rekomendasi, Anomaly Detection, AI Inline Help, Comparative Analysis) + sub-fase 5b RAG/Summary/SMART. *Closed 2026-05-12 — Phase 5 core AI UAT passed; Phase 5b optional items deferred to Phase 6/go-live hardening.*
 - [ ] **Phase 6: Stream Coverage Lengkap + HCR + Go-Live Hardening** — Semua 14 sub-stream ML Pilar II + HCR + sub-indikator Pilar I/IV/V ter-implementasi, prod checklist passed.
+- [x] **Phase 7: Operator Onboarding + Guided Help** — Panduan menu dan alur Konkin tersedia langsung di aplikasi agar operator dapat mempelajari fungsi menu, role, dan perbedaan formula/satuan tiap stream sambil production gates Phase 6 diselesaikan. *Closed 2026-05-12 — `/guide` in-app guide build/test passed.*
 
 ---
 
@@ -189,6 +190,27 @@
 | 4. Compliance Tracker + Reports | 3/3 | **Complete** | 2026-05-12 |
 | 5. AI Integration | 3/3 | **Complete** | 2026-05-12 |
 | 6. Stream Coverage Lengkap + HCR + Go-Live Hardening | 5/5 local, prod gates blocked | Blocked | - |
+| 7. Operator Onboarding + Guided Help | 1/1 | **Complete** | 2026-05-12 |
+
+---
+
+### Phase 7: Operator Onboarding + Guided Help
+**Goal**: Operator dapat mempelajari fungsi menu, role, alur Konkin, dan perbedaan formula/satuan stream langsung dari aplikasi tanpa harus membuka dokumen terpisah.
+
+**Depends on**: Phase 6 local build (production go-live gates may remain blocked)
+
+**Requirements**: REQ-operator-onboarding-guide
+
+**Success Criteria** (what must be TRUE):
+  1. User authenticated melihat menu `Panduan` di header aplikasi.
+  2. `/guide` menjelaskan fungsi Dasbor, Assessment, Rekomendasi, Periode, Compliance, Audit, Master Data, dan Notifikasi.
+  3. `/guide` menjelaskan role utama dan alur end-to-end Konkin.
+  4. `/guide` menjelaskan bahwa tiap stream dapat memiliki formula, satuan, polaritas, bobot, dan agregasi berbeda.
+  5. Frontend build pass.
+
+**Plans**: 1 planned execution slice
+
+- [x] 07-01-in-app-menu-guide-PLAN.md — In-app menu guide and operator onboarding surface. SUMMARY: `07-01-in-app-menu-guide-SUMMARY.md`.
 
 ---
 

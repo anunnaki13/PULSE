@@ -71,6 +71,11 @@ export function AppShell() {
               {t("nav.dashboard")}
             </SkButton>
           </Link>
+          <Link to="/guide" style={{ textDecoration: "none" }}>
+            <SkButton variant="ghost" type="button">
+              {t("nav.guide")}
+            </SkButton>
+          </Link>
           {canWorkAssessment && (
             <Link to="/assessment" style={{ textDecoration: "none" }}>
               <SkButton variant="ghost" type="button">

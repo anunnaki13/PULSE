@@ -28,6 +28,7 @@ const id = {
   nav: {
     master: "Master Data",
     dashboard: "Dasbor",
+    guide: "Panduan",
     logout: "Keluar",
   },
   master: {

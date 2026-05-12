@@ -552,6 +552,16 @@
   - OpenRouter key valid + quota.
   - End-to-end smoke: login + create assessment + submit.
 
+### REQ-operator-onboarding-guide
+- source: user request 2026-05-12
+- description: In-app guide for understanding menus, roles, Konkin workflow, and stream-specific formula/unit differences.
+- acceptance:
+  - Authenticated users can open `/guide`.
+  - Header navigation includes `Panduan`.
+  - Guide explains every major menu and who normally uses it.
+  - Guide explains the end-to-end Konkin flow from periode setup to dashboard/reporting.
+  - Guide explains that each stream may use different formulas, units, polarities, weights, and aggregation rules.
+
 ---
 
 ## Traceability
@@ -613,5 +623,6 @@
 | REQ-ai-summary-periode | Phase 5 | Pending | |
 | REQ-ai-action-plan-generator | Phase 5 | Pending | |
 | REQ-prod-checklist | Phase 6 | Pending | |
+| REQ-operator-onboarding-guide | Phase 7 | Complete | |
 
 **Coverage:** 50 / 50 requirements mapped (note: 53 rows above include REQ-ai-rag-chat, REQ-ai-summary-periode, REQ-ai-action-plan-generator from Section L which the synthesis count rolls into the 50-total via the §K cross-count footnote). All sections A–S accounted for.
